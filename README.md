@@ -1,9 +1,11 @@
 ![Logo](logo.png)
+
 **Приложение для гибкого планирования времени**
 
 [Описание](//readymag.com/greybutton/applaura) | [Демо](//applaura.netlify.com/)
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+
 *При использовании приложения рекомендуется сделать форк*
 
 ---
