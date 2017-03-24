@@ -1,0 +1,16 @@
+{
+  "name": "laura",
+  "description": "Приложение для гибкого планирования времени",
+  "repository": "https://github.com/applaura/web",
+  "env": {
+    "MONGO_URI": {
+      "description": "Переменная окружения для подключения sandbox с mlab.com"
+    },
+    "LOGIN": {
+      "description": "Переменная окружения для авторизации"
+    },
+    "PASS": {
+      "description": "Переменная окружения для авторизации"
+    }
+  }
+}

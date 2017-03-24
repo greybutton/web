@@ -1,0 +1,57 @@
+.daily-tasks,
+.tasks
+  list-style: none
+  margin: 0
+  padding: 0
+  position: relative
+
+.daily-tasks__task-count,
+.daily-tasks__time-count
+  margin: .5rem 1rem
+
+.task
+  background: #fff
+  border-bottom: 1px solid $light-gray
+  border-top: 1px solid $light-gray
+  font-size: 1rem
+  margin: 5px 0
+  padding: 0
+
+.task_chosen
+  background: $light-gray
+
+.task__time
+  border-bottom: solid 1px $light-gray
+  border-right: solid 1px $light-gray
+  float: left
+  margin-right: 10px
+  padding: 10px
+
+.eisenhower-pick[type='radio']
+  display: none
+
+.eisenhower-pick[type='radio']:checked + label
+  background: $success
+
+.task__text
+  padding: 10px
+
+.task__label + .task__text
+  display: inline-block
+
+.task__first
+  border-color: $alert
+
+.task__second
+  border-color: $warning
+
+@media (min-width: 64em)
+
+  .daily-tasks,
+  .tasks
+    overflow-x: hidden
+
+  .tasks
+    max-height: 465px
+  .daily-tasks
+    max-height: 450px
