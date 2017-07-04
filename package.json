@@ -10,17 +10,30 @@
   "scripts": {
     "lint": "eslint server",
     "start": "node server",
+    "develop": "nodemon server --ignore react-ui/ --ignore __test__",
+    "test": "jest",
+    "test:watch": "npm test -- --watch",
     "heroku-postbuild": "cd react-ui/ && npm install --only=dev && npm install && npm run build"
   },
-  "cacheDirectories": ["node_modules", "react-ui/node_modules"],
+  "cacheDirectories": [
+    "node_modules",
+    "react-ui/node_modules"
+  ],
   "dependencies": {
-    "express": "^4.15.3"
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "mongoose": "^4.11.1"
   },
   "devDependencies": {
+    "babel-jest": "^20.0.3",
+    "babel-preset-es2015": "^6.24.1",
     "eslint": "3.19.0",
     "eslint-config-airbnb-base": "^11.2.0",
     "eslint-plugin-import": "^2.6.1",
     "eslint-plugin-prettier": "^2.1.2",
-    "prettier": "^1.5.2"
+    "jest": "^20.0.4",
+    "nodemon": "^1.11.0",
+    "prettier": "^1.5.2",
+    "supertest": "^3.0.0"
   }
 }
