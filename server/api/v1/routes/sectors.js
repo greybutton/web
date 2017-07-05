@@ -1,6 +1,6 @@
 /* eslint no-underscore-dangle: 0 */
-import express from 'express';
-import * as User from '../models/user';
+const express = require('express');
+const User = require('../models/user');
 
 const router = express.Router();
 
@@ -29,4 +29,4 @@ router.get(':_id', (req, res) => {
   });
 });
 
-export default router;
+module.exports = router;

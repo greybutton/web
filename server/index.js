@@ -1,15 +1,17 @@
-import express from 'express';
-import path from 'path';
-import mongoose from 'mongoose';
-import bodyParser from 'body-parser';
+const express = require('express');
+const path = require('path');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
-import apiV1 from './api/v1';
+const apiV1 = require('./api/v1');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/web');
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/web', {
+  useMongoClient: true,
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -31,4 +33,5 @@ if (process.env.NODE_ENV !== 'test') {
   });
 }
 
-export default app; // for testing
+// for testing
+module.exports = app;
