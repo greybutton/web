@@ -9,24 +9,37 @@ const handleError = (err, res) => {
 };
 
 router.get('/', (req, res) => {
-  User.find({}, (err, result) => {
-    if (err) {
+  User.distinct('sectors')
+    .then((sectors) => {
+      res.json({ sectors });
+    })
+    .catch((err) => {
       handleError(err, res);
-    } else {
-      res.json(result.length === 0 ? result : result[0].sectors);
-    }
-  });
+    });
 });
 
-router.get(':_id', (req, res) => {
+router.get('/:_id', (req, res) => {
   const _id = req.params._id;
-  User.findOne({ _id }, (err, sector) => {
-    if (err) {
+  User.distinct('sectors')
+    .then((sectors) => {
+      const sector = sectors.filter(sectorItem => sectorItem._id.toString() === _id)[0];
+      if (sector) {
+        res.json({ sector });
+      } else {
+        const err = {
+          message: `Cast to ObjectId failed for sector value "${_id}" at path "_id" for model "User"`,
+          name: 'CastError',
+          stringValue: `"${_id}"`,
+          kind: 'ObjectId',
+          value: _id,
+          path: '_id',
+        };
+        handleError(err, res);
+      }
+    })
+    .catch((err) => {
       handleError(err, res);
-    } else {
-      res.json({ sector });
-    }
-  });
+    });
 });
 
 module.exports = router;
