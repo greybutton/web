@@ -42,4 +42,19 @@ router.get('/:_id', (req, res) => {
     });
 });
 
+router.post('/', (req, res) => {
+  const sector = req.body;
+  const newSector = new User({
+    sectors: [sector],
+  });
+  newSector
+    .save()
+    .then((result) => {
+      res.json({ sectors: result.sectors });
+    })
+    .catch((err) => {
+      handleError(err, res);
+    });
+});
+
 module.exports = router;
