@@ -20,9 +20,10 @@ describe(`Sector ${apiSectors}`, () => {
       });
   });
   describe('get sectors', () => {
-    it('should get all sectors', (done) => {
+    it('should get all sectors', () => {
       const expected = { sectors: [] };
-      request(app)
+      expect.hasAssertions();
+      return request(app)
         .get(apiSectors)
         .then((res) => {
           const recevied = res.body;
@@ -32,12 +33,12 @@ describe(`Sector ${apiSectors}`, () => {
         .catch((err) => {
           console.log(err);
         });
-      done();
     });
   });
   describe('get sector', () => {
-    it('should 400 on a request for a nonexistant id', (done) => {
-      request(app)
+    it('should 400 on a request for a nonexistant id', () => {
+      expect.hasAssertions();
+      return request(app)
         .get(`${apiSectors}/999`)
         .then((res) => {
           expect(res.status).toBe(400);
@@ -45,7 +46,6 @@ describe(`Sector ${apiSectors}`, () => {
         .catch((err) => {
           console.log(err);
         });
-      done();
     });
     it('should get a sector', () => {
       const sector = {
@@ -283,7 +283,7 @@ describe(`Sector ${apiSectors}`, () => {
           console.log(err);
         });
     });
-    it('should not update a sector', () => {
+    it('should update a sector', () => {
       const sector = {
         title: 'test put sector',
         score: 3,
@@ -309,6 +309,49 @@ describe(`Sector ${apiSectors}`, () => {
               const recevied = result.body.sectors[0];
               expect(result.status).toBe(200);
               expect(recevied).toMatchObject(sectorUpdtate);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  });
+  describe('delete sector', () => {
+    it('should not delete sector on a request for a nonexistand id', () => {
+      expect.hasAssertions();
+      return request(app)
+        .delete(`${apiSectors}/999`)
+        .then((res) => {
+          expect(res.status).toBe(400);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+    it('should delete a sector', () => {
+      const sector = {
+        title: 'test delete sector',
+        score: 3,
+        desirableScore: 7,
+      };
+      const user = new User({
+        sectors: [sector],
+      });
+      return user
+        .save()
+        .then((res) => {
+          const sectorId = res.sectors[0]._id;
+          expect.hasAssertions();
+          return request(app)
+            .delete(`${apiSectors}/${sectorId}`)
+            .then((result) => {
+              const recevied = result.body;
+              const expected = { sectors: [] };
+              expect(result.status).toBe(200);
+              expect(recevied).toEqual(expected);
             })
             .catch((err) => {
               console.log(err);

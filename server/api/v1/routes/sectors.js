@@ -82,4 +82,22 @@ router.put('/:_id', (req, res) => {
   });
 });
 
+router.delete('/:_id', (req, res) => {
+  const _id = req.params._id;
+  User.update({}, { $pull: { sectors: { _id } } }, (err, result) => {
+    if (err) {
+      handleError(err, res);
+    } else {
+      // new model request because in otherwise result is object of $pull operator
+      User.distinct('sectors')
+        .then((sectors) => {
+          res.json({ sectors });
+        })
+        .catch((err) => {
+          handleError(err, res);
+        });
+    }
+  });
+});
+
 module.exports = router;
