@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-export const Sector = new Schema({
+const Sector = new Schema({
   title: {
     type: String,
     required: 'Title sector is required',
@@ -18,7 +18,7 @@ export const Sector = new Schema({
   },
 });
 
-export const Task = new Schema({
+const Task = new Schema({
   text: {
     type: String,
     required: 'Text task is required',
@@ -42,7 +42,7 @@ export const Task = new Schema({
   },
 });
 
-export const User = new Schema({
+const User = new Schema({
   sectors: [Sector],
   tasks: {
     daily: [Task],

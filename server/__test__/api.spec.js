@@ -8,6 +8,7 @@ import app from '../';
 
 const api = '/api/v1';
 const apiSectors = `${api}/sectors`;
+const apiTasks = `${api}/tasks`;
 
 describe(`Sector ${apiSectors}`, () => {
   beforeEach((done) => {
@@ -352,6 +353,96 @@ describe(`Sector ${apiSectors}`, () => {
               const expected = { sectors: [] };
               expect(result.status).toBe(200);
               expect(recevied).toEqual(expected);
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  });
+});
+
+describe(`Task ${apiTasks}`, () => {
+  const sectorTest = {
+    title: 'Test sector',
+    score: 1,
+    desirableScore: 10,
+  };
+  beforeEach((done) => {
+    User.remove({})
+      .then(() => {
+        done();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+  describe('get tasks', () => {
+    it('should get all tasks', () => {
+      const expected = { tasks: [] };
+      expect.hasAssertions();
+      return request(app)
+        .get(apiTasks)
+        .then((res) => {
+          const recevied = res.body;
+          expect(res.status).toBe(200);
+          expect(recevied).toEqual(expected);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+  });
+  describe('get task', () => {
+    it('should 400 on a request for a nonexistant id', () => {
+      expect.hasAssertions();
+      return request(app)
+        .get(`${apiTasks}/999`)
+        .then((res) => {
+          expect(res.status).toBe(400);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+    it('should get a task', () => {
+      const userSector = new User({
+        sectors: [sectorTest],
+      });
+      userSector.save().catch((err) => {
+        console.log(err);
+      });
+      const sectorTestId = userSector.sectors[0]._id;
+      const task = {
+        text: 'test get task',
+        time: '00:30',
+        sector: sectorTestId,
+        matrixQuater: 'first',
+        label: sectorTest.title,
+      };
+      const userTask = new User({
+        tasks: {
+          important: [task],
+        },
+      });
+      return userTask
+        .save()
+        .then((res) => {
+          const expectedTask = res.tasks.important[0];
+          expect.hasAssertions();
+          return request(app)
+            .get(`${apiTasks}/${res.tasks.important[0]._id}`)
+            .then((result) => {
+              const actualTask = result.body.task;
+              expect(result.status).toBe(200);
+              expect(actualTask).toHaveProperty('text', expectedTask.text);
+              expect(actualTask).toHaveProperty('time', expectedTask.time);
+              expect(actualTask).toHaveProperty('sector', expectedTask.sector.toString());
+              expect(actualTask).toHaveProperty('matrixQuater', expectedTask.matrixQuater);
+              expect(actualTask).toHaveProperty('_id', expectedTask._id.toString());
             })
             .catch((err) => {
               console.log(err);
