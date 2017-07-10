@@ -57,4 +57,29 @@ router.post('/', (req, res) => {
     });
 });
 
+router.put('/:_id', (req, res) => {
+  const { title, score, desirableScore } = req.body;
+  const _id = req.params._id;
+  const doc = {
+    'sectors.$.title': title,
+    'sectors.$.score': score,
+    'sectors.$.desirableScore': desirableScore,
+  };
+  const opts = { runValidators: true };
+  User.findOneAndUpdate({ 'sectors._id': _id }, { $set: doc }, opts, (err, result) => {
+    if (err) {
+      handleError(err, res);
+    } else {
+      // new model request because in otherwise result with old data
+      User.distinct('sectors')
+        .then((sectors) => {
+          res.json({ sectors });
+        })
+        .catch((err) => {
+          handleError(err, res);
+        });
+    }
+  });
+});
+
 module.exports = router;
