@@ -43,4 +43,40 @@ router.get('/:_id', (req, res) => {
     });
 });
 
+router.post('/', (req, res) => {
+  const task = req.body;
+  let newTask;
+  switch (task.matrixQuater) {
+    case 'first':
+    case 'second':
+      newTask = User.create({
+        tasks: {
+          important: [task],
+        },
+      });
+      break;
+    case 'daily':
+      newTask = User.create({
+        tasks: {
+          daily: [task],
+        },
+      });
+      break;
+    default:
+      newTask = User.create({
+        tasks: {
+          notImportant: [task],
+        },
+      });
+      break;
+  }
+  newTask
+    .then((result) => {
+      res.json({ tasks: result.tasks });
+    })
+    .catch((err) => {
+      handleError(err, res);
+    });
+});
+
 module.exports = router;
