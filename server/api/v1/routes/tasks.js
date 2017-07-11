@@ -46,7 +46,7 @@ router.get('/:_id', (req, res) => {
 router.post('/', (req, res) => {
   const task = req.body;
   let newTask;
-  switch (task.matrixQuater) {
+  switch (task.matrixQuarter) {
     case 'first':
     case 'second':
       newTask = User.create({
@@ -80,7 +80,7 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:_id', (req, res) => {
-  const { text, time, sector, matrixQuater } = req.body;
+  const { text, time, sector, matrixQuarter } = req.body;
   const _id = req.params._id;
   let label = req.body.label;
   let query = {};
@@ -88,7 +88,7 @@ router.put('/:_id', (req, res) => {
   if (!label) {
     label = 'plain';
   }
-  switch (matrixQuater) {
+  switch (matrixQuarter) {
     case 'first':
     case 'second':
       query = { 'tasks.important._id': _id };
@@ -96,7 +96,7 @@ router.put('/:_id', (req, res) => {
         'tasks.important.$.text': text,
         'tasks.important.$.time': time,
         'tasks.important.$.sector': sector,
-        'tasks.important.$.matrixQuater': matrixQuater,
+        'tasks.important.$.matrixQuarter': matrixQuarter,
         'tasks.important.$.label': label,
       };
       break;
@@ -106,7 +106,7 @@ router.put('/:_id', (req, res) => {
         'tasks.daily.$.text': text,
         'tasks.daily.$.time': time,
         'tasks.daily.$.sector': sector,
-        'tasks.daily.$.matrixQuater': matrixQuater,
+        'tasks.daily.$.matrixQuarter': matrixQuarter,
         'tasks.daily.$.label': label,
       };
       break;
@@ -116,7 +116,7 @@ router.put('/:_id', (req, res) => {
         'tasks.notImportant.$.text': text,
         'tasks.notImportant.$.time': time,
         'tasks.notImportant.$.sector': sector,
-        'tasks.notImportant.$.matrixQuater': matrixQuater,
+        'tasks.notImportant.$.matrixQuarter': matrixQuarter,
         'tasks.notImportant.$.label': label,
       };
       break;
@@ -126,7 +126,7 @@ router.put('/:_id', (req, res) => {
     if (err) {
       handleError(err, res);
     } else {
-      // task changed a matrixQuater
+      // task changed a matrixQuarter
       // not updated because not match any task with new query
       // for example, task became from important to notImportant
       // result is null
@@ -134,7 +134,7 @@ router.put('/:_id', (req, res) => {
       if (!result) {
         // task updated from notImportant to important
         // task updated from daily to important
-        if (matrixQuater === 'first' || matrixQuater === 'second') {
+        if (matrixQuarter === 'first' || matrixQuarter === 'second') {
           // delete task from notImportant
           User.update({}, { $pull: { 'tasks.notImportant': { _id } } })
             .then(() => {
@@ -142,7 +142,7 @@ router.put('/:_id', (req, res) => {
                 text,
                 time,
                 sector,
-                matrixQuater,
+                matrixQuarter,
                 label,
               };
               // add task to important
@@ -177,7 +177,7 @@ router.put('/:_id', (req, res) => {
         }
         // task updated from important to notImportant
         // task updated from daily to notImportant
-        if (matrixQuater === 'third' || matrixQuater === 'fourth') {
+        if (matrixQuarter === 'third' || matrixQuarter === 'fourth') {
           // delete task from important
           User.update({}, { $pull: { 'tasks.important': { _id } } })
             .then(() => {
@@ -185,7 +185,7 @@ router.put('/:_id', (req, res) => {
                 text,
                 time,
                 sector,
-                matrixQuater,
+                matrixQuarter,
                 label,
               };
               // add task to notImportant
@@ -220,7 +220,7 @@ router.put('/:_id', (req, res) => {
         }
         // task updated from important to daily
         // task updated from notImportant to daily
-        if (matrixQuater === 'daily') {
+        if (matrixQuarter === 'daily') {
           // delete task from important
           User.update({}, { $pull: { 'tasks.important': { _id } } })
             .then(() => {
@@ -228,7 +228,7 @@ router.put('/:_id', (req, res) => {
                 text,
                 time,
                 sector,
-                matrixQuater,
+                matrixQuarter,
                 label,
               };
               // add task to daily
@@ -277,7 +277,7 @@ router.put('/:_id', (req, res) => {
 
 router.delete('/:_id', (req, res) => {
   const _id = req.params._id;
-  User.update({}, { $pull: { 'tasks.important': { _id } } }, (err, result) => {
+  User.update({}, { $pull: { 'tasks.important': { _id } } }, (err) => {
     if (err) {
       handleError(err, res);
     } else {

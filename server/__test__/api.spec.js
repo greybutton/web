@@ -420,7 +420,7 @@ describe(`Task ${apiTasks}`, () => {
         text: 'test get task',
         time: '00:30',
         sector: sectorTestId,
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
         label: sectorTest.title,
       };
       const userTask = new User({
@@ -441,7 +441,7 @@ describe(`Task ${apiTasks}`, () => {
               expect(actualTask).toHaveProperty('text', expectedTask.text);
               expect(actualTask).toHaveProperty('time', expectedTask.time);
               expect(actualTask).toHaveProperty('sector', expectedTask.sector.toString());
-              expect(actualTask).toHaveProperty('matrixQuater', expectedTask.matrixQuater);
+              expect(actualTask).toHaveProperty('matrixQuarter', expectedTask.matrixQuarter);
               expect(actualTask).toHaveProperty('_id', expectedTask._id.toString());
             })
             .catch((err) => {
@@ -465,7 +465,7 @@ describe(`Task ${apiTasks}`, () => {
       const task = {
         time: '00:30',
         sector: sectorTestId,
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
         label: sectorTest.title,
       };
       expect.hasAssertions();
@@ -496,7 +496,7 @@ describe(`Task ${apiTasks}`, () => {
       const task = {
         text: 'test post task',
         sector: sectorTestId,
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
         label: sectorTest.title,
       };
       expect.hasAssertions();
@@ -520,7 +520,7 @@ describe(`Task ${apiTasks}`, () => {
       const task = {
         text: 'test post task',
         time: '00:30',
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
         label: sectorTest.title,
       };
       expect.hasAssertions();
@@ -540,7 +540,7 @@ describe(`Task ${apiTasks}`, () => {
           console.log(err);
         });
     });
-    it('should not post a task without matrixQuater field', () => {
+    it('should not post a task without matrixQuarter field', () => {
       const userSector = new User({
         sectors: [sectorTest],
       });
@@ -583,7 +583,7 @@ describe(`Task ${apiTasks}`, () => {
         text: 'test post task',
         time: '00:30',
         sector: sectorTestId,
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
       };
       expect.hasAssertions();
       return request(app)
@@ -595,7 +595,7 @@ describe(`Task ${apiTasks}`, () => {
             text: 'test post task',
             time: '00:30',
             sector: sectorTestId.toString(),
-            matrixQuater: 'first',
+            matrixQuarter: 'first',
             label: 'plain',
           };
           expect(res.status).toBe(200);
@@ -617,7 +617,7 @@ describe(`Task ${apiTasks}`, () => {
         text: 'test post task',
         time: '00:30',
         sector: sectorTestId.toString(),
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
         label: sectorTest.title,
       };
       expect.hasAssertions();
@@ -645,7 +645,7 @@ describe(`Task ${apiTasks}`, () => {
         text: 'test post task',
         time: '00:30',
         sector: sectorTestId.toString(),
-        matrixQuater: 'third',
+        matrixQuarter: 'third',
         label: sectorTest.title,
       };
       expect.hasAssertions();
@@ -673,7 +673,7 @@ describe(`Task ${apiTasks}`, () => {
         text: 'test post task',
         time: '00:30',
         sector: sectorTestId.toString(),
-        matrixQuater: 'daily',
+        matrixQuarter: 'daily',
         label: sectorTest.title,
       };
       expect.hasAssertions();
@@ -703,13 +703,13 @@ describe(`Task ${apiTasks}`, () => {
         text: 'test put task',
         time: '00:30',
         sector: sectorTestId,
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
         label: sectorTest.title,
       };
       const taskUpdate = {
         time: '00:30',
         sector: sectorTestId,
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
         label: sectorTest.title,
       };
       const userTask = new User({
@@ -753,13 +753,13 @@ describe(`Task ${apiTasks}`, () => {
         text: 'test put task',
         time: '00:30',
         sector: sectorTestId,
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
         label: sectorTest.title,
       };
       const taskUpdate = {
         text: 'test put update task',
         sector: sectorTestId,
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
         label: sectorTest.title,
       };
       const userTask = new User({
@@ -803,13 +803,13 @@ describe(`Task ${apiTasks}`, () => {
         text: 'test put task',
         time: '00:30',
         sector: sectorTestId,
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
         label: sectorTest.title,
       };
       const taskUpdate = {
         text: 'test put update task',
         time: '00:30',
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
         label: sectorTest.title,
       };
       const userTask = new User({
@@ -841,7 +841,7 @@ describe(`Task ${apiTasks}`, () => {
           console.log(err);
         });
     });
-    it('should not update a task without matrixQuater field', () => {
+    it('should not update a task without matrixQuarter field', () => {
       const userSector = new User({
         sectors: [sectorTest],
       });
@@ -853,7 +853,7 @@ describe(`Task ${apiTasks}`, () => {
         text: 'test put task',
         time: '00:30',
         sector: sectorTestId,
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
         label: sectorTest.title,
       };
       const taskUpdate = {
@@ -903,14 +903,14 @@ describe(`Task ${apiTasks}`, () => {
         text: 'test put task',
         time: '00:30',
         sector: sectorTestId,
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
         label: sectorTest.title,
       };
       const taskUpdate = {
         text: 'test put update task',
         time: '00:30',
         sector: sectorTestId,
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
       };
       const userTask = new User({
         tasks: {
@@ -930,7 +930,7 @@ describe(`Task ${apiTasks}`, () => {
                 text: 'test put update task',
                 time: '00:30',
                 sector: sectorTestId.toString(),
-                matrixQuater: 'first',
+                matrixQuarter: 'first',
                 label: 'plain',
               };
               expect(result.status).toBe(200);
@@ -956,14 +956,14 @@ describe(`Task ${apiTasks}`, () => {
         text: 'test put task',
         time: '00:30',
         sector: sectorTestId,
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
         label: sectorTest.title,
       };
       const taskUpdate = {
         text: 'test put update task',
         time: '00:30',
         sector: sectorTestId.toString(),
-        matrixQuater: 'third',
+        matrixQuarter: 'third',
         label: sectorTest.title,
       };
       const userTask = new User({
@@ -1003,14 +1003,14 @@ describe(`Task ${apiTasks}`, () => {
         text: 'test put task',
         time: '00:30',
         sector: sectorTestId,
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
         label: sectorTest.title,
       };
       const taskUpdate = {
         text: 'test put update task',
         time: '00:30',
         sector: sectorTestId.toString(),
-        matrixQuater: 'daily',
+        matrixQuarter: 'daily',
         label: sectorTest.title,
       };
       const userTask = new User({
@@ -1050,14 +1050,14 @@ describe(`Task ${apiTasks}`, () => {
         text: 'test put task',
         time: '00:30',
         sector: sectorTestId,
-        matrixQuater: 'third',
+        matrixQuarter: 'third',
         label: sectorTest.title,
       };
       const taskUpdate = {
         text: 'test put update task',
         time: '00:30',
         sector: sectorTestId.toString(),
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
         label: sectorTest.title,
       };
       const userTask = new User({
@@ -1097,14 +1097,14 @@ describe(`Task ${apiTasks}`, () => {
         text: 'test put task',
         time: '00:30',
         sector: sectorTestId,
-        matrixQuater: 'third',
+        matrixQuarter: 'third',
         label: sectorTest.title,
       };
       const taskUpdate = {
         text: 'test put update task',
         time: '00:30',
         sector: sectorTestId.toString(),
-        matrixQuater: 'daily',
+        matrixQuarter: 'daily',
         label: sectorTest.title,
       };
       const userTask = new User({
@@ -1144,14 +1144,14 @@ describe(`Task ${apiTasks}`, () => {
         text: 'test put task',
         time: '00:30',
         sector: sectorTestId,
-        matrixQuater: 'daily',
+        matrixQuarter: 'daily',
         label: sectorTest.title,
       };
       const taskUpdate = {
         text: 'test put update task',
         time: '00:30',
         sector: sectorTestId.toString(),
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
         label: sectorTest.title,
       };
       const userTask = new User({
@@ -1191,14 +1191,14 @@ describe(`Task ${apiTasks}`, () => {
         text: 'test put task',
         time: '00:30',
         sector: sectorTestId,
-        matrixQuater: 'daily',
+        matrixQuarter: 'daily',
         label: sectorTest.title,
       };
       const taskUpdate = {
         text: 'test put update task',
         time: '00:30',
         sector: sectorTestId.toString(),
-        matrixQuater: 'third',
+        matrixQuarter: 'third',
         label: sectorTest.title,
       };
       const userTask = new User({
@@ -1238,14 +1238,14 @@ describe(`Task ${apiTasks}`, () => {
         text: 'test put task',
         time: '00:30',
         sector: sectorTestId,
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
         label: sectorTest.title,
       };
       const taskUpdate = {
         text: 'test put update task',
         time: '00:30',
         sector: sectorTestId.toString(),
-        matrixQuater: 'second',
+        matrixQuarter: 'second',
         label: sectorTest.title,
       };
       const userTask = new User({
@@ -1285,14 +1285,14 @@ describe(`Task ${apiTasks}`, () => {
         text: 'test put task',
         time: '00:30',
         sector: sectorTestId,
-        matrixQuater: 'third',
+        matrixQuarter: 'third',
         label: sectorTest.title,
       };
       const taskUpdate = {
         text: 'test put update task',
         time: '00:30',
         sector: sectorTestId.toString(),
-        matrixQuater: 'fourth',
+        matrixQuarter: 'fourth',
         label: sectorTest.title,
       };
       const userTask = new User({
@@ -1332,14 +1332,14 @@ describe(`Task ${apiTasks}`, () => {
         text: 'test put task',
         time: '00:30',
         sector: sectorTestId,
-        matrixQuater: 'daily',
+        matrixQuarter: 'daily',
         label: sectorTest.title,
       };
       const taskUpdate = {
         text: 'test put update task',
         time: '00:30',
         sector: sectorTestId.toString(),
-        matrixQuater: 'daily',
+        matrixQuarter: 'daily',
         label: sectorTest.title,
       };
       const userTask = new User({
@@ -1392,7 +1392,7 @@ describe(`Task ${apiTasks}`, () => {
         text: 'test delete task',
         time: '00:30',
         sector: sectorTestId.toString(),
-        matrixQuater: 'first',
+        matrixQuarter: 'first',
         label: sectorTest.title,
       };
       const userTask = new User({
@@ -1408,7 +1408,7 @@ describe(`Task ${apiTasks}`, () => {
             .delete(`${apiTasks}/${res.tasks.important[0]._id}`)
             .then((result) => {
               const recevied = result.body;
-              const expected = { tasks: {important: [], notImportant: [], daily: [] } };
+              const expected = { tasks: { important: [], notImportant: [], daily: [] } };
               expect(result.status).toBe(200);
               expect(recevied).toEqual(expected);
             })

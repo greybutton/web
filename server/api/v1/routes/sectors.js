@@ -66,7 +66,7 @@ router.put('/:_id', (req, res) => {
     'sectors.$.desirableScore': desirableScore,
   };
   const opts = { runValidators: true };
-  User.findOneAndUpdate({ 'sectors._id': _id }, { $set: doc }, opts, (err, result) => {
+  User.findOneAndUpdate({ 'sectors._id': _id }, { $set: doc }, opts, (err) => {
     if (err) {
       handleError(err, res);
     } else {
@@ -75,8 +75,8 @@ router.put('/:_id', (req, res) => {
         .then((sectors) => {
           res.json({ sectors });
         })
-        .catch((err) => {
-          handleError(err, res);
+        .catch((error) => {
+          handleError(error, res);
         });
     }
   });
@@ -84,7 +84,7 @@ router.put('/:_id', (req, res) => {
 
 router.delete('/:_id', (req, res) => {
   const _id = req.params._id;
-  User.update({}, { $pull: { sectors: { _id } } }, (err, result) => {
+  User.update({}, { $pull: { sectors: { _id } } }, (err) => {
     if (err) {
       handleError(err, res);
     } else {
@@ -93,8 +93,8 @@ router.delete('/:_id', (req, res) => {
         .then((sectors) => {
           res.json({ sectors });
         })
-        .catch((err) => {
-          handleError(err, res);
+        .catch((error) => {
+          handleError(error, res);
         });
     }
   });

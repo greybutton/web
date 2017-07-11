@@ -32,7 +32,7 @@ const Task = new Schema({
     ref: 'Sector',
     required: 'Sector task is required',
   },
-  matrixQuater: {
+  matrixQuarter: {
     type: String,
     required: 'Matrix quater is required',
   },
