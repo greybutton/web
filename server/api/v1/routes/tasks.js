@@ -275,4 +275,22 @@ router.put('/:_id', (req, res) => {
   });
 });
 
+router.delete('/:_id', (req, res) => {
+  const _id = req.params._id;
+  User.update({}, { $pull: { 'tasks.important': { _id } } }, (err, result) => {
+    if (err) {
+      handleError(err, res);
+    } else {
+      // new model request because in otherwise result is object of $pull operator
+      User.distinct('tasks')
+        .then((tasks) => {
+          res.json({ tasks: tasks[0] });
+        })
+        .catch((error) => {
+          handleError(error, res);
+        });
+    }
+  });
+});
+
 module.exports = router;
