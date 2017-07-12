@@ -146,17 +146,7 @@ router.put('/:_id', (req, res) => {
                 label,
               };
               // add task to important
-              User.update(
-                {},
-                {
-                  $push: {
-                    'tasks.important': {
-                      $each: [task],
-                      $position: 0,
-                    },
-                  },
-                },
-              )
+              User.update({}, { $push: { 'tasks.important': { $each: [task], $position: 0 } } })
                 .then(() => {
                   // send updated tasks
                   User.distinct('tasks')
@@ -189,17 +179,7 @@ router.put('/:_id', (req, res) => {
                 label,
               };
               // add task to notImportant
-              User.update(
-                {},
-                {
-                  $push: {
-                    'tasks.notImportant': {
-                      $each: [task],
-                      $position: 0,
-                    },
-                  },
-                },
-              )
+              User.update({}, { $push: { 'tasks.notImportant': { $each: [task], $position: 0 } } })
                 .then(() => {
                   // send updated tasks
                   User.distinct('tasks')
@@ -232,17 +212,7 @@ router.put('/:_id', (req, res) => {
                 label,
               };
               // add task to daily
-              User.update(
-                {},
-                {
-                  $push: {
-                    'tasks.daily': {
-                      $each: [task],
-                      $position: 0,
-                    },
-                  },
-                },
-              )
+              User.update({}, { $push: { 'tasks.daily': { $each: [task], $position: 0 } } })
                 .then(() => {
                   // send updated tasks
                   User.distinct('tasks')
