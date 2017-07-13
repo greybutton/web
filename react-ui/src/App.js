@@ -1,19 +1,28 @@
-import React, { Component } from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import React, { Component } from 'react';
+import { Route, NavLink } from 'react-router-dom';
+import { Grid, Row, Col } from 'react-bootstrap';
+import HomePage from './containers/HomePage';
+import SectorFormPage from './containers/SectorFormPage';
+
+import logo from './laura.svg';
+import './App.css';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-      </div>
+      <Grid>
+        <Row>
+          <Col xs={12}>
+            <NavLink to="/">
+              <img src={logo} className="App-logo" alt="logo" />
+            </NavLink>
+            <NavLink to="sector/new">Add sector</NavLink>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/sector/new" component={SectorFormPage} />
+            <Route path="/sector/edit/:_id" component={SectorFormPage} />
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }
