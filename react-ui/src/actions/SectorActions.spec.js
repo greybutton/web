@@ -1,4 +1,5 @@
 import {
+  newSector,
   saveSector,
   saveSectorPending,
   saveSectorFulfilled,
@@ -6,6 +7,12 @@ import {
 } from './SectorActions.js';
 
 describe('Sector Actions', () => {
+  it('should create an action new sector', () => {
+    const expectedAction = {
+      type: 'NEW_SECTOR',
+    };
+    expect(newSector()).toEqual(expectedAction);
+  });
   it('should create an action to save a sector', () => {
     const sector = {
       _id: 1,
