@@ -7,20 +7,14 @@ import {
   FormControl,
   ControlLabel,
   InputGroup,
+  HelpBlock,
   Button,
 } from 'react-bootstrap';
 
 class SectorForm extends Component {
-  componentWillReceiveProps = nextProps => {
-    const { sector } = nextProps;
-    if (sector._id !== this.props.sector._id) {
-      console.log('will props', sector);
-      this.props.initialize(sector);
-    }
-  };
   renderField = ({ input, label, type, placeholder, meta: { touched, error } }) => {
     return (
-      <FormGroup>
+      <FormGroup validationState={touched && error ? 'error' : null}>
         <ControlLabel>
           {label}
         </ControlLabel>
@@ -32,46 +26,70 @@ class SectorForm extends Component {
           : <FormControl {...input} placeholder={placeholder} type={type} />}
         {touched &&
           error &&
-          <span className="error">
+          <HelpBlock>
             {error.message}
-          </span>}
+          </HelpBlock>}
       </FormGroup>
     );
   };
   render() {
-    const { sector, handleSubmit } = this.props;
+    const { sector, handleSubmit, loading, pristine, submitting } = this.props;
     return (
       <Grid>
         <h1>
           {sector._id ? 'Edit Sector' : 'Add New Sector'}
         </h1>
-        <Form onSubmit={handleSubmit}>
-          <Field
-            name="title"
-            type="text"
-            component={this.renderField}
-            label="Sector title"
-            placeholder="Enter text"
-          />
-          <Field
-            name="score"
-            type="number"
-            component={this.renderField}
-            label="Sector score"
-            placeholder="Enter number from 1 to 10"
-          />
-          <Field
-            name="desirableScore"
-            type="number"
-            component={this.renderField}
-            label="Sector desirable score"
-            placeholder="Enter number from 1 to 10"
-          />
-          <Button type="submit">Submit</Button>
-        </Form>
+        {loading
+          ? 'Loading...'
+          : <Form onSubmit={handleSubmit}>
+              <Field
+                name="title"
+                type="text"
+                component={this.renderField}
+                label="Sector title"
+                placeholder="Enter text"
+              />
+              <Field
+                name="score"
+                type="number"
+                component={this.renderField}
+                label="Sector score"
+                placeholder="Enter number from 1 to 10"
+              />
+              <Field
+                name="desirableScore"
+                type="number"
+                component={this.renderField}
+                label="Sector desirable score"
+                placeholder="Enter number from 1 to 10"
+              />
+              <Button type="submit" bsStyle="primary" disabled={pristine || submitting}>
+                Submit
+              </Button>
+            </Form>}
       </Grid>
     );
   }
 }
 
-export default reduxForm({ form: 'sector' })(SectorForm);
+const validate = values => {
+  const errors = {};
+  if (!values.title) {
+    errors.title = {
+      message: 'You need to provide title',
+    };
+  }
+  if (!values.score) {
+    errors.score = {
+      message: 'You need to provide score',
+    };
+  }
+  if (!values.desirableScore) {
+    errors.desirableScore = {
+      message: 'You need to provide desirable score',
+    };
+  }
+  return errors;
+};
+
+export default reduxForm({ form: 'sector', validate })(SectorForm);
