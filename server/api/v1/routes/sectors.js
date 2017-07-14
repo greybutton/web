@@ -44,17 +44,24 @@ router.get('/:_id', (req, res) => {
 
 router.post('/', (req, res) => {
   const sector = req.body;
-  const newSector = new User({
-    sectors: [sector],
-  });
-  newSector
-    .save()
-    .then((result) => {
-      res.json({ sectors: result.sectors });
-    })
-    .catch((err) => {
+  const opts = {
+    upsert: true,
+    runValidators: true,
+  };
+  User.update({}, { $push: { sectors: sector } }, opts, (err) => {
+    if (err) {
       handleError(err, res);
-    });
+    } else {
+      // new model request because in otherwise result is object of $pull operator
+      User.distinct('sectors')
+        .then((sectors) => {
+          res.json({ sectors });
+        })
+        .catch((error) => {
+          handleError(error, res);
+        });
+    }
+  });
 });
 
 router.put('/:_id', (req, res) => {

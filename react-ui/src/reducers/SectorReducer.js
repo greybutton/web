@@ -24,11 +24,7 @@ export default (state = defaultState, action = {}) => {
     }
     case 'SAVE_SECTOR_REJECTED': {
       const data = action.payload.response.data;
-      const {
-        'sectors.0.title': title,
-        'sectors.0.score': score,
-        'sectors.0.desirableScore': desirableScore,
-      } = data.errors;
+      const { title, score, desirableScore } = data.errors.sectors.errors;
       const errors = { global: data.message, title, score, desirableScore };
       return {
         ...state,

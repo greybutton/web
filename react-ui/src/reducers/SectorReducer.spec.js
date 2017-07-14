@@ -40,9 +40,13 @@ describe('Sector Reducer', () => {
       data: {
         message: 'ValidationError',
         errors: {
-          'sectors.0.title': 'Title sector is required',
-          'sectors.0.score': 'Score sector is required',
-          'sectors.0.desirableScore': 'Desirable score sector is required',
+          sectors: {
+            errors: {
+              title: 'Title sector is required',
+              score: 'Score sector is required',
+              desirableScore: 'Desirable score sector is required',
+            },
+          },
         },
       },
     };
