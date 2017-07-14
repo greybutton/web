@@ -1,24 +1,9 @@
-import { put, call } from 'redux-saga/effects';
-import root, { watchSaveSector, saveSector } from './index.js';
-import {
-  saveSectorPending,
-  saveSectorFulfilled,
-  saveSectorRejected,
-} from '../actions/SectorActions.js';
+import { fork } from 'redux-saga/effects';
+import root from './index.js';
+import { watchSaveSector } from './watchers';
 
-describe('Sector saga', () => {
-  const payload = {
-    sector: {
-      _id: 1,
-      title: 'test sector actions',
-      score: 1,
-      desirableScore: 2,
-    },
-    resolve: () => {},
-    reject: () => {},
-  };
-  const gen = saveSector({ payload });
-  it('should put pending action', () => {
-    expect(gen.next().value).toEqual(put(saveSectorPending()));
+describe('test root saga', () => {
+  it('should yield array watchers saga', () => {
+    expect(root().next().value).toEqual(fork(watchSaveSector));
   });
 });
