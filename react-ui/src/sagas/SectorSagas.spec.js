@@ -1,5 +1,14 @@
 import { put, call } from 'redux-saga/effects';
-import { saveSector, saveSectorApi, fetchSectors, fetchSectorsApi } from './SectorSagas';
+import {
+  saveSector,
+  saveSectorApi,
+  fetchSectors,
+  fetchSectorsApi,
+  fetchSector,
+  fetchSectorApi,
+  updateSector,
+  updateSectorApi,
+} from './SectorSagas';
 import * as SectorActions from '../actions/SectorActions';
 
 describe('Sector sagas tests', () => {
@@ -47,6 +56,55 @@ describe('Sector sagas tests', () => {
     });
     it('should be done', () => {
       expect(gen.next().done).toEqual(true);
+    });
+  });
+  describe('put sector saga', () => {
+    describe('fetch sector', () => {
+      const payload = 123;
+      const gen = fetchSector({ payload });
+      it('should call get sector api', () => {
+        expect(gen.next().value).toEqual(call(fetchSectorApi, payload));
+      });
+      it('should put receive sector', () => {
+        expect(gen.next().value).toEqual(put(SectorActions.receiveSector()));
+      });
+      it('should be done', () => {
+        expect(gen.next().done).toEqual(true);
+      });
+    });
+    describe('update sector', () => {
+      const payload = {
+        sector: {
+          _id: 1,
+          title: 'test sector sagas',
+          score: 1,
+          desirableScore: 2,
+        },
+        resolve: () => {},
+        reject: () => {},
+      };
+      const gen = updateSector({ payload });
+      it('should put update sector penging', () => {
+        expect(gen.next().value).toEqual(put(SectorActions.updateSectorPending()));
+      });
+      it('should call update sector api', () => {
+        expect(gen.next().value).toEqual(call(updateSectorApi, payload.sector));
+      });
+      it('should put update sector fulfilled', () => {
+        expect(gen.next().value).toEqual(put(SectorActions.updateSectorFulfilled()));
+      });
+      it('should call resolve', () => {
+        expect(gen.next().value).toEqual(call(payload.resolve));
+      });
+      it('should put update sector reject', () => {
+        expect(gen.throw().value).toEqual(put(SectorActions.updateSectorRejected()));
+      });
+      it('should call reject', () => {
+        expect(gen.next().value).toEqual(call(payload.reject));
+      });
+      it('should be done', () => {
+        expect(gen.next().done).toEqual(true);
+      });
     });
   });
 });

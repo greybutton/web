@@ -17,6 +17,20 @@ export function newSector() {
   };
 }
 
+export function requestSector(_id) {
+  return {
+    type: 'REQUEST_SECTOR',
+    payload: _id,
+  };
+}
+
+export function receiveSector(sector) {
+  return {
+    type: 'RECEIVE_SECTOR',
+    payload: sector,
+  };
+}
+
 export function saveSector(sector) {
   return {
     type: 'SAVE_SECTOR',
@@ -40,6 +54,33 @@ export function saveSectorFulfilled(sector) {
 export function saveSectorRejected(error) {
   return {
     type: 'SAVE_SECTOR_REJECTED',
+    payload: error,
+  };
+}
+
+export function updateSector(sector) {
+  return {
+    type: 'UPDATE_SECTOR',
+    payload: sector,
+  };
+}
+
+export function updateSectorPending() {
+  return {
+    type: 'UPDATE_SECTOR_PENDING',
+  };
+}
+
+export function updateSectorFulfilled(sectors) {
+  return {
+    type: 'UPDATE_SECTOR_FULFILLED',
+    payload: sectors,
+  };
+}
+
+export function updateSectorRejected(error) {
+  return {
+    type: 'UPDATE_SECTOR_REJECTED',
     payload: error,
   };
 }

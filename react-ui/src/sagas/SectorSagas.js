@@ -8,8 +8,16 @@ export function fetchSectorsApi() {
   return axios.get(url);
 }
 
+export function fetchSectorApi(_id) {
+  return axios.get(`${url}/${_id}`);
+}
+
 export function saveSectorApi(sector) {
   return axios.post(url, sector);
+}
+
+export function updateSectorApi(sector) {
+  return axios.put(`${url}/${sector._id}`, sector);
 }
 
 export function* saveSector({ payload }) {
@@ -27,4 +35,21 @@ export function* saveSector({ payload }) {
 export function* fetchSectors() {
   const sectors = yield call(fetchSectorsApi);
   yield put(SectorActions.receiveSectors(sectors));
+}
+
+export function* fetchSector({ payload }) {
+  const sector = yield call(fetchSectorApi, payload);
+  yield put(SectorActions.receiveSector(sector));
+}
+
+export function* updateSector({ payload }) {
+  yield put(SectorActions.updateSectorPending());
+  try {
+    const sectors = yield call(updateSectorApi, payload.sector);
+    yield put(SectorActions.updateSectorFulfilled(sectors));
+    yield call(payload.resolve);
+  } catch (e) {
+    yield put(SectorActions.updateSectorRejected(e));
+    yield call(payload.reject);
+  }
 }

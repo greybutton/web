@@ -10,16 +10,31 @@ class SectorFormPage extends Component {
     redirect: false,
   };
   componentDidMount() {
-    this.props.dispatch(SectorActions.newSector());
+    const { _id } = this.props.match.params;
+    if (_id) {
+      this.props.dispatch(SectorActions.requestSector(_id));
+    } else {
+      this.props.dispatch(SectorActions.newSector());
+    }
   }
   handleSubmit = sector => {
-    return new Promise((resolve, reject) => {
-      this.props.dispatch(SectorActions.saveSector({ sector, resolve, reject }));
-    })
-      .then(response => this.setState({ redirect: true }))
-      .catch(err => {
-        throw new SubmissionError(this.props.errors);
-      });
+    if (!sector._id) {
+      return new Promise((resolve, reject) => {
+        this.props.dispatch(SectorActions.saveSector({ sector, resolve, reject }));
+      })
+        .then(response => this.setState({ redirect: true }))
+        .catch(err => {
+          throw new SubmissionError(this.props.errors);
+        });
+    } else {
+      return new Promise((resolve, reject) => {
+        this.props.dispatch(SectorActions.updateSector({ sector, resolve, reject }));
+      })
+        .then(response => this.setState({ redirect: true }))
+        .catch(err => {
+          throw new SubmissionError(this.props.errors);
+        });
+    }
   };
   render() {
     return (

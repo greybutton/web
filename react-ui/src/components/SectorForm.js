@@ -12,6 +12,14 @@ import {
 } from 'react-bootstrap';
 
 class SectorForm extends Component {
+  componentWillReceiveProps = nextProps => {
+    // receive sector data asynchronously
+    const { sector } = nextProps;
+    if (sector._id !== this.props.sector._id) {
+      // initialize form only once
+      this.props.initialize(sector);
+    }
+  };
   renderField = ({ input, label, type, placeholder, meta: { touched, error } }) => {
     return (
       <FormGroup validationState={touched && error ? 'error' : null}>
