@@ -1,3 +1,16 @@
+export function requestSectors() {
+  return {
+    type: 'REQUEST_SECTORS',
+  };
+}
+
+export function receiveSectors(sectors) {
+  return {
+    type: 'RECEIVE_SECTORS',
+    payload: sectors,
+  };
+}
+
 export function newSector() {
   return {
     type: 'NEW_SECTOR',

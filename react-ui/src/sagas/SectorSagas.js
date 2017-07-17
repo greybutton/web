@@ -4,6 +4,10 @@ import * as SectorActions from '../actions/SectorActions';
 
 const url = '/api/v1/sectors';
 
+export function fetchSectorsApi() {
+  return axios.get(url);
+}
+
 export function saveSectorApi(sector) {
   return axios.post(url, sector);
 }
@@ -18,4 +22,9 @@ export function* saveSector({ payload }) {
     yield put(SectorActions.saveSectorRejected(e));
     yield call(payload.reject);
   }
+}
+
+export function* fetchSectors() {
+  const sectors = yield call(fetchSectorsApi);
+  yield put(SectorActions.receiveSectors(sectors));
 }

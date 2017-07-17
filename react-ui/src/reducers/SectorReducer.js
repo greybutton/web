@@ -8,6 +8,18 @@ export const defaultState = {
 
 export default (state = defaultState, action = {}) => {
   switch (action.type) {
+    case 'REQUEST_SECTORS': {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case 'RECEIVE_SECTORS':
+      return {
+        ...state,
+        sectors: action.payload.data.sectors,
+        loading: false,
+      };
     case 'SAVE_SECTOR_PENDING': {
       return {
         ...state,
