@@ -12,7 +12,6 @@ class HomePage extends Component {
   render() {
     return (
       <div>
-        <h1>List of Sectors</h1>
         <SectorList sectors={this.props.sectors} loading={this.props.loading} />
       </div>
     );

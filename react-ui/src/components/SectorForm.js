@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Field, reduxForm } from 'redux-form';
+import { Link } from 'react-router-dom';
 import {
   Grid,
   Form,
@@ -9,6 +10,7 @@ import {
   InputGroup,
   HelpBlock,
   Button,
+  ButtonToolbar,
 } from 'react-bootstrap';
 
 class SectorForm extends Component {
@@ -71,9 +73,14 @@ class SectorForm extends Component {
                 label="Sector desirable score"
                 placeholder="Enter number from 1 to 10"
               />
-              <Button type="submit" bsStyle="primary" disabled={pristine || submitting}>
-                Submit
-              </Button>
+              <ButtonToolbar>
+                <Button type="submit" bsStyle="primary" disabled={pristine || submitting}>
+                  Submit
+                </Button>
+                <Button>
+                  <Link to="/">Cancel</Link>
+                </Button>
+              </ButtonToolbar>
             </Form>}
       </Grid>
     );
