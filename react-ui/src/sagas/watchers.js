@@ -1,18 +1,19 @@
 import { takeLatest } from 'redux-saga/effects';
 import { saveSector, fetchSectors, fetchSector, updateSector } from './SectorSagas';
+import * as types from '../constants/actionTypes';
 
 export function* watchSaveSector() {
-  yield takeLatest('SAVE_SECTOR', saveSector);
+  yield takeLatest(types.SAVE_SECTOR, saveSector);
 }
 
 export function* watchRequestSectors() {
-  yield takeLatest('REQUEST_SECTORS', fetchSectors);
+  yield takeLatest(types.REQUEST_SECTORS, fetchSectors);
 }
 
 export function* watchRequestSector() {
-  yield takeLatest('REQUEST_SECTOR', fetchSector);
+  yield takeLatest(types.REQUEST_SECTOR, fetchSector);
 }
 
 export function* watchUpdateSector() {
-  yield takeLatest('UPDATE_SECTOR', updateSector);
+  yield takeLatest(types.UPDATE_SECTOR, updateSector);
 }

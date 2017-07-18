@@ -13,11 +13,12 @@ import {
   saveSectorFulfilled,
   saveSectorRejected,
 } from './SectorActions.js';
+import * as types from '../constants/actionTypes';
 
 describe('Sector Actions', () => {
   it('should create an action new sector', () => {
     const expectedAction = {
-      type: 'NEW_SECTOR',
+      type: types.NEW_SECTOR,
     };
     expect(newSector()).toEqual(expectedAction);
   });
@@ -30,14 +31,14 @@ describe('Sector Actions', () => {
         desirableScore: 2,
       };
       const expectedAction = {
-        type: 'SAVE_SECTOR',
+        type: types.SAVE_SECTOR,
         payload: sector,
       };
       expect(saveSector(sector)).toEqual(expectedAction);
     });
     it('should create an action to save pending a sector', () => {
       const expectedAction = {
-        type: 'SAVE_SECTOR_PENDING',
+        type: types.SAVE_SECTOR_PENDING,
       };
       expect(saveSectorPending()).toEqual(expectedAction);
     });
@@ -49,7 +50,7 @@ describe('Sector Actions', () => {
         desirableScore: 2,
       };
       const expectedAction = {
-        type: 'SAVE_SECTOR_FULFILLED',
+        type: types.SAVE_SECTOR_FULFILLED,
         payload: sector,
       };
       expect(saveSectorFulfilled(sector)).toEqual(expectedAction);
@@ -67,7 +68,7 @@ describe('Sector Actions', () => {
         },
       };
       const expectedAction = {
-        type: 'SAVE_SECTOR_REJECTED',
+        type: types.SAVE_SECTOR_REJECTED,
         payload: response,
       };
       expect(saveSectorRejected(response)).toEqual(expectedAction);
@@ -76,7 +77,7 @@ describe('Sector Actions', () => {
   describe('get sectors', () => {
     it('should create an action request sectors', () => {
       const expectedAction = {
-        type: 'REQUEST_SECTORS',
+        type: types.REQUEST_SECTORS,
       };
       expect(requestSectors()).toEqual(expectedAction);
     });
@@ -88,7 +89,7 @@ describe('Sector Actions', () => {
         desirableScore: 2,
       };
       const expectedAction = {
-        type: 'RECEIVE_SECTORS',
+        type: types.RECEIVE_SECTORS,
         payload: sector,
       };
       expect(receiveSectors(sector)).toEqual(expectedAction);
@@ -98,7 +99,7 @@ describe('Sector Actions', () => {
     it('should creata an action to request a sector', () => {
       const _id = 123;
       const expectedAction = {
-        type: 'REQUEST_SECTOR',
+        type: types.REQUEST_SECTOR,
         payload: _id,
       };
       expect(requestSector(_id)).toEqual(expectedAction);
@@ -111,7 +112,7 @@ describe('Sector Actions', () => {
         desirableScore: 2,
       };
       const expectedAction = {
-        type: 'RECEIVE_SECTOR',
+        type: types.RECEIVE_SECTOR,
         payload: sector,
       };
       expect(receiveSector(sector)).toEqual(expectedAction);
@@ -124,14 +125,14 @@ describe('Sector Actions', () => {
         desirableScore: 2,
       };
       const expectedAction = {
-        type: 'UPDATE_SECTOR',
+        type: types.UPDATE_SECTOR,
         payload: sector,
       };
       expect(updateSector(sector)).toEqual(expectedAction);
     });
     it('should create an action to update pending a sector', () => {
       const expectedAction = {
-        type: 'UPDATE_SECTOR_PENDING',
+        type: types.UPDATE_SECTOR_PENDING,
       };
       expect(updateSectorPending()).toEqual(expectedAction);
     });
@@ -143,7 +144,7 @@ describe('Sector Actions', () => {
         desirableScore: 2,
       };
       const expectedAction = {
-        type: 'UPDATE_SECTOR_FULFILLED',
+        type: types.UPDATE_SECTOR_FULFILLED,
         payload: sector,
       };
       expect(updateSectorFulfilled(sector)).toEqual(expectedAction);
@@ -161,7 +162,7 @@ describe('Sector Actions', () => {
         },
       };
       const expectedAction = {
-        type: 'UPDATE_SECTOR_REJECTED',
+        type: types.UPDATE_SECTOR_REJECTED,
         payload: response,
       };
       expect(updateSectorRejected(response)).toEqual(expectedAction);

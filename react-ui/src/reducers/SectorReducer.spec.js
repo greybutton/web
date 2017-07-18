@@ -1,4 +1,5 @@
 import SectorReducer, { defaultState } from './SectorReducer';
+import * as types from '../constants/actionTypes';
 
 describe('Sector Reducer', () => {
   it('should return the initial state', () => {
@@ -8,7 +9,7 @@ describe('Sector Reducer', () => {
     it('should handle SAVE_SECTOR_PENDING', () => {
       expect(
         SectorReducer(defaultState, {
-          type: 'SAVE_SECTOR_PENDING',
+          type: types.SAVE_SECTOR_PENDING,
         }),
       ).toEqual({
         ...defaultState,
@@ -27,7 +28,7 @@ describe('Sector Reducer', () => {
       };
       expect(
         SectorReducer(defaultState, {
-          type: 'SAVE_SECTOR_FULFILLED',
+          type: types.SAVE_SECTOR_FULFILLED,
           payload: { data },
         }),
       ).toEqual({
@@ -53,7 +54,7 @@ describe('Sector Reducer', () => {
       };
       expect(
         SectorReducer(defaultState, {
-          type: 'SAVE_SECTOR_REJECTED',
+          type: types.SAVE_SECTOR_REJECTED,
           payload: { response },
         }),
       ).toEqual({
@@ -71,7 +72,7 @@ describe('Sector Reducer', () => {
     it('should handle REQUEST_SECTORS', () => {
       expect(
         SectorReducer(defaultState, {
-          type: 'REQUEST_SECTORS',
+          type: types.REQUEST_SECTORS,
         }),
       ).toEqual({
         ...defaultState,
@@ -90,7 +91,7 @@ describe('Sector Reducer', () => {
       };
       expect(
         SectorReducer(defaultState, {
-          type: 'RECEIVE_SECTORS',
+          type: types.RECEIVE_SECTORS,
           payload: { data },
         }),
       ).toEqual({
@@ -105,7 +106,7 @@ describe('Sector Reducer', () => {
       const payload = 123;
       expect(
         SectorReducer(defaultState, {
-          type: 'REQUEST_SECTOR',
+          type: types.REQUEST_SECTOR,
           payload,
         }),
       ).toEqual({
@@ -126,7 +127,7 @@ describe('Sector Reducer', () => {
       };
       expect(
         SectorReducer(defaultState, {
-          type: 'RECEIVE_SECTOR',
+          type: types.RECEIVE_SECTOR,
           payload: { data },
         }),
       ).toEqual({
@@ -138,7 +139,7 @@ describe('Sector Reducer', () => {
     it('should handle UPDATE_SECTOR_PENDING', () => {
       expect(
         SectorReducer(defaultState, {
-          type: 'UPDATE_SECTOR_PENDING',
+          type: types.UPDATE_SECTOR_PENDING,
         }),
       ).toEqual({
         ...defaultState,
@@ -157,7 +158,7 @@ describe('Sector Reducer', () => {
       };
       expect(
         SectorReducer(defaultState, {
-          type: 'UPDATE_SECTOR_FULFILLED',
+          type: types.UPDATE_SECTOR_FULFILLED,
           payload: { data },
         }),
       ).toEqual({
@@ -179,7 +180,7 @@ describe('Sector Reducer', () => {
       };
       expect(
         SectorReducer(defaultState, {
-          type: 'UPDATE_SECTOR_REJECTED',
+          type: types.UPDATE_SECTOR_REJECTED,
           payload: { response },
         }),
       ).toEqual({

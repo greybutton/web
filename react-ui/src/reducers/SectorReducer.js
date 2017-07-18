@@ -1,3 +1,5 @@
+import * as types from '../constants/actionTypes';
+
 export const defaultState = {
   sectors: [],
   sector: {},
@@ -8,43 +10,46 @@ export const defaultState = {
 
 export default (state = defaultState, action = {}) => {
   switch (action.type) {
-    case 'REQUEST_SECTORS': {
+    case types.REQUEST_SECTORS: {
       return {
         ...state,
         loading: true,
       };
     }
-    case 'RECEIVE_SECTORS':
+    case types.RECEIVE_SECTORS: {
       return {
         ...state,
         sectors: action.payload.data.sectors,
         loading: false,
       };
-    case 'REQUEST_SECTOR': {
+    }
+    case types.REQUEST_SECTOR: {
       return {
         ...state,
         loading: true,
         sector: {},
       };
     }
-    case 'RECEIVE_SECTOR':
+    case types.RECEIVE_SECTOR: {
       return {
         ...state,
         sector: action.payload.data.sector,
         loading: false,
       };
-    case 'NEW_SECTOR':
+    }
+    case types.NEW_SECTOR: {
       return {
         ...state,
         sector: {},
       };
-    case 'SAVE_SECTOR_PENDING': {
+    }
+    case types.SAVE_SECTOR_PENDING: {
       return {
         ...state,
         loading: true,
       };
     }
-    case 'SAVE_SECTOR_FULFILLED': {
+    case types.SAVE_SECTOR_FULFILLED: {
       return {
         ...state,
         sectors: [...action.payload.data.sectors],
@@ -52,7 +57,7 @@ export default (state = defaultState, action = {}) => {
         errors: {},
       };
     }
-    case 'SAVE_SECTOR_REJECTED': {
+    case types.SAVE_SECTOR_REJECTED: {
       const data = action.payload.response.data;
       const { title, score, desirableScore } = data.errors.sectors.errors;
       const errors = { global: data.message, title, score, desirableScore };
@@ -62,13 +67,13 @@ export default (state = defaultState, action = {}) => {
         errors,
       };
     }
-    case 'UPDATE_SECTOR_PENDING': {
+    case types.UPDATE_SECTOR_PENDING: {
       return {
         ...state,
         loading: true,
       };
     }
-    case 'UPDATE_SECTOR_FULFILLED': {
+    case types.UPDATE_SECTOR_FULFILLED: {
       return {
         ...state,
         sectors: [...action.payload.data.sectors],
@@ -76,7 +81,7 @@ export default (state = defaultState, action = {}) => {
         errors: {},
       };
     }
-    case 'UPDATE_SECTOR_REJECTED': {
+    case types.UPDATE_SECTOR_REJECTED: {
       const data = action.payload.response.data;
       const {
         'sectors.0.title': title,
