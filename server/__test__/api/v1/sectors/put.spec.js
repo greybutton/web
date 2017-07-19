@@ -30,14 +30,12 @@ describe(`Sector ${apiSectors}`, () => {
         score: 5,
         desirableScore: 6,
       };
-      const user = new User({
-        sectors: [sector],
-      });
-      return user
-        .save()
+      expect.hasAssertions();
+      return request(app)
+        .post(apiSectors)
+        .send(sector)
         .then((res) => {
-          const sectorId = res.sectors[0]._id;
-          expect.hasAssertions();
+          const sectorId = res.body.sectors[0]._id;
           return request(app)
             .put(`${apiSectors}/${sectorId}`)
             .send(sectorUpdtate)
@@ -68,14 +66,12 @@ describe(`Sector ${apiSectors}`, () => {
         title: 'test put sector update',
         desirableScore: 6,
       };
-      const user = new User({
-        sectors: [sector],
-      });
-      return user
-        .save()
+      expect.hasAssertions();
+      return request(app)
+        .post(apiSectors)
+        .send(sector)
         .then((res) => {
-          const sectorId = res.sectors[0]._id;
-          expect.hasAssertions();
+          const sectorId = res.body.sectors[0]._id;
           return request(app)
             .put(`${apiSectors}/${sectorId}`)
             .send(sectorUpdtate)
@@ -106,14 +102,12 @@ describe(`Sector ${apiSectors}`, () => {
         title: 'test put sector update',
         score: 5,
       };
-      const user = new User({
-        sectors: [sector],
-      });
-      return user
-        .save()
+      expect.hasAssertions();
+      return request(app)
+        .post(apiSectors)
+        .send(sector)
         .then((res) => {
-          const sectorId = res.sectors[0]._id;
-          expect.hasAssertions();
+          const sectorId = res.body.sectors[0]._id;
           return request(app)
             .put(`${apiSectors}/${sectorId}`)
             .send(sectorUpdtate)
@@ -293,14 +287,12 @@ describe(`Sector ${apiSectors}`, () => {
         score: 5,
         desirableScore: 6,
       };
-      const user = new User({
-        sectors: [sector],
-      });
-      return user
-        .save()
+      expect.hasAssertions();
+      return request(app)
+        .post(apiSectors)
+        .send(sector)
         .then((res) => {
-          const sectorId = res.sectors[0]._id;
-          expect.hasAssertions();
+          const sectorId = res.body.sectors[0]._id;
           return request(app)
             .put(`${apiSectors}/${sectorId}`)
             .send(sectorUpdtate)

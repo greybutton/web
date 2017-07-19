@@ -37,14 +37,12 @@ describe(`Sector ${apiSectors}`, () => {
         score: 3,
         desirableScore: 7,
       };
-      const user = new User({
-        sectors: [sector],
-      });
-      return user
-        .save()
+      expect.hasAssertions();
+      return request(app)
+        .post(apiSectors)
+        .send(sector)
         .then((res) => {
-          const sectorId = res.sectors[0]._id;
-          expect.hasAssertions();
+          const sectorId = res.body.sectors[0]._id;
           return request(app)
             .delete(`${apiSectors}/${sectorId}`)
             .then((result) => {

@@ -53,16 +53,14 @@ describe(`Sector ${apiSectors}`, () => {
         score: 3,
         desirableScore: 7,
       };
-      const user = new User({
-        sectors: [sector],
-      });
-      return user
-        .save()
+      expect.hasAssertions();
+      return request(app)
+        .post(apiSectors)
+        .send(sector)
         .then((res) => {
-          const expectedSector = res.sectors[0];
-          expect.hasAssertions();
+          const expectedSector = res.body.sectors[0];
           return request(app)
-            .get(`${apiSectors}/${res.sectors[0]._id}`)
+            .get(`${apiSectors}/${res.body.sectors[0]._id}`)
             .then((result) => {
               const actualSector = result.body.sector;
               expect(result.status).toBe(200);
