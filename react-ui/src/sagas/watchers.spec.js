@@ -4,6 +4,7 @@ import {
   watchRequestSectors,
   watchRequestSector,
   watchUpdateSector,
+  watchUpdateSectorOrder,
 } from './watchers';
 import * as SectorSagas from './SectorSagas';
 import * as types from '../constants/actionTypes';
@@ -45,6 +46,17 @@ describe('test watch save sector', () => {
       it('should be done', () => {
         expect(gen.next().done).toEqual(true);
       });
+    });
+  });
+  describe('update sector order', () => {
+    const gen = watchUpdateSectorOrder();
+    it('should call watchUpdateSectorOrder', () => {
+      expect(gen.next().value).toEqual(
+        takeLatest(types.UPDATE_SECTOR_ORDER, SectorSagas.updateSectorOrder),
+      );
+    });
+    it('should be done', () => {
+      expect(gen.next().done).toEqual(true);
     });
   });
 });

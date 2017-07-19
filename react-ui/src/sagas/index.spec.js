@@ -5,6 +5,7 @@ import {
   watchRequestSectors,
   watchRequestSector,
   watchUpdateSector,
+  watchUpdateSectorOrder,
 } from './watchers';
 
 describe('test root saga', () => {
@@ -15,6 +16,7 @@ describe('test root saga', () => {
         fork(watchRequestSectors),
         fork(watchRequestSector),
         fork(watchUpdateSector),
+        fork(watchUpdateSectorOrder),
       ]),
     );
   });

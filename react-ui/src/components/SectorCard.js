@@ -1,17 +1,20 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { ProgressBar, ListGroupItem, Button } from 'react-bootstrap';
+import { ProgressBar, ListGroupItem, Button, Collapse } from 'react-bootstrap';
 
 class SectorCard extends Component {
   constructor(props) {
     super(props);
-    this.state = { open: true };
+    this.state = { open: false };
   }
   render() {
     const { sector } = this.props;
     return (
-      <ListGroupItem onDoubleClick={() => this.setState({ open: !this.state.open })}>
+      <ListGroupItem
+        data-id={sector._id}
+        onDoubleClick={() => this.setState({ open: !this.state.open })}
+      >
         <h4>
           {sector.title}
         </h4>
@@ -33,9 +36,13 @@ class SectorCard extends Component {
             key={2}
           />
         </ProgressBar>
-        <Link to={`/sector/edit/${sector._id}`} hidden={this.state.open}>
-          <Button>Edit</Button>
-        </Link>
+        <Collapse in={this.state.open}>
+          <div>
+            <Link to={`/sector/edit/${sector._id}`}>
+              <Button>Edit</Button>
+            </Link>
+          </div>
+        </Collapse>
       </ListGroupItem>
     );
   }

@@ -9,12 +9,13 @@ const handleError = (err, res) => {
 };
 
 router.get('/', (req, res) => {
-  User.distinct('sectors')
-    .then((sectors) => {
+  User.find({})
+    .then((result) => {
+      const sectors = result[0] ? result[0].sectors : [];
       res.json({ sectors });
     })
     .catch((err) => {
-      handleError(err, res);
+      console.log(err);
     });
 });
 
@@ -105,6 +106,43 @@ router.delete('/:_id', (req, res) => {
         });
     }
   });
+});
+
+router.put('/sectorOrder/:_id', (req, res) => {
+  const _id = req.params._id;
+  const oldIndex = req.body.indexes.oldIndex;
+  const newIndex = req.body.indexes.newIndex;
+
+  User.find({}, {})
+    .then((result) => {
+      const sectors = result[0].sectors;
+      const sector = sectors.splice(oldIndex, 1);
+      return sector;
+    })
+    .then((sector) => {
+      User.update({}, { $pull: { sectors: { _id } } })
+        .then(() => {
+          User.update({}, { $push: { sectors: { $each: sector, $position: newIndex } } })
+            .then(() => {
+              User.find({})
+                .then((result) => {
+                  res.json({ sectors: result[0].sectors });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 });
 
 module.exports = router;

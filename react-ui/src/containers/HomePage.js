@@ -12,7 +12,11 @@ class HomePage extends Component {
   render() {
     return (
       <div>
-        <SectorList sectors={this.props.sectors} loading={this.props.loading} />
+        <SectorList
+          sectors={this.props.sectors}
+          loading={this.props.loading}
+          updateSectorOrder={this.props.SectorActions.updateSectorOrder}
+        />
       </div>
     );
   }

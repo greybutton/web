@@ -17,3 +17,7 @@ export function* watchRequestSector() {
 export function* watchUpdateSector() {
   yield takeLatest(types.UPDATE_SECTOR, SectorSagas.updateSector);
 }
+
+export function* watchUpdateSectorOrder() {
+  yield takeLatest(types.UPDATE_SECTOR_ORDER, SectorSagas.updateSectorOrder);
+}

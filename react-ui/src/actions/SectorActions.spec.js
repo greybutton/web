@@ -154,4 +154,58 @@ describe('Sector Actions', () => {
       expect(SectorActions.updateSectorRejected(response)).toEqual(expectedAction);
     });
   });
+  describe('update sector order', () => {
+    it('should create an action to update a sector order', () => {
+      const sector = {
+        _id: 1,
+        title: 'test sector actions',
+        score: 1,
+        desirableScore: 2,
+      };
+      const payload = {
+        oldIndex: 0,
+        newIndex: 1,
+        _id: sector._id,
+        resolve: () => {},
+        reject: () => {},
+      };
+      const expectedAction = {
+        type: types.UPDATE_SECTOR_ORDER,
+        payload,
+      };
+      expect(SectorActions.updateSectorOrder(payload)).toEqual(expectedAction);
+    });
+    it('should create an action to update pending a sector order', () => {
+      const expectedAction = {
+        type: types.UPDATE_SECTOR_ORDER_PENDING,
+      };
+      expect(SectorActions.updateSectorOrderPending()).toEqual(expectedAction);
+    });
+    it('should create an action to update fulfilled a sector order', () => {
+      const sector = {
+        _id: 1,
+        title: 'test sector actions',
+        score: 1,
+        desirableScore: 2,
+      };
+      const expectedAction = {
+        type: types.UPDATE_SECTOR_ORDER_FULFILLED,
+        payload: sector,
+      };
+      expect(SectorActions.updateSectorOrderFulfilled(sector)).toEqual(expectedAction);
+    });
+    it('should create an action to update rejected a sector order', () => {
+      const error = {
+        data: {
+          message: 'OrderError',
+          errors: {},
+        },
+      };
+      const expectedAction = {
+        type: types.UPDATE_SECTOR_ORDER_REJECTED,
+        payload: error,
+      };
+      expect(SectorActions.updateSectorOrderRejected(error)).toEqual(expectedAction);
+    });
+  });
 });

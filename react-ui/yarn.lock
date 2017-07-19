@@ -5173,6 +5173,12 @@ react-scripts@1.0.10:
   optionalDependencies:
     fsevents "1.1.2"
 
+react-sortablejs@^1.3.4:
+  version "1.3.4"
+  resolved "https://registry.yarnpkg.com/react-sortablejs/-/react-sortablejs-1.3.4.tgz#807f13fb3c20309cc0b43e9de357a980a76481fd"
+  dependencies:
+    prop-types "^15.5.8"
+
 react@^15.6.1:
   version "15.6.1"
   resolved "https://registry.yarnpkg.com/react/-/react-15.6.1.tgz#baa8434ec6780bde997cdc380b79cd33b96393df"
@@ -5734,6 +5740,10 @@ sort-keys@^1.0.0:
   resolved "https://registry.yarnpkg.com/sort-keys/-/sort-keys-1.1.2.tgz#441b6d4d346798f1b4e49e8920adfba0e543f9ad"
   dependencies:
     is-plain-obj "^1.0.0"
+
+sortablejs@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/sortablejs/-/sortablejs-1.6.0.tgz#097cc19267218af2ca1cd455ed858f380136ab68"
 
 source-list-map@^0.1.7:
   version "0.1.8"

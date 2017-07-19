@@ -95,6 +95,28 @@ export default (state = defaultState, action = {}) => {
         errors,
       };
     }
+    case types.UPDATE_SECTOR_ORDER_PENDING: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case types.UPDATE_SECTOR_ORDER_FULFILLED: {
+      return {
+        ...state,
+        sectors: [...action.payload.data.sectors],
+        loading: false,
+        errors: {},
+      };
+    }
+    case types.UPDATE_SECTOR_ORDER_REJECTED: {
+      const data = action.payload.data.errors;
+      return {
+        ...state,
+        loading: false,
+        errors: data,
+      };
+    }
     default:
       return state;
   }

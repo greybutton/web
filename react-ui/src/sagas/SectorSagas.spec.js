@@ -98,4 +98,35 @@ describe('Sector sagas tests', () => {
       });
     });
   });
+  describe('update sector order', () => {
+    const payload = {
+      sector: {
+        _id: 1,
+        title: 'test update sector order sagas',
+        score: 1,
+        desirableScore: 2,
+      },
+      resolve: () => {},
+      reject: () => {},
+    };
+    const gen = SectorSagas.updateSectorOrder({ payload });
+    it('should call update sector order api', () => {
+      expect(gen.next().value).toEqual(call(SectorSagas.updateSectorOrderApi, payload));
+    });
+    it('should put update sector order fulfilled', () => {
+      expect(gen.next().value).toEqual(put(SectorActions.updateSectorOrderFulfilled()));
+    });
+    it('should call resolve', () => {
+      expect(gen.next().value).toEqual(call(payload.resolve));
+    });
+    it('should put update sector order reject', () => {
+      expect(gen.throw().value).toEqual(put(SectorActions.updateSectorOrderRejected()));
+    });
+    it('should call reject', () => {
+      expect(gen.next().value).toEqual(call(payload.reject));
+    });
+    it('should be done', () => {
+      expect(gen.next().done).toEqual(true);
+    });
+  });
 });

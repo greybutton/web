@@ -86,3 +86,30 @@ export function updateSectorRejected(error) {
     payload: error,
   };
 }
+
+export function updateSectorOrder(payload) {
+  return {
+    type: types.UPDATE_SECTOR_ORDER,
+    payload,
+  };
+}
+
+export function updateSectorOrderPending() {
+  return {
+    type: types.UPDATE_SECTOR_ORDER_PENDING,
+  };
+}
+
+export function updateSectorOrderFulfilled(sectors) {
+  return {
+    type: types.UPDATE_SECTOR_ORDER_FULFILLED,
+    payload: sectors,
+  };
+}
+
+export function updateSectorOrderRejected(error) {
+  return {
+    type: types.UPDATE_SECTOR_ORDER_REJECTED,
+    payload: error,
+  };
+}

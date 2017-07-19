@@ -20,6 +20,12 @@ export function updateSectorApi(sector) {
   return axios.put(`${url}/${sector._id}`, sector);
 }
 
+export function updateSectorOrderApi(payload) {
+  return axios.put(`${url}/sectorOrder/${payload._id}`, {
+    indexes: { oldIndex: payload.oldIndex, newIndex: payload.newIndex },
+  });
+}
+
 export function* saveSector({ payload }) {
   yield put(SectorActions.saveSectorPending());
   try {
@@ -50,6 +56,17 @@ export function* updateSector({ payload }) {
     yield call(payload.resolve);
   } catch (e) {
     yield put(SectorActions.updateSectorRejected(e));
+    yield call(payload.reject);
+  }
+}
+
+export function* updateSectorOrder({ payload }) {
+  try {
+    const sectors = yield call(updateSectorOrderApi, payload);
+    yield put(SectorActions.updateSectorOrderFulfilled(sectors));
+    yield call(payload.resolve);
+  } catch (e) {
+    yield put(SectorActions.updateSectorOrderRejected(e));
     yield call(payload.reject);
   }
 }

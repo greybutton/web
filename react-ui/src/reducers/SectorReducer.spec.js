@@ -194,4 +194,51 @@ describe('Sector Reducer', () => {
       });
     });
   });
+  describe('update sector order', () => {
+    it('should handle UPDATE_SECTOR_ORDER_PENDING', () => {
+      expect(
+        SectorReducer(defaultState, {
+          type: types.UPDATE_SECTOR_ORDER_PENDING,
+        }),
+      ).toEqual({
+        ...defaultState,
+        loading: true,
+      });
+    });
+    it('should handle UPDATE_SECTOR_ORDER_FULFILLED', () => {
+      const sector = {
+        _id: 1,
+        title: 'test sector reducer',
+        score: 1,
+        desirableScore: 2,
+      };
+      const data = {
+        sectors: [sector],
+      };
+      expect(
+        SectorReducer(defaultState, {
+          type: types.UPDATE_SECTOR_ORDER_FULFILLED,
+          payload: { data },
+        }),
+      ).toEqual({
+        ...defaultState,
+        sectors: [...data.sectors],
+      });
+    });
+    it('should handle UPDATE_SECTOR_ORDER_REJECTED', () => {
+      const data = {
+        message: 'OrderError',
+        errors: {},
+      };
+      expect(
+        SectorReducer(defaultState, {
+          type: types.UPDATE_SECTOR_ORDER_REJECTED,
+          payload: { data },
+        }),
+      ).toEqual({
+        ...defaultState,
+        errors: {},
+      });
+    });
+  });
 });
