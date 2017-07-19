@@ -10,10 +10,14 @@ const Sector = new Schema({
   },
   score: {
     type: Number,
+    min: [0, 'The value of score {VALUE} is beneath the limit {MIN}'],
+    max: [10, 'The value of score {VALUE} exceeds the limit {MAX}'],
     required: 'Score sector is required',
   },
   desirableScore: {
     type: Number,
+    min: [0, 'The value of desirable score {VALUE} is beneath the limit {MIN}'],
+    max: [10, 'The value of desirable score {VALUE} exceeds the limit {MAX}'],
     required: 'Desirable score sector is required',
   },
 });

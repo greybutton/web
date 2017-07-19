@@ -86,6 +86,98 @@ describe(`Sector ${apiSectors}`, () => {
           console.log(err);
         });
     });
+    it('should not post a sector with score field more than 10', () => {
+      const sector = {
+        title: 'test post sector with score more than 10',
+        score: 20,
+        desirableScore: 5,
+      };
+      expect.hasAssertions();
+      return request(app)
+        .post(apiSectors)
+        .send(sector)
+        .then((res) => {
+          const recevied = res.body;
+          const expected = {
+            errors: {},
+            name: 'ValidationError',
+          };
+          expect(res.status).toBe(400);
+          expect(recevied).toMatchObject(expected);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+    it('should not post a sector with desirable score field more than 10', () => {
+      const sector = {
+        title: 'test post sector with desirable score more than 10',
+        score: 5,
+        desirableScore: 20,
+      };
+      expect.hasAssertions();
+      return request(app)
+        .post(apiSectors)
+        .send(sector)
+        .then((res) => {
+          const recevied = res.body;
+          const expected = {
+            errors: {},
+            name: 'ValidationError',
+          };
+          expect(res.status).toBe(400);
+          expect(recevied).toMatchObject(expected);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+    it('should not post a sector with score field less than 0', () => {
+      const sector = {
+        title: 'test post sector with score less than 0',
+        score: -10,
+        desirableScore: 5,
+      };
+      expect.hasAssertions();
+      return request(app)
+        .post(apiSectors)
+        .send(sector)
+        .then((res) => {
+          const recevied = res.body;
+          const expected = {
+            errors: {},
+            name: 'ValidationError',
+          };
+          expect(res.status).toBe(400);
+          expect(recevied).toMatchObject(expected);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+    it('should not post a sector with desirable score field less than 0', () => {
+      const sector = {
+        title: 'test post sector with desirable score less than 0',
+        score: 5,
+        desirableScore: -10,
+      };
+      expect.hasAssertions();
+      return request(app)
+        .post(apiSectors)
+        .send(sector)
+        .then((res) => {
+          const recevied = res.body;
+          const expected = {
+            errors: {},
+            name: 'ValidationError',
+          };
+          expect(res.status).toBe(400);
+          expect(recevied).toMatchObject(expected);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
     it('should post a sector', () => {
       const sectorFirst = {
         title: 'test post sector first',

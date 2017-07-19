@@ -98,10 +98,26 @@ const validate = values => {
     errors.score = {
       message: 'You need to provide score',
     };
+  } else if (values.score < 0) {
+    errors.score = {
+      message: 'The value of score is beneath the limit 0',
+    };
+  } else if (values.score > 10) {
+    errors.score = {
+      message: 'The value of score is exceeds the limit 10',
+    };
   }
   if (!values.desirableScore) {
     errors.desirableScore = {
       message: 'You need to provide desirable score',
+    };
+  } else if (values.desirableScore < 0) {
+    errors.desirableScore = {
+      message: 'The value of desirable score is beneath the limit 0',
+    };
+  } else if (values.desirableScore > 10) {
+    errors.desirableScore = {
+      message: 'The value of desirable score is exceeds the limit 10',
     };
   }
   return errors;
