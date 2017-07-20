@@ -45,38 +45,50 @@ router.get('/:_id', (req, res) => {
 
 router.post('/', (req, res) => {
   const task = req.body;
-  let newTask;
+  const opts = {
+    upsert: true,
+    runValidators: true,
+  };
   switch (task.matrixQuarter) {
     case 'first':
     case 'second':
-      newTask = User.create({
-        tasks: {
-          important: [task],
-        },
-      });
+      // eslint-disable-next-line max-len
+      User.findOneAndUpdate({}, { $push: { 'tasks.important': { $each: [task], $position: 0 } } }, opts)
+        .then(() => {
+          User.find({}).then((result) => {
+            const tasks = result[0] ? result[0].tasks : [];
+            res.json({ tasks });
+          });
+        })
+        .catch((err) => {
+          handleError(err, res);
+        });
       break;
     case 'daily':
-      newTask = User.create({
-        tasks: {
-          daily: [task],
-        },
-      });
+      User.findOneAndUpdate({}, { $push: { 'tasks.daily': { $each: [task], $position: 0 } } }, opts)
+        .then(() => {
+          User.find({}).then((result) => {
+            const tasks = result[0] ? result[0].tasks : [];
+            res.json({ tasks });
+          });
+        })
+        .catch((err) => {
+          handleError(err, res);
+        });
       break;
     default:
-      newTask = User.create({
-        tasks: {
-          notImportant: [task],
-        },
-      });
+      User.findOneAndUpdate({}, { $push: { 'tasks.notImportant': { $each: [task], $position: 0 } } }, opts)
+        .then(() => {
+          User.find({}).then((result) => {
+            const tasks = result[0] ? result[0].tasks : [];
+            res.json({ tasks });
+          });
+        })
+        .catch((err) => {
+          handleError(err, res);
+        });
       break;
   }
-  newTask
-    .then((result) => {
-      res.json({ tasks: result.tasks });
-    })
-    .catch((err) => {
-      handleError(err, res);
-    });
 });
 
 router.put('/:_id', (req, res) => {
