@@ -20,13 +20,10 @@ router.get('/', (req, res) => {
 
 router.get('/:_id', (req, res) => {
   const _id = req.params._id;
-  User.distinct('tasks')
-    .then((tasks) => {
-      const tasksArr = tasks[1].notImportant.concat(tasks[1].important, tasks[1].daily);
-      const task = tasksArr.filter(taskItem => taskItem._id.toString() === _id)[0];
-      if (task) {
-        res.json({ task });
-      } else {
+  User.find({})
+    .then((result) => {
+      const tasks = result[0] ? result[0].tasks : [];
+      if (tasks.length === 0) {
         const err = {
           message: `Cast to ObjectId failed for task value "${_id}" at path "_id" for model "User"`,
           name: 'CastError',
@@ -35,7 +32,11 @@ router.get('/:_id', (req, res) => {
           value: _id,
           path: '_id',
         };
-        handleError(err, res);
+        throw err;
+      } else {
+        const tasksArr = tasks.important.concat(tasks.notImportant, tasks.daily);
+        const task = tasksArr.filter(taskItem => taskItem._id.toString() === _id)[0];
+        res.json({ task });
       }
     })
     .catch((err) => {

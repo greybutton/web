@@ -8,6 +8,7 @@ import app from '../../../../'; // api/index.js folder
 
 const api = '/api/v1';
 const apiTasks = `${api}/tasks`;
+const apiSectors = `${api}/sectors`;
 
 describe(`Task ${apiTasks}`, () => {
   const sectorTest = {
@@ -46,6 +47,7 @@ describe(`Task ${apiTasks}`, () => {
       return request(app)
         .get(`${apiTasks}/999`)
         .then((res) => {
+          console.log(res.body);
           expect(res.status).toBe(400);
         })
         .catch((err) => {
@@ -53,45 +55,36 @@ describe(`Task ${apiTasks}`, () => {
         });
     });
     it('should get a task', () => {
-      const userSector = new User({
-        sectors: [sectorTest],
-      });
-      userSector.save().catch((err) => {
-        console.log(err);
-      });
-      const sectorTestId = userSector.sectors[0]._id;
-      const task = {
-        text: 'test get task',
-        time: '00:30',
-        sector: sectorTestId,
-        matrixQuarter: 'first',
-        label: sectorTest.title,
-      };
-      const userTask = new User({
-        tasks: {
-          important: [task],
-        },
-      });
-      return userTask
-        .save()
+      expect.hasAssertions();
+      return request(app)
+        .post(apiSectors)
+        .send(sectorTest)
         .then((res) => {
-          const expectedTask = res.tasks.important[0];
-          expect.hasAssertions();
-          return request(app)
-            .get(`${apiTasks}/${res.tasks.important[0]._id}`)
-            .then((result) => {
-              const actualTask = result.body.task;
-              expect(result.status).toBe(200);
-              expect(actualTask).toHaveProperty('text', expectedTask.text);
-              expect(actualTask).toHaveProperty('time', expectedTask.time);
-              expect(actualTask).toHaveProperty('sector', expectedTask.sector.toString());
-              expect(actualTask).toHaveProperty('matrixQuarter', expectedTask.matrixQuarter);
-              expect(actualTask).toHaveProperty('_id', expectedTask._id.toString());
-            })
-            .catch((err) => {
-              console.log(err);
-            });
+          const sector = res.body.sectors[0];
+          return sector;
         })
+        .then((sector) => {
+          const task = {
+            text: 'test get task',
+            time: '00:30',
+            sector: sector._id.toString(),
+            matrixQuarter: 'first',
+            label: sector.title,
+          };
+          return request(app).post(apiTasks).send(task).then((res) => {
+            const task = res.body.tasks.important[0];
+            return task;
+          });
+        })
+        .then(task => request(app).get(`${apiTasks}/${task._id}`).then((res) => {
+          const recevied = res.body.task;
+          expect(res.status).toBe(200);
+          expect(recevied).toHaveProperty('text', task.text);
+          expect(recevied).toHaveProperty('time', task.time);
+          expect(recevied).toHaveProperty('sector', task.sector);
+          expect(recevied).toHaveProperty('matrixQuarter', task.matrixQuarter);
+          expect(recevied).toHaveProperty('_id', task._id.toString());
+        }))
         .catch((err) => {
           console.log(err);
         });
