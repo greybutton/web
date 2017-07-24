@@ -265,9 +265,10 @@ router.delete('/:_id', (req, res) => {
       handleError(err, res);
     } else {
       // new model request because in otherwise result is object of $pull operator
-      User.distinct('tasks')
-        .then((tasks) => {
-          res.json({ tasks: tasks[0] });
+      User.find({})
+        .then((result) => {
+          const tasks = result[0] ? result[0].tasks : [];
+          res.json({ tasks });
         })
         .catch((error) => {
           handleError(error, res);
