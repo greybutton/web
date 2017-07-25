@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import { Row, Col } from 'react-bootstrap';
 import * as SectorActions from '../actions/SectorActions';
 import SectorList from '../components/SectorList';
 
@@ -11,13 +12,16 @@ class HomePage extends Component {
   }
   render() {
     return (
-      <div>
-        <SectorList
-          sectors={this.props.sectors}
-          loading={this.props.loading}
-          updateSectorOrder={this.props.SectorActions.updateSectorOrder}
-        />
-      </div>
+      <Row>
+        <Col xs={12} sm={6} />
+        <Col xs={12} sm={6}>
+          <SectorList
+            sectors={this.props.sectors}
+            loading={this.props.loading}
+            updateSectorOrder={this.props.SectorActions.updateSectorOrder}
+          />
+        </Col>
+      </Row>
     );
   }
 }

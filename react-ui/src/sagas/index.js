@@ -5,6 +5,7 @@ import {
   watchRequestSector,
   watchUpdateSector,
   watchUpdateSectorOrder,
+  watchSaveTask,
 } from './watchers';
 
 export default function* root() {
@@ -14,5 +15,6 @@ export default function* root() {
     fork(watchRequestSector),
     fork(watchUpdateSector),
     fork(watchUpdateSectorOrder),
+    fork(watchSaveTask),
   ]);
 }

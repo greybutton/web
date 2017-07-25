@@ -5,8 +5,10 @@ import {
   watchRequestSector,
   watchUpdateSector,
   watchUpdateSectorOrder,
+  watchSaveTask,
 } from './watchers';
 import * as SectorSagas from './SectorSagas';
+import * as TaskSagas from './TaskSagas';
 import * as types from '../constants/actionTypes';
 
 describe('test watch save sector', () => {
@@ -54,6 +56,18 @@ describe('test watch save sector', () => {
       expect(gen.next().value).toEqual(
         takeLatest(types.UPDATE_SECTOR_ORDER, SectorSagas.updateSectorOrder),
       );
+    });
+    it('should be done', () => {
+      expect(gen.next().done).toEqual(true);
+    });
+  });
+});
+
+describe('test watch save task', () => {
+  describe('post task', () => {
+    const gen = watchSaveTask();
+    it('should call watchSaveTask', () => {
+      expect(gen.next().value).toEqual(takeLatest(types.SAVE_TASK, TaskSagas.saveTask));
     });
     it('should be done', () => {
       expect(gen.next().done).toEqual(true);

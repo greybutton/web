@@ -1,5 +1,6 @@
 import { takeLatest } from 'redux-saga/effects';
 import * as SectorSagas from './SectorSagas';
+import * as TaskSagas from './TaskSagas';
 import * as types from '../constants/actionTypes';
 
 export function* watchSaveSector() {
@@ -20,4 +21,8 @@ export function* watchUpdateSector() {
 
 export function* watchUpdateSectorOrder() {
   yield takeLatest(types.UPDATE_SECTOR_ORDER, SectorSagas.updateSectorOrder);
+}
+
+export function* watchSaveTask() {
+  yield takeLatest(types.SAVE_TASK, TaskSagas.saveTask);
 }
