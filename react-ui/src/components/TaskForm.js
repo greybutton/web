@@ -52,9 +52,7 @@ class TaskForm extends Component {
   renderMatrix = ({ input, label, type, placeholder, meta: { touched, error } }) => {
     return (
       <FormGroup validationState={touched && error ? 'error' : null}>
-        {type === 'checkbox'
-          ? this.checkboxDaily({ input, label, type, placeholder, meta: { touched, error } })
-          : this.pickMatrixButtons({ input, label, type, placeholder, meta: { touched, error } })}
+        {type === 'checkbox' ? this.checkboxDaily({ input }) : this.pickMatrixButtons({ input })}
         {touched &&
           error &&
           <HelpBlock>
@@ -63,25 +61,30 @@ class TaskForm extends Component {
       </FormGroup>
     );
   };
-  checkboxDaily = ({ input, label, type, placeholder, meta: { touched, error } }) => {
+  checkboxDaily = ({ input }) => {
     return (
-      <Button>
-        <Checkbox
-          {...input}
-          inline
-          id="daily"
-          checked={this.state.daily ? true : false}
-          onBlur={e => e.preventDefault()}
-          inputRef={ref => {
-            this.daily = ref;
-          }}
-        >
-          Daily
-        </Checkbox>
-      </Button>
+      <div>
+        <ControlLabel>Is task daily?</ControlLabel>
+        <div>
+          <Button>
+            <Checkbox
+              {...input}
+              inline
+              id="daily"
+              checked={this.state.daily ? true : false}
+              onBlur={e => e.preventDefault()}
+              inputRef={ref => {
+                this.daily = ref;
+              }}
+            >
+              Daily
+            </Checkbox>
+          </Button>
+        </div>
+      </div>
     );
   };
-  pickMatrixButtons = ({ input, label, type, placeholder, meta: { touched, error } }) => {
+  pickMatrixButtons = ({ input }) => {
     return (
       <div
         {...input}
@@ -144,11 +147,6 @@ class TaskForm extends Component {
               </Radio>
             </Button>
           </ButtonGroup>
-          {touched &&
-            error &&
-            <HelpBlock>
-              {error}
-            </HelpBlock>}
         </FormGroup>
       </div>
     );
@@ -159,6 +157,13 @@ class TaskForm extends Component {
     const notUrgent = this.notUrgent.checked;
     const important = this.important.checked;
     const notImportant = this.notImportant.checked;
+
+    if (daily) {
+      this.urgent.checked = false;
+      this.notUrgent.checked = false;
+      this.important.checked = false;
+      this.notImportant.checked = false;
+    }
 
     this.setState({
       daily: daily,
@@ -246,4 +251,36 @@ class TaskForm extends Component {
   }
 }
 
-export default reduxForm({ form: 'task' })(TaskForm);
+const validate = values => {
+  const errors = {};
+  if (!values.text) {
+    errors.text = {
+      message: 'You need to provide text',
+    };
+  } else if (!values.matrixQuarter) {
+    errors.matrixQuarter = {
+      message: 'You need to provide matrix quarter',
+    };
+  }
+  if (!values.time) {
+    errors.time = {
+      message: 'You need to provide time',
+    };
+  } else if (!values.matrixQuarter) {
+    errors.matrixQuarter = {
+      message: 'You need to provide matrix quarter',
+    };
+  }
+  if (!values.sector) {
+    errors.sector = {
+      message: 'You need to provide sector',
+    };
+  } else if (!values.matrixQuarter) {
+    errors.matrixQuarter = {
+      message: 'You need to provide matrix quarter',
+    };
+  }
+  return errors;
+};
+
+export default reduxForm({ form: 'task', validate })(TaskForm);

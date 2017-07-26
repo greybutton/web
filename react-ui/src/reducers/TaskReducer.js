@@ -32,7 +32,10 @@ export default (state = defaultState, action = {}) => {
       };
     }
     case types.SAVE_TASK_REJECTED: {
-      const data = action.payload.response.data;
+      const data =
+        action.payload.response.data.errors['tasks.daily'] ||
+        action.payload.response.data.errors['tasks.important'] ||
+        action.payload.response.data.errors['tasks.notImportant'];
       const { text, time, sector, matrixQuarter } = data.errors;
       const errors = { global: data.message, text, time, sector, matrixQuarter };
       return {
