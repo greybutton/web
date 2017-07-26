@@ -26,3 +26,11 @@ export function* watchUpdateSectorOrder() {
 export function* watchSaveTask() {
   yield takeLatest(types.SAVE_TASK, TaskSagas.saveTask);
 }
+
+export function* watchRequestTasks() {
+  yield takeLatest(types.REQUEST_TASKS, TaskSagas.fetchTasks);
+}
+
+export function* watchUpdateImportantTasksOrder() {
+  yield takeLatest(types.UPDATE_IMPORTANT_TASKS_ORDER, TaskSagas.updateImportantTasksOrder);
+}

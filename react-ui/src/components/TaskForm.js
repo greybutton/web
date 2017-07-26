@@ -257,27 +257,15 @@ const validate = values => {
     errors.text = {
       message: 'You need to provide text',
     };
-  } else if (!values.matrixQuarter) {
-    errors.matrixQuarter = {
-      message: 'You need to provide matrix quarter',
-    };
   }
   if (!values.time) {
     errors.time = {
       message: 'You need to provide time',
     };
-  } else if (!values.matrixQuarter) {
-    errors.matrixQuarter = {
-      message: 'You need to provide matrix quarter',
-    };
   }
   if (!values.sector) {
     errors.sector = {
       message: 'You need to provide sector',
-    };
-  } else if (!values.matrixQuarter) {
-    errors.matrixQuarter = {
-      message: 'You need to provide matrix quarter',
     };
   }
   return errors;

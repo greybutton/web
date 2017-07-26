@@ -6,6 +6,8 @@ import {
   watchUpdateSector,
   watchUpdateSectorOrder,
   watchSaveTask,
+  watchRequestTasks,
+  watchUpdateImportantTasksOrder,
 } from './watchers';
 import * as SectorSagas from './SectorSagas';
 import * as TaskSagas from './TaskSagas';
@@ -68,6 +70,26 @@ describe('test watch save task', () => {
     const gen = watchSaveTask();
     it('should call watchSaveTask', () => {
       expect(gen.next().value).toEqual(takeLatest(types.SAVE_TASK, TaskSagas.saveTask));
+    });
+    it('should be done', () => {
+      expect(gen.next().done).toEqual(true);
+    });
+  });
+  describe('get tasks', () => {
+    const gen = watchRequestTasks();
+    it('should call watchRequestTasks', () => {
+      expect(gen.next().value).toEqual(takeLatest(types.REQUEST_TASKS, TaskSagas.fetchTasks));
+    });
+    it('should be done', () => {
+      expect(gen.next().done).toEqual(true);
+    });
+  });
+  describe('update important tasks order', () => {
+    const gen = watchUpdateImportantTasksOrder();
+    it('should call watchUpdateImportantTasksOrder', () => {
+      expect(gen.next().value).toEqual(
+        takeLatest(types.UPDATE_IMPORTANT_TASKS_ORDER, TaskSagas.updateImportantTasksOrder),
+      );
     });
     it('should be done', () => {
       expect(gen.next().done).toEqual(true);

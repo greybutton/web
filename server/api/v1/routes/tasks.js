@@ -9,12 +9,13 @@ const handleError = (err, res) => {
 };
 
 router.get('/', (req, res) => {
-  User.distinct('tasks')
-    .then((tasks) => {
+  User.find({})
+    .then((result) => {
+      const tasks = result[0] ? result[0].tasks : [];
       res.json({ tasks });
     })
     .catch((err) => {
-      handleError(err, res);
+      console.log(err);
     });
 });
 
@@ -275,6 +276,43 @@ router.delete('/:_id', (req, res) => {
         });
     }
   });
+});
+
+router.put('/tasksImportantOrder/:_id', (req, res) => {
+  const _id = req.params._id;
+  const oldIndex = req.body.indexes.oldIndex;
+  const newIndex = req.body.indexes.newIndex;
+
+  User.find({}, {})
+    .then((result) => {
+      const tasks = result[0].tasks.important;
+      const task = tasks.splice(oldIndex, 1);
+      return task;
+    })
+    .then((task) => {
+      User.update({}, { $pull: { 'tasks.important': { _id } } })
+        .then(() => {
+          User.update({}, { $push: { 'tasks.important': { $each: task, $position: newIndex } } })
+            .then(() => {
+              User.find({})
+                .then((result) => {
+                  res.json({ tasks: result[0].tasks.important });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            })
+            .catch((err) => {
+              console.log(err);
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      handleError(err, res);
+    });
 });
 
 module.exports = router;
