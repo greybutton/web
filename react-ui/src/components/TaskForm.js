@@ -16,6 +16,47 @@ import {
 
 class TaskForm extends Component {
   state = {};
+  componentWillReceiveProps = nextProps => {
+    // receive task data asynchronously
+    const { task } = nextProps;
+    if (task._id !== this.props.task._id) {
+      // initialize form only once
+      this.props.initialize(task);
+    }
+  };
+  shouldComponentUpdate = (nextProps, nextState) => {
+    if (Object.keys(nextProps.task).length === 0) {
+      return false;
+    } else {
+      return true;
+    }
+  };
+  componentDidUpdate = (prevProps, prevState) => {
+    const { task } = prevProps;
+    // refs should be exist
+    // if refs doesn't exist checked is null and after submit form null prevent redirect
+    if (Object.keys(prevState).length === 0 && this.daily) {
+      if (task.matrixQuarter === 'daily') {
+        this.daily.checked = true;
+      }
+      if (task.matrixQuarter === 'first') {
+        this.urgent.checked = true;
+        this.important.checked = true;
+      }
+      if (task.matrixQuarter === 'second') {
+        this.notUrgent.checked = true;
+        this.important.checked = true;
+      }
+      if (task.matrixQuarter === 'third') {
+        this.urgent.checked = true;
+        this.notImportant.checked = true;
+      }
+      if (task.matrixQuarter === 'fourth') {
+        this.notUrgent.checked = true;
+        this.notImportant.checked = true;
+      }
+    }
+  };
   renderField = ({ input, label, type, placeholder, meta: { touched, error } }) => {
     return (
       <FormGroup validationState={touched && error ? 'error' : null}>
@@ -251,24 +292,24 @@ class TaskForm extends Component {
   }
 }
 
-const validate = values => {
-  const errors = {};
-  if (!values.text) {
-    errors.text = {
-      message: 'You need to provide text',
-    };
-  }
-  if (!values.time) {
-    errors.time = {
-      message: 'You need to provide time',
-    };
-  }
-  if (!values.sector) {
-    errors.sector = {
-      message: 'You need to provide sector',
-    };
-  }
-  return errors;
-};
+// const validate = values => {
+//   const errors = {};
+//   if (!values.text) {
+//     errors.text = {
+//       message: 'You need to provide text',
+//     };
+//   }
+//   if (!values.time) {
+//     errors.time = {
+//       message: 'You need to provide time',
+//     };
+//   }
+//   if (!values.sector) {
+//     errors.sector = {
+//       message: 'You need to provide sector',
+//     };
+//   }
+//   return errors;
+// };
 
-export default reduxForm({ form: 'task', validate })(TaskForm);
+export default reduxForm({ form: 'task' })(TaskForm);

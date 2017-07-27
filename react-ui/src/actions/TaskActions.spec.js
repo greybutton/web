@@ -67,6 +67,61 @@ describe('Task Actions', () => {
       expect(TaskActions.receiveTasks(task)).toEqual(expectedAction);
     });
   });
+  describe('put task', () => {
+    it('should create an action to request a task', () => {
+      const expectedAction = {
+        type: types.REQUEST_TASK,
+        payload: task._id,
+      };
+      expect(TaskActions.requestTask(task._id)).toEqual(expectedAction);
+    });
+    it('should create an action to receive a task', () => {
+      const expectedAction = {
+        type: types.RECEIVE_TASK,
+        payload: task,
+      };
+      expect(TaskActions.receiveTask(task)).toEqual(expectedAction);
+    });
+    it('should create an action to update a task', () => {
+      const expectedAction = {
+        type: types.UPDATE_TASK,
+        payload: task,
+      };
+      expect(TaskActions.updateTask(task)).toEqual(expectedAction);
+    });
+    it('should create an action to update pending a task', () => {
+      const expectedAction = {
+        type: types.UPDATE_TASK_PENDING,
+      };
+      expect(TaskActions.updateTaskPending()).toEqual(expectedAction);
+    });
+    it('should create an action to update fulfilled a task', () => {
+      const expectedAction = {
+        type: types.UPDATE_TASK_FULFILLED,
+        payload: task,
+      };
+      expect(TaskActions.updateTaskFulfilled(task)).toEqual(expectedAction);
+    });
+    it('should create an action to update rejected a task', () => {
+      const response = {
+        status: 400,
+        data: {
+          message: 'ValidationError',
+          errors: {
+            'tasks.important.0.text': 'Text task is required',
+            'tasks.important.0.time': 'Time task is required',
+            'tasks.important.0.sector': 'Sector task is required',
+            'tasks.important.0.matrixQuarter': 'Matrix quarter is required',
+          },
+        },
+      };
+      const expectedAction = {
+        type: types.UPDATE_TASK_REJECTED,
+        payload: response,
+      };
+      expect(TaskActions.updateTaskRejected(response)).toEqual(expectedAction);
+    });
+  });
   describe('update important task order', () => {
     it('should create an action to update a important task order', () => {
       const payload = {

@@ -21,14 +21,14 @@ class HomePage extends Component {
           <TaskList
             importantTasks={this.props.importantTasks}
             sectors={this.props.sectors}
-            loading={this.props.loading}
+            loading={this.props.loadingTask}
             updateImportantTasksOrder={this.props.TaskActions.updateImportantTasksOrder}
           />
         </Col>
         <Col xs={12} sm={6}>
           <SectorList
             sectors={this.props.sectors}
-            loading={this.props.loading}
+            loading={this.props.loadingSector}
             updateSectorOrder={this.props.SectorActions.updateSectorOrder}
           />
         </Col>
@@ -39,9 +39,10 @@ class HomePage extends Component {
 
 function mapStateToProps(state) {
   return {
+    loadingSector: state.sectorStore.loading,
     sectors: state.sectorStore.sectors,
+    loadingTask: state.taskStore.loading,
     importantTasks: state.taskStore.importantTasks,
-    loading: state.sectorStore.loading,
   };
 }
 

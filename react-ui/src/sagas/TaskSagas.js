@@ -8,8 +8,16 @@ export function fetchTasksApi() {
   return axios.get(url);
 }
 
+export function fetchTaskApi(_id) {
+  return axios.get(`${url}/${_id}`);
+}
+
 export function saveTaskApi(task) {
   return axios.post(url, task);
+}
+
+export function updateTaskApi(task) {
+  return axios.put(`${url}/${task._id}`, task);
 }
 
 export function updateImportantTasksOrderApi(payload) {
@@ -33,6 +41,23 @@ export function* saveTask({ payload }) {
 export function* fetchTasks() {
   const tasks = yield call(fetchTasksApi);
   yield put(TaskActions.receiveTasks(tasks));
+}
+
+export function* fetchTask({ payload }) {
+  const task = yield call(fetchTaskApi, payload);
+  yield put(TaskActions.receiveTask(task));
+}
+
+export function* updateTask({ payload }) {
+  yield put(TaskActions.updateTaskPending());
+  try {
+    const tasks = yield call(updateTaskApi, payload.task);
+    yield put(TaskActions.updateTaskFulfilled(tasks));
+    yield call(payload.resolve);
+  } catch (e) {
+    yield put(TaskActions.updateTaskRejected(e));
+    yield call(payload.reject);
+  }
 }
 
 export function* updateImportantTasksOrder({ payload }) {

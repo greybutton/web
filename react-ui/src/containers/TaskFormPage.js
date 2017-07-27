@@ -10,16 +10,31 @@ class TaskFormPage extends Component {
     redirect: false,
   };
   componentDidMount() {
-    this.props.dispatch(TaskActions.newTask());
+    const { _id } = this.props.match.params;
+    if (_id) {
+      this.props.dispatch(TaskActions.requestTask(_id));
+    } else {
+      this.props.dispatch(TaskActions.newTask());
+    }
   }
   handleSubmit = task => {
-    return new Promise((resolve, reject) => {
-      this.props.dispatch(TaskActions.saveTask({ task, resolve, reject }));
-    })
-      .then(response => this.setState({ redirect: true }))
-      .catch(err => {
-        throw new SubmissionError(this.props.errors);
-      });
+    if (!task._id) {
+      return new Promise((resolve, reject) => {
+        this.props.dispatch(TaskActions.saveTask({ task, resolve, reject }));
+      })
+        .then(response => this.setState({ redirect: true }))
+        .catch(err => {
+          throw new SubmissionError(this.props.errors);
+        });
+    } else {
+      return new Promise((resolve, reject) => {
+        this.props.dispatch(TaskActions.updateTask({ task, resolve, reject }));
+      })
+        .then(response => this.setState({ redirect: true }))
+        .catch(err => {
+          throw new SubmissionError(this.props.errors);
+        });
+    }
   };
   render() {
     return (

@@ -163,9 +163,10 @@ router.put('/:_id', (req, res) => {
               User.update({}, { $push: { 'tasks.important': { $each: [task], $position: 0 } } })
                 .then(() => {
                   // send updated tasks
-                  User.distinct('tasks')
-                    .then((tasks) => {
-                      res.json({ tasks: tasks[0] });
+                  User.find({})
+                    .then((result) => {
+                      const tasks = result[0] ? result[0].tasks : [];
+                      res.json({ tasks });
                     })
                     .catch((error) => {
                       handleError(error, res);
@@ -196,9 +197,10 @@ router.put('/:_id', (req, res) => {
               User.update({}, { $push: { 'tasks.notImportant': { $each: [task], $position: 0 } } })
                 .then(() => {
                   // send updated tasks
-                  User.distinct('tasks')
-                    .then((tasks) => {
-                      res.json({ tasks: tasks[0] });
+                  User.find({})
+                    .then((result) => {
+                      const tasks = result[0] ? result[0].tasks : [];
+                      res.json({ tasks });
                     })
                     .catch((error) => {
                       handleError(error, res);
@@ -229,9 +231,10 @@ router.put('/:_id', (req, res) => {
               User.update({}, { $push: { 'tasks.daily': { $each: [task], $position: 0 } } })
                 .then(() => {
                   // send updated tasks
-                  User.distinct('tasks')
-                    .then((tasks) => {
-                      res.json({ tasks: tasks[0] });
+                  User.find({})
+                    .then((result) => {
+                      const tasks = result[0] ? result[0].tasks : [];
+                      res.json({ tasks });
                     })
                     .catch((error) => {
                       handleError(error, res);
@@ -247,9 +250,10 @@ router.put('/:_id', (req, res) => {
         }
       } else {
         // new model request because in otherwise result with old data
-        User.distinct('tasks')
-          .then((tasks) => {
-            res.json({ tasks: tasks[1] });
+        User.find({})
+          .then((result) => {
+            const tasks = result[0] ? result[0].tasks : [];
+            res.json({ tasks });
           })
           .catch((error) => {
             handleError(error, res);
