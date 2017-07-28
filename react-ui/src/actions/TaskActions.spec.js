@@ -122,6 +122,36 @@ describe('Task Actions', () => {
       expect(TaskActions.updateTaskRejected(response)).toEqual(expectedAction);
     });
   });
+  describe('delete task', () => {
+    it('should create an action to delete a task', () => {
+      const expectedAction = {
+        type: types.DELETE_TASK,
+        payload: task._id,
+      };
+      expect(TaskActions.deleteTask(task._id)).toEqual(expectedAction);
+    });
+    it('should create an action to delete fulfilled a task', () => {
+      const expectedAction = {
+        type: types.DELETE_TASK_FULFILLED,
+        payload: task,
+      };
+      expect(TaskActions.deleteTaskFulfilled(task)).toEqual(expectedAction);
+    });
+    it('should create an action to delete rejected a task', () => {
+      const response = {
+        status: 400,
+        data: {
+          message: 'DeleteError',
+          errors: {},
+        },
+      };
+      const expectedAction = {
+        type: types.DELETE_TASK_REJECTED,
+        payload: response,
+      };
+      expect(TaskActions.deleteTaskRejected(response)).toEqual(expectedAction);
+    });
+  });
   describe('update important task order', () => {
     it('should create an action to update a important task order', () => {
       const payload = {

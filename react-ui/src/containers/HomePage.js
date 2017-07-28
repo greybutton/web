@@ -22,6 +22,7 @@ class HomePage extends Component {
             importantTasks={this.props.importantTasks}
             sectors={this.props.sectors}
             loading={this.props.loadingTask}
+            deleteTask={this.props.TaskActions.deleteTask}
             updateImportantTasksOrder={this.props.TaskActions.updateImportantTasksOrder}
           />
         </Col>

@@ -9,6 +9,7 @@ import {
   watchRequestTasks,
   watchRequestTask,
   watchUpdateTask,
+  watchDeleteTask,
   watchUpdateImportantTasksOrder,
 } from './watchers';
 import * as SectorSagas from './SectorSagas';
@@ -104,6 +105,15 @@ describe('test watch save task', () => {
       it('should be done', () => {
         expect(gen.next().done).toEqual(true);
       });
+    });
+  });
+  describe('delete task', () => {
+    const gen = watchDeleteTask();
+    it('should call watchDeleteTask', () => {
+      expect(gen.next().value).toEqual(takeLatest(types.DELETE_TASK, TaskSagas.deleteTask));
+    });
+    it('should be done', () => {
+      expect(gen.next().done).toEqual(true);
     });
   });
   describe('update important tasks order', () => {

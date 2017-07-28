@@ -39,6 +39,10 @@ export function* watchUpdateTask() {
   yield takeLatest(types.UPDATE_TASK, TaskSagas.updateTask);
 }
 
+export function* watchDeleteTask() {
+  yield takeLatest(types.DELETE_TASK, TaskSagas.deleteTask);
+}
+
 export function* watchUpdateImportantTasksOrder() {
   yield takeLatest(types.UPDATE_IMPORTANT_TASKS_ORDER, TaskSagas.updateImportantTasksOrder);
 }

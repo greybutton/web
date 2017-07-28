@@ -123,6 +123,27 @@ export default (state = defaultState, action = {}) => {
         errors,
       };
     }
+    case types.DELETE_TASK_FULFILLED: {
+      return {
+        ...state,
+        dailyTasks: action.payload.data.tasks.daily,
+        importantTasks: action.payload.data.tasks.important,
+        matrixTasks: action.payload.data.tasks.important.concat(
+          action.payload.data.tasks.notImportant,
+        ),
+        loading: false,
+        errors: {},
+      };
+    }
+    case types.DELETE_TASK_REJECTED: {
+      const data = action.payload.response.data;
+      const errors = { global: data.message };
+      return {
+        ...state,
+        loading: false,
+        errors,
+      };
+    }
     case types.UPDATE_IMPORTANT_TASKS_ORDER_PENDING: {
       return {
         ...state,

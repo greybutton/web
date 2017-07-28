@@ -9,7 +9,7 @@ class TaskCard extends Component {
     this.state = { open: false };
   }
   render() {
-    const { task } = this.props;
+    const { task, deleteTask } = this.props;
     return (
       <ListGroupItem
         data-id={task._id}
@@ -24,7 +24,9 @@ class TaskCard extends Component {
             <Link to={`/task/edit/${task._id}`}>
               <Button>Edit</Button>
             </Link>
-            <Button bsStyle="danger">Delete</Button>
+            <Button bsStyle="danger" onClick={() => deleteTask(task._id)}>
+              Delete
+            </Button>
           </ButtonToolbar>
         </Collapse>
       </ListGroupItem>

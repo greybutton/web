@@ -10,6 +10,7 @@ import {
   watchRequestTasks,
   watchRequestTask,
   watchUpdateTask,
+  watchDeleteTask,
   watchUpdateImportantTasksOrder,
 } from './watchers';
 
@@ -26,6 +27,7 @@ describe('test root saga', () => {
         fork(watchRequestTasks),
         fork(watchRequestTask),
         fork(watchUpdateTask),
+        fork(watchDeleteTask),
         fork(watchUpdateImportantTasksOrder),
       ]),
     );

@@ -187,6 +187,44 @@ describe('Task Reducer', () => {
       });
     });
   });
+  describe('delete task', () => {
+    it('should handle DELETE_TASK_FULFILLED', () => {
+      const data = {
+        tasks: { important: [task], notImportant: [task], daily: [task] },
+      };
+      expect(
+        TaskReducer(defaultState, {
+          type: types.DELETE_TASK_FULFILLED,
+          payload: { data },
+        }),
+      ).toEqual({
+        ...defaultState,
+        dailyTasks: data.tasks.daily,
+        importantTasks: data.tasks.important,
+        matrixTasks: data.tasks.important.concat(data.tasks.notImportant),
+      });
+    });
+    it('should handle DELETE_TASK_REJECTED', () => {
+      const response = {
+        status: 400,
+        data: {
+          message: 'DeleteError',
+          errors: {},
+        },
+      };
+      expect(
+        TaskReducer(defaultState, {
+          type: types.DELETE_TASK_REJECTED,
+          payload: { response },
+        }),
+      ).toEqual({
+        ...defaultState,
+        errors: {
+          global: 'DeleteError',
+        },
+      });
+    });
+  });
   describe('update important tasks order', () => {
     it('should handle UPDATE_IMPORTANT_TASKS_ORDER_PENDING', () => {
       expect(

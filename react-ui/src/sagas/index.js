@@ -9,6 +9,7 @@ import {
   watchRequestTasks,
   watchRequestTask,
   watchUpdateTask,
+  watchDeleteTask,
   watchUpdateImportantTasksOrder,
 } from './watchers';
 
@@ -23,6 +24,7 @@ export default function* root() {
     fork(watchRequestTasks),
     fork(watchRequestTask),
     fork(watchUpdateTask),
+    fork(watchDeleteTask),
     fork(watchUpdateImportantTasksOrder),
   ]);
 }

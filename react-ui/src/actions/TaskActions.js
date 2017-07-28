@@ -87,6 +87,27 @@ export function updateTaskRejected(error) {
   };
 }
 
+export function deleteTask(id) {
+  return {
+    type: types.DELETE_TASK,
+    payload: id,
+  };
+}
+
+export function deleteTaskFulfilled(tasks) {
+  return {
+    type: types.DELETE_TASK_FULFILLED,
+    payload: tasks,
+  };
+}
+
+export function deleteTaskRejected(error) {
+  return {
+    type: types.DELETE_TASK_REJECTED,
+    payload: error,
+  };
+}
+
 export function updateImportantTasksOrder(payload) {
   return {
     type: types.UPDATE_IMPORTANT_TASKS_ORDER,

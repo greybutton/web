@@ -20,6 +20,10 @@ export function updateTaskApi(task) {
   return axios.put(`${url}/${task._id}`, task);
 }
 
+export function deleteTaskApi(id) {
+  return axios.delete(`${url}/${id}`);
+}
+
 export function updateImportantTasksOrderApi(payload) {
   return axios.put(`${url}/tasksImportantOrder/${payload._id}`, {
     indexes: { oldIndex: payload.oldIndex, newIndex: payload.newIndex },
@@ -57,6 +61,15 @@ export function* updateTask({ payload }) {
   } catch (e) {
     yield put(TaskActions.updateTaskRejected(e));
     yield call(payload.reject);
+  }
+}
+
+export function* deleteTask({ payload }) {
+  try {
+    const tasks = yield call(deleteTaskApi, payload);
+    yield put(TaskActions.deleteTaskFulfilled(tasks));
+  } catch (e) {
+    yield put(TaskActions.deleteTaskRejected(e));
   }
 }
 

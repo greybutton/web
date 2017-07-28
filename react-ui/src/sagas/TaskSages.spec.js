@@ -96,6 +96,19 @@ describe('Task sagas tests', () => {
       });
     });
   });
+  describe('delete task', () => {
+    const payload = task._id;
+    const gen = TaskSagas.deleteTask({ payload });
+    it('should call delete task api', () => {
+      expect(gen.next().value).toEqual(call(TaskSagas.deleteTaskApi, payload));
+    });
+    it('should put delete task fulfilled', () => {
+      expect(gen.next().value).toEqual(put(TaskActions.deleteTaskFulfilled()));
+    });
+    it('should put delete task reject', () => {
+      expect(gen.throw().value).toEqual(put(TaskActions.deleteTaskRejected()));
+    });
+  });
   describe('update important tasks order', () => {
     const payload = {
       task: {
