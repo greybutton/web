@@ -47,7 +47,6 @@ describe(`Task ${apiTasks}`, () => {
       return request(app)
         .get(`${apiTasks}/999`)
         .then((res) => {
-          console.log(res.body);
           expect(res.status).toBe(400);
         })
         .catch((err) => {
@@ -76,15 +75,17 @@ describe(`Task ${apiTasks}`, () => {
             return task;
           });
         })
-        .then(task => request(app).get(`${apiTasks}/${task._id}`).then((res) => {
-          const recevied = res.body.task;
-          expect(res.status).toBe(200);
-          expect(recevied).toHaveProperty('text', task.text);
-          expect(recevied).toHaveProperty('time', task.time);
-          expect(recevied).toHaveProperty('sector', task.sector);
-          expect(recevied).toHaveProperty('matrixQuarter', task.matrixQuarter);
-          expect(recevied).toHaveProperty('_id', task._id.toString());
-        }))
+        .then(task =>
+          request(app).get(`${apiTasks}/${task._id}`).then((res) => {
+            const recevied = res.body.task;
+            expect(res.status).toBe(200);
+            expect(recevied).toHaveProperty('text', task.text);
+            expect(recevied).toHaveProperty('time', task.time);
+            expect(recevied).toHaveProperty('sector', task.sector);
+            expect(recevied).toHaveProperty('matrixQuarter', task.matrixQuarter);
+            expect(recevied).toHaveProperty('_id', task._id.toString());
+          }),
+        )
         .catch((err) => {
           console.log(err);
         });
