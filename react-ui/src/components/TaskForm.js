@@ -25,7 +25,7 @@ class TaskForm extends Component {
     }
   };
   shouldComponentUpdate = (nextProps, nextState) => {
-    if (Object.keys(nextProps.task).length === 0) {
+    if (Object.keys(nextProps.task).length === 0 && !nextProps.anyTouched) {
       return false;
     } else {
       return true;
@@ -292,24 +292,24 @@ class TaskForm extends Component {
   }
 }
 
-// const validate = values => {
-//   const errors = {};
-//   if (!values.text) {
-//     errors.text = {
-//       message: 'You need to provide text',
-//     };
-//   }
-//   if (!values.time) {
-//     errors.time = {
-//       message: 'You need to provide time',
-//     };
-//   }
-//   if (!values.sector) {
-//     errors.sector = {
-//       message: 'You need to provide sector',
-//     };
-//   }
-//   return errors;
-// };
+const validate = values => {
+  const errors = {};
+  if (!values.text) {
+    errors.text = {
+      message: 'You need to provide text',
+    };
+  }
+  if (!values.time) {
+    errors.time = {
+      message: 'You need to provide time',
+    };
+  }
+  if (!values.sector) {
+    errors.sector = {
+      message: 'You need to provide sector',
+    };
+  }
+  return errors;
+};
 
-export default reduxForm({ form: 'task' })(TaskForm);
+export default reduxForm({ form: 'task', validate })(TaskForm);
