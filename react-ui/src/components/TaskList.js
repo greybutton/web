@@ -3,12 +3,12 @@ import { Panel, ListGroup } from 'react-bootstrap';
 import Sortable from 'react-sortablejs';
 import TaskCard from './TaskCard';
 
-const TaskList = ({ importantTasks, sectors, loading, updateImportantTasksOrder, deleteTask }) => {
+const TaskList = ({ importantTaskList, loading, updateTaskListImportantOrder, deleteTask }) => {
   const cards = () =>
-    importantTasks.map(task => <TaskCard key={task._id} task={task} deleteTask={deleteTask} />);
+    importantTaskList.map(task => <TaskCard key={task._id} task={task} deleteTask={deleteTask} />);
   const onEnd = evt =>
     new Promise((resolve, reject) =>
-      updateImportantTasksOrder({
+      updateTaskListImportantOrder({
         oldIndex: evt.oldIndex,
         newIndex: evt.newIndex,
         _id: evt.item.dataset.id,

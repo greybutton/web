@@ -2,25 +2,25 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { SubmissionError } from 'redux-form';
 import { connect } from 'react-redux';
-import * as SectorActions from '../actions/SectorActions';
-import SectorForm from '../components/SectorForm';
+import * as AreaActions from '../actions/AreaActions';
+import AreaForm from '../components/AreaForm';
 
-class SectorFormPage extends Component {
+class AreaFormPage extends Component {
   state = {
     redirect: false,
   };
   componentDidMount() {
     const { _id } = this.props.match.params;
     if (_id) {
-      this.props.dispatch(SectorActions.requestSector(_id));
+      this.props.dispatch(AreaActions.requestArea(_id));
     } else {
-      this.props.dispatch(SectorActions.newSector());
+      this.props.dispatch(AreaActions.newArea());
     }
   }
-  handleSubmit = sector => {
-    if (!sector._id) {
+  handleSubmit = area => {
+    if (!area._id) {
       return new Promise((resolve, reject) => {
-        this.props.dispatch(SectorActions.saveSector({ sector, resolve, reject }));
+        this.props.dispatch(AreaActions.saveArea({ area, resolve, reject }));
       })
         .then(response => this.setState({ redirect: true }))
         .catch(err => {
@@ -28,7 +28,7 @@ class SectorFormPage extends Component {
         });
     } else {
       return new Promise((resolve, reject) => {
-        this.props.dispatch(SectorActions.updateSector({ sector, resolve, reject }));
+        this.props.dispatch(AreaActions.updateArea({ area, resolve, reject }));
       })
         .then(response => this.setState({ redirect: true }))
         .catch(err => {
@@ -41,8 +41,8 @@ class SectorFormPage extends Component {
       <div>
         {this.state.redirect
           ? <Redirect to="/" />
-          : <SectorForm
-              sector={this.props.sector}
+          : <AreaForm
+              area={this.props.area}
               loading={this.props.loading}
               onSubmit={this.handleSubmit}
             />}
@@ -53,10 +53,10 @@ class SectorFormPage extends Component {
 
 function mapStateToProps(state) {
   return {
-    sector: state.sectorStore.sector,
-    loading: state.sectorStore.loading,
-    errors: state.sectorStore.errors,
+    area: state.areaStore.area,
+    loading: state.areaStore.loading,
+    errors: state.areaStore.errors,
   };
 }
 
-export default connect(mapStateToProps)(SectorFormPage);
+export default connect(mapStateToProps)(AreaFormPage);

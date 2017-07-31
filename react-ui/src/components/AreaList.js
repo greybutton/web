@@ -1,13 +1,13 @@
 import React from 'react';
 import { Panel, ListGroup } from 'react-bootstrap';
 import Sortable from 'react-sortablejs';
-import SectorCard from './SectorCard';
+import AreaCard from './AreaCard';
 
-const SectorList = ({ sectors, loading, updateSectorOrder }) => {
-  const cards = () => sectors.map(sector => <SectorCard key={sector._id} sector={sector} />);
+const AreaList = ({ areaList, loading, updateAreaListOrder }) => {
+  const cards = () => areaList.map(area => <AreaCard key={area._id} area={area} />);
   const onEnd = evt =>
     new Promise((resolve, reject) =>
-      updateSectorOrder({
+      updateAreaListOrder({
         oldIndex: evt.oldIndex,
         newIndex: evt.newIndex,
         _id: evt.item.dataset.id,
@@ -18,7 +18,7 @@ const SectorList = ({ sectors, loading, updateSectorOrder }) => {
       console.log(err);
     });
   return (
-    <Panel header="List of Sectors">
+    <Panel header="The wheel of life">
       <ListGroup fill>
         {loading
           ? 'loading...'
@@ -35,4 +35,4 @@ const SectorList = ({ sectors, loading, updateSectorOrder }) => {
   );
 };
 
-export default SectorList;
+export default AreaList;

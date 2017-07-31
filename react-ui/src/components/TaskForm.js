@@ -36,22 +36,22 @@ class TaskForm extends Component {
     // refs should be exist
     // if refs doesn't exist checked is null and after submit form null prevent redirect
     if (Object.keys(prevState).length === 0 && this.daily) {
-      if (task.matrixQuarter === 'daily') {
+      if (task.quadrant === 'daily') {
         this.daily.checked = true;
       }
-      if (task.matrixQuarter === 'first') {
+      if (task.quadrant === 'first') {
         this.urgent.checked = true;
         this.important.checked = true;
       }
-      if (task.matrixQuarter === 'second') {
+      if (task.quadrant === 'second') {
         this.notUrgent.checked = true;
         this.important.checked = true;
       }
-      if (task.matrixQuarter === 'third') {
+      if (task.quadrant === 'third') {
         this.urgent.checked = true;
         this.notImportant.checked = true;
       }
-      if (task.matrixQuarter === 'fourth') {
+      if (task.quadrant === 'fourth') {
         this.notUrgent.checked = true;
         this.notImportant.checked = true;
       }
@@ -68,15 +68,15 @@ class TaskForm extends Component {
               componentClass="select"
               placeholder="select"
               inputRef={ref => {
-                this.sector = ref;
+                this.area = ref;
               }}
               {...input}
             >
               <option />
-              {this.props.sectors.map(sector => {
+              {this.props.areaList.map(area => {
                 return (
-                  <option key={sector._id} value={sector._id} data-title={sector.title}>
-                    {sector.title}
+                  <option key={area._id} value={area._id} data-title={area.title}>
+                    {area.title}
                   </option>
                 );
               })}
@@ -132,7 +132,7 @@ class TaskForm extends Component {
         onClick={this.handleChangePickMatrix}
         style={{ display: this.state.daily ? 'none' : '' }}
       >
-        <ControlLabel>Pick matrix quarter</ControlLabel>
+        <ControlLabel>Pick quadrant of the matrix</ControlLabel>
         <FormGroup>
           <ButtonGroup>
             <Button>
@@ -214,9 +214,9 @@ class TaskForm extends Component {
       notImportant: notImportant,
     });
   };
-  handleChangeSector = () => {
-    const index = this.sector.options.selectedIndex;
-    const title = this.sector.options[index].dataset.title;
+  handleChangeArea = () => {
+    const index = this.area.options.selectedIndex;
+    const title = this.area.options[index].dataset.title;
     this.props.change('label', title);
   };
   render() {
@@ -244,14 +244,14 @@ class TaskForm extends Component {
                 placeholder="Enter time hh:mm"
               />
               <Field
-                name="sector"
+                name="area"
                 type="select"
                 component={this.renderField}
-                onChange={this.handleChangeSector}
-                label="Pick sector"
+                onChange={this.handleChangeArea}
+                label="Pick area of the wheel of life"
               />
               <Field
-                name="matrixQuarter"
+                name="quadrant"
                 type="checkbox"
                 component={this.renderMatrix}
                 onChange={this.handleChangePickMatrix}
@@ -264,7 +264,7 @@ class TaskForm extends Component {
                 }}
               />
               <Field
-                name="matrixQuarter"
+                name="quadrant"
                 component={this.renderMatrix}
                 normalize={(value, previousValue) => {
                   if (this.state.urgent && this.state.important) {
@@ -304,9 +304,9 @@ const validate = values => {
       message: 'You need to provide time',
     };
   }
-  if (!values.sector) {
-    errors.sector = {
-      message: 'You need to provide sector',
+  if (!values.area) {
+    errors.area = {
+      message: 'You need to provide area',
     };
   }
   return errors;

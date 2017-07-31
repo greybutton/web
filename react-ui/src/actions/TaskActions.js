@@ -1,15 +1,15 @@
 import * as types from '../constants/actionTypes';
 
-export function requestTasks() {
+export function requestTaskList() {
   return {
-    type: types.REQUEST_TASKS,
+    type: types.REQUEST_TASK_LIST,
   };
 }
 
-export function receiveTasks(tasks) {
+export function receiveTaskList(taskList) {
   return {
-    type: types.RECEIVE_TASKS,
-    payload: tasks,
+    type: types.RECEIVE_TASK_LIST,
+    payload: taskList,
   };
 }
 
@@ -73,10 +73,10 @@ export function updateTaskPending() {
   };
 }
 
-export function updateTaskFulfilled(tasks) {
+export function updateTaskFulfilled(taskList) {
   return {
     type: types.UPDATE_TASK_FULFILLED,
-    payload: tasks,
+    payload: taskList,
   };
 }
 
@@ -94,10 +94,10 @@ export function deleteTask(id) {
   };
 }
 
-export function deleteTaskFulfilled(tasks) {
+export function deleteTaskFulfilled(taskList) {
   return {
     type: types.DELETE_TASK_FULFILLED,
-    payload: tasks,
+    payload: taskList,
   };
 }
 
@@ -108,29 +108,29 @@ export function deleteTaskRejected(error) {
   };
 }
 
-export function updateImportantTasksOrder(payload) {
+export function updateTaskListImportantOrder(payload) {
   return {
-    type: types.UPDATE_IMPORTANT_TASKS_ORDER,
+    type: types.UPDATE_TASK_LIST_IMPORTANT_ORDER,
     payload,
   };
 }
 
-export function updateImportantTasksOrderPending() {
+export function updateTaskListImportantOrderPending() {
   return {
-    type: types.UPDATE_IMPORTANT_TASKS_ORDER_PENDING,
+    type: types.UPDATE_TASK_LIST_IMPORTANT_ORDER_PENDING,
   };
 }
 
-export function updateImportantTasksOrderFulfilled(tasks) {
+export function updateTaskListImportantOrderFulfilled(taskList) {
   return {
-    type: types.UPDATE_IMPORTANT_TASKS_ORDER_FULFILLED,
-    payload: tasks,
+    type: types.UPDATE_TASK_LIST_IMPORTANT_ORDER_FULFILLED,
+    payload: taskList,
   };
 }
 
-export function updateImportantTasksOrderRejected(error) {
+export function updateTaskListImportantOrderRejected(error) {
   return {
-    type: types.UPDATE_IMPORTANT_TASKS_ORDER_REJECTED,
+    type: types.UPDATE_TASK_LIST_IMPORTANT_ORDER_REJECTED,
     payload: error,
   };
 }

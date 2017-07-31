@@ -1,9 +1,9 @@
 import * as types from '../constants/actionTypes';
 
 export const defaultState = {
-  dailyTasks: [],
-  importantTasks: [],
-  matrixTasks: [],
+  dailyTaskList: [],
+  importantTaskList: [],
+  matrixTaskList: [],
   task: {},
   taskSearchResult: [],
   loading: false,
@@ -12,18 +12,18 @@ export const defaultState = {
 
 export default (state = defaultState, action = {}) => {
   switch (action.type) {
-    case types.REQUEST_TASKS: {
+    case types.REQUEST_TASK_LIST: {
       return {
         ...state,
         loading: true,
       };
     }
-    case types.RECEIVE_TASKS: {
+    case types.RECEIVE_TASK_LIST: {
       return {
         ...state,
-        dailyTasks: action.payload.data.tasks.daily,
-        importantTasks: action.payload.data.tasks.important,
-        matrixTasks: action.payload.data.tasks.important.concat(
+        dailyTaskList: action.payload.data.tasks.daily,
+        importantTaskList: action.payload.data.tasks.important,
+        matrixTaskList: action.payload.data.tasks.important.concat(
           action.payload.data.tasks.notImportant,
         ),
         loading: false,
@@ -58,9 +58,9 @@ export default (state = defaultState, action = {}) => {
     case types.SAVE_TASK_FULFILLED: {
       return {
         ...state,
-        dailyTasks: action.payload.data.tasks.daily,
-        importantTasks: action.payload.data.tasks.important,
-        matrixTasks: action.payload.data.tasks.important.concat(
+        dailyTaskList: action.payload.data.tasks.daily,
+        importantTaskList: action.payload.data.tasks.important,
+        matrixTaskList: action.payload.data.tasks.important.concat(
           action.payload.data.tasks.notImportant,
         ),
         loading: false,
@@ -72,8 +72,8 @@ export default (state = defaultState, action = {}) => {
         action.payload.response.data.errors['tasks.daily'] ||
         action.payload.response.data.errors['tasks.important'] ||
         action.payload.response.data.errors['tasks.notImportant'];
-      const { text, time, sector, matrixQuarter } = data.errors;
-      const errors = { global: data.message, text, time, sector, matrixQuarter };
+      const { text, time, area, quadrant } = data.errors;
+      const errors = { global: data.message, text, time, area, quadrant };
       return {
         ...state,
         loading: false,
@@ -89,9 +89,9 @@ export default (state = defaultState, action = {}) => {
     case types.UPDATE_TASK_FULFILLED: {
       return {
         ...state,
-        dailyTasks: action.payload.data.tasks.daily,
-        importantTasks: action.payload.data.tasks.important,
-        matrixTasks: action.payload.data.tasks.important.concat(
+        dailyTaskList: action.payload.data.tasks.daily,
+        importantTaskList: action.payload.data.tasks.important,
+        matrixTaskList: action.payload.data.tasks.important.concat(
           action.payload.data.tasks.notImportant,
         ),
         loading: false,
@@ -108,15 +108,15 @@ export default (state = defaultState, action = {}) => {
         data.errors['tasks.daily.0.time'] ||
         data.errors['tasks.important.0.time'] ||
         data.errors['tasks.notImportant.0.time'];
-      const sector =
-        data.errors['tasks.daily.0.sector'] ||
-        data.errors['tasks.important.0.sector'] ||
-        data.errors['tasks.notImportant.0.sector'];
-      const matrixQuarter =
-        data.errors['tasks.daily.0.matrixQuarter'] ||
-        data.errors['tasks.important.0.matrixQuarter'] ||
-        data.errors['tasks.notImportant.0.matrixQuarter'];
-      const errors = { global: data.message, text, time, sector, matrixQuarter };
+      const area =
+        data.errors['tasks.daily.0.area'] ||
+        data.errors['tasks.important.0.area'] ||
+        data.errors['tasks.notImportant.0.area'];
+      const quadrant =
+        data.errors['tasks.daily.0.quadrant'] ||
+        data.errors['tasks.important.0.quadrant'] ||
+        data.errors['tasks.notImportant.0.quadrant'];
+      const errors = { global: data.message, text, time, area, quadrant };
       return {
         ...state,
         loading: false,
@@ -126,9 +126,9 @@ export default (state = defaultState, action = {}) => {
     case types.DELETE_TASK_FULFILLED: {
       return {
         ...state,
-        dailyTasks: action.payload.data.tasks.daily,
-        importantTasks: action.payload.data.tasks.important,
-        matrixTasks: action.payload.data.tasks.important.concat(
+        dailyTaskList: action.payload.data.tasks.daily,
+        importantTaskList: action.payload.data.tasks.important,
+        matrixTaskList: action.payload.data.tasks.important.concat(
           action.payload.data.tasks.notImportant,
         ),
         loading: false,
@@ -144,21 +144,21 @@ export default (state = defaultState, action = {}) => {
         errors,
       };
     }
-    case types.UPDATE_IMPORTANT_TASKS_ORDER_PENDING: {
+    case types.UPDATE_TASK_LIST_IMPORTANT_ORDER_PENDING: {
       return {
         ...state,
         loading: true,
       };
     }
-    case types.UPDATE_IMPORTANT_TASKS_ORDER_FULFILLED: {
+    case types.UPDATE_TASK_LIST_IMPORTANT_ORDER_FULFILLED: {
       return {
         ...state,
-        importantTasks: action.payload.data.tasks,
+        importantTaskList: action.payload.data.tasks,
         loading: false,
         errors: {},
       };
     }
-    case types.UPDATE_IMPORTANT_TASKS_ORDER_REJECTED: {
+    case types.UPDATE_TASK_LIST_IMPORTANT_ORDER_REJECTED: {
       const data = action.payload.data.errors;
       return {
         ...state,

@@ -4,7 +4,7 @@ import * as TaskActions from '../actions/TaskActions';
 
 const url = '/api/v1/tasks';
 
-export function fetchTasksApi() {
+export function fetchTaskListApi() {
   return axios.get(url);
 }
 
@@ -24,8 +24,8 @@ export function deleteTaskApi(id) {
   return axios.delete(`${url}/${id}`);
 }
 
-export function updateImportantTasksOrderApi(payload) {
-  return axios.put(`${url}/tasksImportantOrder/${payload._id}`, {
+export function updateTaskListImportantOrderApi(payload) {
+  return axios.put(`${url}/taskListImportantOrder/${payload._id}`, {
     indexes: { oldIndex: payload.oldIndex, newIndex: payload.newIndex },
   });
 }
@@ -33,8 +33,8 @@ export function updateImportantTasksOrderApi(payload) {
 export function* saveTask({ payload }) {
   yield put(TaskActions.saveTaskPending());
   try {
-    const tasks = yield call(saveTaskApi, payload.task);
-    yield put(TaskActions.saveTaskFulfilled(tasks));
+    const taskList = yield call(saveTaskApi, payload.task);
+    yield put(TaskActions.saveTaskFulfilled(taskList));
     yield call(payload.resolve);
   } catch (e) {
     yield put(TaskActions.saveTaskRejected(e));
@@ -42,9 +42,9 @@ export function* saveTask({ payload }) {
   }
 }
 
-export function* fetchTasks() {
-  const tasks = yield call(fetchTasksApi);
-  yield put(TaskActions.receiveTasks(tasks));
+export function* fetchTaskList() {
+  const taskList = yield call(fetchTaskListApi);
+  yield put(TaskActions.receiveTaskList(taskList));
 }
 
 export function* fetchTask({ payload }) {
@@ -55,8 +55,8 @@ export function* fetchTask({ payload }) {
 export function* updateTask({ payload }) {
   yield put(TaskActions.updateTaskPending());
   try {
-    const tasks = yield call(updateTaskApi, payload.task);
-    yield put(TaskActions.updateTaskFulfilled(tasks));
+    const taskList = yield call(updateTaskApi, payload.task);
+    yield put(TaskActions.updateTaskFulfilled(taskList));
     yield call(payload.resolve);
   } catch (e) {
     yield put(TaskActions.updateTaskRejected(e));
@@ -66,20 +66,20 @@ export function* updateTask({ payload }) {
 
 export function* deleteTask({ payload }) {
   try {
-    const tasks = yield call(deleteTaskApi, payload);
-    yield put(TaskActions.deleteTaskFulfilled(tasks));
+    const taskList = yield call(deleteTaskApi, payload);
+    yield put(TaskActions.deleteTaskFulfilled(taskList));
   } catch (e) {
     yield put(TaskActions.deleteTaskRejected(e));
   }
 }
 
-export function* updateImportantTasksOrder({ payload }) {
+export function* updateTaskListImportantOrder({ payload }) {
   try {
-    const tasks = yield call(updateImportantTasksOrderApi, payload);
-    yield put(TaskActions.updateImportantTasksOrderFulfilled(tasks));
+    const taskList = yield call(updateTaskListImportantOrderApi, payload);
+    yield put(TaskActions.updateTaskListImportantOrderFulfilled(taskList));
     yield call(payload.resolve);
   } catch (e) {
-    yield put(TaskActions.updateImportantTasksOrderRejected(e));
+    yield put(TaskActions.updateTaskListImportantOrderRejected(e));
     yield call(payload.reject);
   }
 }

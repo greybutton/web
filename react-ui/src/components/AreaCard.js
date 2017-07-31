@@ -3,42 +3,39 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { ProgressBar, ListGroupItem, Button, Collapse } from 'react-bootstrap';
 
-class SectorCard extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { open: false };
-  }
+class AreaCard extends Component {
+  state = { open: false };
   render() {
-    const { sector } = this.props;
+    const { area } = this.props;
     return (
       <ListGroupItem
-        data-id={sector._id}
+        data-id={area._id}
         onDoubleClick={() => this.setState({ open: !this.state.open })}
       >
         <h4>
-          {sector.title}
+          {area.title}
         </h4>
         <ProgressBar>
           <ProgressBar
             min={0}
             max={10}
-            now={sector.score}
+            now={area.score}
             bsStyle="success"
-            label={`${sector.score}/10 score`}
+            label={`${area.score}/10 score`}
             key={1}
           />
           <ProgressBar
             min={0}
             max={10}
-            now={sector.desirableScore - sector.score}
+            now={area.desirableScore - area.score}
             bsStyle="info"
-            label={`${sector.desirableScore}/10 desirable score`}
+            label={`${area.desirableScore}/10 desirable score`}
             key={2}
           />
         </ProgressBar>
         <Collapse in={this.state.open}>
           <div>
-            <Link to={`/sector/edit/${sector._id}`}>
+            <Link to={`/areas/edit/${area._id}`}>
               <Button>Edit</Button>
             </Link>
           </div>
@@ -48,8 +45,8 @@ class SectorCard extends Component {
   }
 }
 
-SectorCard.propTypes = {
-  sector: PropTypes.object.isRequired,
+AreaCard.propTypes = {
+  area: PropTypes.object.isRequired,
 };
 
-export default SectorCard;
+export default AreaCard;

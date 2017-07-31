@@ -6,9 +6,9 @@ describe('Task Actions', () => {
     _id: 123,
     text: 'test task actions',
     time: '00:15',
-    sector: 2,
-    matrixQuarter: 'first',
-    label: 'sector title',
+    area: 2,
+    quadrant: 'first',
+    label: 'area title',
   };
   it('should create an action new task', () => {
     const expectedAction = {
@@ -52,19 +52,19 @@ describe('Task Actions', () => {
       expect(TaskActions.saveTaskRejected(response)).toEqual(expectedAction);
     });
   });
-  describe('get tasks', () => {
-    it('should create an action request tasks', () => {
+  describe('get task list', () => {
+    it('should create an action request task list', () => {
       const expectedAction = {
-        type: types.REQUEST_TASKS,
+        type: types.REQUEST_TASK_LIST,
       };
-      expect(TaskActions.requestTasks()).toEqual(expectedAction);
+      expect(TaskActions.requestTaskList()).toEqual(expectedAction);
     });
-    it('should create an action receive tasks', () => {
+    it('should create an action receive task list', () => {
       const expectedAction = {
-        type: types.RECEIVE_TASKS,
+        type: types.RECEIVE_TASK_LIST,
         payload: task,
       };
-      expect(TaskActions.receiveTasks(task)).toEqual(expectedAction);
+      expect(TaskActions.receiveTaskList(task)).toEqual(expectedAction);
     });
   });
   describe('put task', () => {
@@ -110,8 +110,8 @@ describe('Task Actions', () => {
           errors: {
             'tasks.important.0.text': 'Text task is required',
             'tasks.important.0.time': 'Time task is required',
-            'tasks.important.0.sector': 'Sector task is required',
-            'tasks.important.0.matrixQuarter': 'Matrix quarter is required',
+            'tasks.important.0.area': 'Area task is required',
+            'tasks.important.0.quadrant': 'Matrix quarter is required',
           },
         },
       };
@@ -162,23 +162,23 @@ describe('Task Actions', () => {
         reject: () => {},
       };
       const expectedAction = {
-        type: types.UPDATE_IMPORTANT_TASKS_ORDER,
+        type: types.UPDATE_TASK_LIST_IMPORTANT_ORDER,
         payload,
       };
-      expect(TaskActions.updateImportantTasksOrder(payload)).toEqual(expectedAction);
+      expect(TaskActions.updateTaskListImportantOrder(payload)).toEqual(expectedAction);
     });
     it('should create an action to update pending a important task order', () => {
       const expectedAction = {
-        type: types.UPDATE_IMPORTANT_TASKS_ORDER_PENDING,
+        type: types.UPDATE_TASK_LIST_IMPORTANT_ORDER_PENDING,
       };
-      expect(TaskActions.updateImportantTasksOrderPending()).toEqual(expectedAction);
+      expect(TaskActions.updateTaskListImportantOrderPending()).toEqual(expectedAction);
     });
     it('should create an action to update fulfilled a important task order', () => {
       const expectedAction = {
-        type: types.UPDATE_IMPORTANT_TASKS_ORDER_FULFILLED,
+        type: types.UPDATE_TASK_LIST_IMPORTANT_ORDER_FULFILLED,
         payload: task,
       };
-      expect(TaskActions.updateImportantTasksOrderFulfilled(task)).toEqual(expectedAction);
+      expect(TaskActions.updateTaskListImportantOrderFulfilled(task)).toEqual(expectedAction);
     });
     it('should create an action to update rejected a important task order', () => {
       const error = {
@@ -188,10 +188,10 @@ describe('Task Actions', () => {
         },
       };
       const expectedAction = {
-        type: types.UPDATE_IMPORTANT_TASKS_ORDER_REJECTED,
+        type: types.UPDATE_TASK_LIST_IMPORTANT_ORDER_REJECTED,
         payload: error,
       };
-      expect(TaskActions.updateImportantTasksOrderRejected(error)).toEqual(expectedAction);
+      expect(TaskActions.updateTaskListImportantOrderRejected(error)).toEqual(expectedAction);
     });
   });
 });

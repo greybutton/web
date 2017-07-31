@@ -1,65 +1,55 @@
 import { takeLatest } from 'redux-saga/effects';
-import {
-  watchSaveSector,
-  watchRequestSectors,
-  watchRequestSector,
-  watchUpdateSector,
-  watchUpdateSectorOrder,
-  watchSaveTask,
-  watchRequestTasks,
-  watchRequestTask,
-  watchUpdateTask,
-  watchDeleteTask,
-  watchUpdateImportantTasksOrder,
-} from './watchers';
-import * as SectorSagas from './SectorSagas';
+import * as Watchers from './watchers';
+import * as AreaSagas from './AreaSagas';
 import * as TaskSagas from './TaskSagas';
 import * as types from '../constants/actionTypes';
 
-describe('test watch save sector', () => {
-  describe('post sector', () => {
-    const gen = watchSaveSector();
-    it('should call watchSaveSector', () => {
-      expect(gen.next().value).toEqual(takeLatest(types.SAVE_SECTOR, SectorSagas.saveSector));
+describe('test watch save area', () => {
+  describe('post area', () => {
+    const gen = Watchers.watchSaveArea();
+    it('should call watchSaveArea', () => {
+      expect(gen.next().value).toEqual(takeLatest(types.SAVE_AREA, AreaSagas.saveArea));
     });
     it('should be done', () => {
       expect(gen.next().done).toEqual(true);
     });
   });
-  describe('get sectors', () => {
-    const gen = watchRequestSectors();
-    it('should call watchRequestSectors', () => {
-      expect(gen.next().value).toEqual(takeLatest(types.REQUEST_SECTORS, SectorSagas.fetchSectors));
-    });
-    it('should be done', () => {
-      expect(gen.next().done).toEqual(true);
-    });
-  });
-  describe('put sector', () => {
-    describe('fetch sector', () => {
-      const gen = watchRequestSector();
-      it('should call watchRequestSector', () => {
-        expect(gen.next().value).toEqual(takeLatest(types.REQUEST_SECTOR, SectorSagas.fetchSector));
-      });
-      it('should be done', () => {
-        expect(gen.next().done).toEqual(true);
-      });
-    });
-    describe('update sector', () => {
-      const gen = watchUpdateSector();
-      it('should call watchUpdateSector', () => {
-        expect(gen.next().value).toEqual(takeLatest(types.UPDATE_SECTOR, SectorSagas.updateSector));
-      });
-      it('should be done', () => {
-        expect(gen.next().done).toEqual(true);
-      });
-    });
-  });
-  describe('update sector order', () => {
-    const gen = watchUpdateSectorOrder();
-    it('should call watchUpdateSectorOrder', () => {
+  describe('get area list', () => {
+    const gen = Watchers.watchRequestAreaList();
+    it('should call watchRequestAreaList', () => {
       expect(gen.next().value).toEqual(
-        takeLatest(types.UPDATE_SECTOR_ORDER, SectorSagas.updateSectorOrder),
+        takeLatest(types.REQUEST_AREA_LIST, AreaSagas.fetchAreaList),
+      );
+    });
+    it('should be done', () => {
+      expect(gen.next().done).toEqual(true);
+    });
+  });
+  describe('put area', () => {
+    describe('fetch area', () => {
+      const gen = Watchers.watchRequestArea();
+      it('should call watchRequestArea', () => {
+        expect(gen.next().value).toEqual(takeLatest(types.REQUEST_AREA, AreaSagas.fetchArea));
+      });
+      it('should be done', () => {
+        expect(gen.next().done).toEqual(true);
+      });
+    });
+    describe('update area', () => {
+      const gen = Watchers.watchUpdateArea();
+      it('should call watchUpdateArea', () => {
+        expect(gen.next().value).toEqual(takeLatest(types.UPDATE_AREA, AreaSagas.updateArea));
+      });
+      it('should be done', () => {
+        expect(gen.next().done).toEqual(true);
+      });
+    });
+  });
+  describe('update area list order', () => {
+    const gen = Watchers.watchUpdateAreaListOrder();
+    it('should call watchUpdateAreaListOrder', () => {
+      expect(gen.next().value).toEqual(
+        takeLatest(types.UPDATE_AREA_LIST_ORDER, AreaSagas.updateAreaListOrder),
       );
     });
     it('should be done', () => {
@@ -70,7 +60,7 @@ describe('test watch save sector', () => {
 
 describe('test watch save task', () => {
   describe('post task', () => {
-    const gen = watchSaveTask();
+    const gen = Watchers.watchSaveTask();
     it('should call watchSaveTask', () => {
       expect(gen.next().value).toEqual(takeLatest(types.SAVE_TASK, TaskSagas.saveTask));
     });
@@ -79,9 +69,11 @@ describe('test watch save task', () => {
     });
   });
   describe('get tasks', () => {
-    const gen = watchRequestTasks();
+    const gen = Watchers.watchRequestTaskList();
     it('should call watchRequestTasks', () => {
-      expect(gen.next().value).toEqual(takeLatest(types.REQUEST_TASKS, TaskSagas.fetchTasks));
+      expect(gen.next().value).toEqual(
+        takeLatest(types.REQUEST_TASK_LIST, TaskSagas.fetchTaskList),
+      );
     });
     it('should be done', () => {
       expect(gen.next().done).toEqual(true);
@@ -89,7 +81,7 @@ describe('test watch save task', () => {
   });
   describe('put task', () => {
     describe('fetch task', () => {
-      const gen = watchRequestTask();
+      const gen = Watchers.watchRequestTask();
       it('should call watchRequestTask', () => {
         expect(gen.next().value).toEqual(takeLatest(types.REQUEST_TASK, TaskSagas.fetchTask));
       });
@@ -98,7 +90,7 @@ describe('test watch save task', () => {
       });
     });
     describe('update task', () => {
-      const gen = watchUpdateTask();
+      const gen = Watchers.watchUpdateTask();
       it('should call watchUpdateTask', () => {
         expect(gen.next().value).toEqual(takeLatest(types.UPDATE_TASK, TaskSagas.updateTask));
       });
@@ -108,7 +100,7 @@ describe('test watch save task', () => {
     });
   });
   describe('delete task', () => {
-    const gen = watchDeleteTask();
+    const gen = Watchers.watchDeleteTask();
     it('should call watchDeleteTask', () => {
       expect(gen.next().value).toEqual(takeLatest(types.DELETE_TASK, TaskSagas.deleteTask));
     });
@@ -116,11 +108,11 @@ describe('test watch save task', () => {
       expect(gen.next().done).toEqual(true);
     });
   });
-  describe('update important tasks order', () => {
-    const gen = watchUpdateImportantTasksOrder();
-    it('should call watchUpdateImportantTasksOrder', () => {
+  describe('update task list important order', () => {
+    const gen = Watchers.watchUpdateTaskListImportantOrder();
+    it('should call watchUpdateTaskListImportantOrder', () => {
       expect(gen.next().value).toEqual(
-        takeLatest(types.UPDATE_IMPORTANT_TASKS_ORDER, TaskSagas.updateImportantTasksOrder),
+        takeLatest(types.UPDATE_TASK_LIST_IMPORTANT_ORDER, TaskSagas.updateTaskListImportantOrder),
       );
     });
     it('should be done', () => {

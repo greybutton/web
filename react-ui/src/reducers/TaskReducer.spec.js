@@ -6,14 +6,25 @@ describe('Task Reducer', () => {
     _id: 123,
     text: 'test task reducers',
     time: '00:15',
-    sector: 2,
-    matrixQuarter: 'first',
-    label: 'sector title',
+    area: 2,
+    quadrant: 'first',
+    label: 'area title',
   };
   it('should return the initial state', () => {
     expect(TaskReducer(undefined, {})).toEqual(defaultState);
+    expect(TaskReducer(undefined)).toEqual(defaultState);
   });
   describe('post task', () => {
+    it('should handle NEW_TASK', () => {
+      expect(
+        TaskReducer(defaultState, {
+          type: types.NEW_TASK,
+        }),
+      ).toEqual({
+        ...defaultState,
+        task: {},
+      });
+    });
     it('should handle SAVE_TASK_PENDING', () => {
       expect(
         TaskReducer(defaultState, {
@@ -35,9 +46,9 @@ describe('Task Reducer', () => {
         }),
       ).toEqual({
         ...defaultState,
-        dailyTasks: data.tasks.daily,
-        importantTasks: data.tasks.important,
-        matrixTasks: data.tasks.important.concat(data.tasks.notImportant),
+        dailyTaskList: data.tasks.daily,
+        importantTaskList: data.tasks.important,
+        matrixTaskList: data.tasks.important.concat(data.tasks.notImportant),
       });
     });
     it('should handle SAVE_TASK_REJECTED', () => {
@@ -45,13 +56,13 @@ describe('Task Reducer', () => {
         status: 400,
         data: {
           errors: {
-            'tasks.daily': {
+            'tasks.notImportant': {
               message: 'ValidationError',
               errors: {
                 text: 'Text task is required',
                 time: 'Time task is required',
-                sector: 'Sector task is required',
-                matrixQuarter: 'Matrix quater is required',
+                area: 'area task is required',
+                quadrant: 'Matrix quater is required',
               },
             },
           },
@@ -68,37 +79,37 @@ describe('Task Reducer', () => {
           global: 'ValidationError',
           text: 'Text task is required',
           time: 'Time task is required',
-          sector: 'Sector task is required',
-          matrixQuarter: 'Matrix quater is required',
+          area: 'area task is required',
+          quadrant: 'Matrix quater is required',
         },
       });
     });
   });
-  describe('get sectors', () => {
-    it('should handle REQUEST_TASKS', () => {
+  describe('get task list', () => {
+    it('should handle REQUEST_TASK_LIST', () => {
       expect(
         TaskReducer(defaultState, {
-          type: types.REQUEST_TASKS,
+          type: types.REQUEST_TASK_LIST,
         }),
       ).toEqual({
         ...defaultState,
         loading: true,
       });
     });
-    it('should handle RECEIVE_TASKS', () => {
+    it('should handle RECEIVE_TASK_LIST', () => {
       const data = {
         tasks: { important: [task], notImportant: [task], daily: [task] },
       };
       expect(
         TaskReducer(defaultState, {
-          type: types.RECEIVE_TASKS,
+          type: types.RECEIVE_TASK_LIST,
           payload: { data },
         }),
       ).toEqual({
         ...defaultState,
-        dailyTasks: data.tasks.daily,
-        importantTasks: data.tasks.important,
-        matrixTasks: data.tasks.important.concat(data.tasks.notImportant),
+        dailyTaskList: data.tasks.daily,
+        importantTaskList: data.tasks.important,
+        matrixTaskList: data.tasks.important.concat(data.tasks.notImportant),
         loading: false,
       });
     });
@@ -152,9 +163,9 @@ describe('Task Reducer', () => {
         }),
       ).toEqual({
         ...defaultState,
-        dailyTasks: data.tasks.daily,
-        importantTasks: data.tasks.important,
-        matrixTasks: data.tasks.important.concat(data.tasks.notImportant),
+        dailyTaskList: data.tasks.daily,
+        importantTaskList: data.tasks.important,
+        matrixTaskList: data.tasks.important.concat(data.tasks.notImportant),
       });
     });
     it('should handle UPDATE_TASK_REJECTED', () => {
@@ -163,10 +174,10 @@ describe('Task Reducer', () => {
         data: {
           message: 'ValidationError',
           errors: {
-            'tasks.important.0.text': 'Text task is required',
-            'tasks.important.0.time': 'Time task is required',
-            'tasks.important.0.sector': 'Sector task is required',
-            'tasks.important.0.matrixQuarter': 'Matrix quarter is required',
+            'tasks.notImportant.0.text': 'Text task is required',
+            'tasks.notImportant.0.time': 'Time task is required',
+            'tasks.notImportant.0.area': 'area task is required',
+            'tasks.notImportant.0.quadrant': 'Matrix quarter is required',
           },
         },
       };
@@ -181,8 +192,8 @@ describe('Task Reducer', () => {
           global: 'ValidationError',
           text: 'Text task is required',
           time: 'Time task is required',
-          sector: 'Sector task is required',
-          matrixQuarter: 'Matrix quarter is required',
+          area: 'area task is required',
+          quadrant: 'Matrix quarter is required',
         },
       });
     });
@@ -199,9 +210,9 @@ describe('Task Reducer', () => {
         }),
       ).toEqual({
         ...defaultState,
-        dailyTasks: data.tasks.daily,
-        importantTasks: data.tasks.important,
-        matrixTasks: data.tasks.important.concat(data.tasks.notImportant),
+        dailyTaskList: data.tasks.daily,
+        importantTaskList: data.tasks.important,
+        matrixTaskList: data.tasks.important.concat(data.tasks.notImportant),
       });
     });
     it('should handle DELETE_TASK_REJECTED', () => {
@@ -226,38 +237,38 @@ describe('Task Reducer', () => {
     });
   });
   describe('update important tasks order', () => {
-    it('should handle UPDATE_IMPORTANT_TASKS_ORDER_PENDING', () => {
+    it('should handle UPDATE_TASK_LIST_IMPORTANT_ORDER_PENDING', () => {
       expect(
         TaskReducer(defaultState, {
-          type: types.UPDATE_IMPORTANT_TASKS_ORDER_PENDING,
+          type: types.UPDATE_TASK_LIST_IMPORTANT_ORDER_PENDING,
         }),
       ).toEqual({
         ...defaultState,
         loading: true,
       });
     });
-    it('should handle UPDATE_IMPORTANT_TASKS_ORDER_FULFILLED', () => {
+    it('should handle UPDATE_TASK_LIST_IMPORTANT_ORDER_FULFILLED', () => {
       const data = {
         tasks: [task],
       };
       expect(
         TaskReducer(defaultState, {
-          type: types.UPDATE_IMPORTANT_TASKS_ORDER_FULFILLED,
+          type: types.UPDATE_TASK_LIST_IMPORTANT_ORDER_FULFILLED,
           payload: { data },
         }),
       ).toEqual({
         ...defaultState,
-        importantTasks: [...data.tasks],
+        importantTaskList: [...data.tasks],
       });
     });
-    it('should handle UPDATE_IMPORTANT_TASKS_ORDER_REJECTED', () => {
+    it('should handle UPDATE_TASK_LIST_IMPORTANT_ORDER_REJECTED', () => {
       const data = {
         message: 'OrderError',
         errors: {},
       };
       expect(
         TaskReducer(defaultState, {
-          type: types.UPDATE_IMPORTANT_TASKS_ORDER_REJECTED,
+          type: types.UPDATE_TASK_LIST_IMPORTANT_ORDER_REJECTED,
           payload: { data },
         }),
       ).toEqual({

@@ -13,13 +13,13 @@ import {
   ButtonToolbar,
 } from 'react-bootstrap';
 
-class SectorForm extends Component {
+class AreaForm extends Component {
   componentWillReceiveProps = nextProps => {
-    // receive sector data asynchronously
-    const { sector } = nextProps;
-    if (sector._id !== this.props.sector._id) {
+    // receive area data asynchronously
+    const { area } = nextProps;
+    if (area._id !== this.props.area._id) {
       // initialize form only once
-      this.props.initialize(sector);
+      this.props.initialize(area);
     }
   };
   renderField = ({ input, label, type, placeholder, meta: { touched, error } }) => {
@@ -43,11 +43,11 @@ class SectorForm extends Component {
     );
   };
   render() {
-    const { sector, handleSubmit, loading, pristine, submitting } = this.props;
+    const { area, handleSubmit, loading, pristine, submitting } = this.props;
     return (
       <Grid>
         <h1>
-          {sector._id ? 'Edit Sector' : 'Add New Sector'}
+          {area._id ? 'Edit Area' : 'Add New Area'}
         </h1>
         {loading
           ? 'Loading...'
@@ -56,21 +56,21 @@ class SectorForm extends Component {
                 name="title"
                 type="text"
                 component={this.renderField}
-                label="Sector title"
+                label="Area title"
                 placeholder="Enter text"
               />
               <Field
                 name="score"
                 type="number"
                 component={this.renderField}
-                label="Sector score"
+                label="Area score"
                 placeholder="Enter number from 1 to 10"
               />
               <Field
                 name="desirableScore"
                 type="number"
                 component={this.renderField}
-                label="Sector desirable score"
+                label="Area desirable score"
                 placeholder="Enter number from 1 to 10"
               />
               <ButtonToolbar>
@@ -123,4 +123,4 @@ const validate = values => {
   return errors;
 };
 
-export default reduxForm({ form: 'sector', validate })(SectorForm);
+export default reduxForm({ form: 'area', validate })(AreaForm);

@@ -42,7 +42,7 @@ class TaskFormPage extends Component {
         {this.state.redirect
           ? <Redirect to="/" />
           : <TaskForm
-              sectors={this.props.sectors}
+              areaList={this.props.areaList}
               task={this.props.task}
               loading={this.props.loading}
               onSubmit={this.handleSubmit}
@@ -54,7 +54,7 @@ class TaskFormPage extends Component {
 
 function mapStateToProps(state) {
   return {
-    sectors: state.sectorStore.sectors,
+    areaList: state.areaStore.areaList,
     task: state.taskStore.task,
     loading: state.taskStore.loading,
     errors: state.taskStore.errors,

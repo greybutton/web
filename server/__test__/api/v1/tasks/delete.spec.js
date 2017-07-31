@@ -7,12 +7,12 @@ import User from '../../../../api/v1/models/user';
 import app from '../../../../'; // api/index.js folder
 
 const api = '/api/v1';
-const apiTasks = `${api}/tasks`;
-const apiSectors = `${api}/sectors`;
+const apiTask = `${api}/tasks`;
+const apiArea = `${api}/areas`;
 
-describe(`Task ${apiTasks}`, () => {
-  const sectorTest = {
-    title: 'Test sector',
+describe(`Task ${apiTask}`, () => {
+  const areaTest = {
+    title: 'Test area',
     score: 1,
     desirableScore: 10,
   };
@@ -24,34 +24,34 @@ describe(`Task ${apiTasks}`, () => {
   describe('delete task', () => {
     it('should not delete task on a request for a nonexistand id', () => {
       expect.hasAssertions();
-      return request(app).delete(`${apiTasks}/999`).then((res) => {
-        expect(res.status).toBe(400);
+      return request(app).delete(`${apiTask}/999`).then((res) => {
+        expect(res.status).toBe(500);
       });
     });
     it('should delete a task', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const task = {
             text: 'test delete task',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'first',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'first',
+            label: area.title,
           };
-          return request(app).post(apiTasks).send(task).then((res) => {
+          return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.important[0];
             return taskAdded;
           });
         })
         .then(taskAdded =>
-          request(app).delete(`${apiTasks}/${taskAdded._id}`).then((result) => {
+          request(app).delete(`${apiTask}/${taskAdded._id}`).then((result) => {
             const recevied = result.body;
             const expected = { tasks: { important: [], notImportant: [], daily: [] } };
             expect(result.status).toBe(200);

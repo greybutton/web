@@ -1,4 +1,11 @@
 /* eslint no-underscore-dangle: 0 */
+/* eslint "comma-dangle": ["error", {
+  "arrays": "always-multiline",
+  "objects": "always-multiline",
+  "imports": "always-multiline",
+  "exports": "always-multiline",
+  "functions": "never"
+}] */
 const express = require('express');
 const User = require('../models/user');
 
@@ -11,11 +18,11 @@ const handleError = (err, res) => {
 router.get('/', (req, res) => {
   User.find({})
     .then((result) => {
-      const tasks = result[0] ? result[0].tasks : [];
+      const tasks = result[0] ? result[0].tasks : { daily: [], important: [], notImportant: [] };
       res.json({ tasks });
     })
     .catch((err) => {
-      console.log(err);
+      handleError(err, res);
     });
 });
 
@@ -51,14 +58,19 @@ router.post('/', (req, res) => {
     upsert: true,
     runValidators: true,
   };
-  switch (task.matrixQuarter) {
+  switch (task.quadrant) {
     case 'first':
     case 'second':
-      // eslint-disable-next-line max-len
-      User.findOneAndUpdate({}, { $push: { 'tasks.important': { $each: [task], $position: 0 } } }, opts)
+      User.findOneAndUpdate(
+        {},
+        { $push: { 'tasks.important': { $each: [task], $position: 0 } } },
+        opts
+      )
         .then(() => {
           User.find({}).then((result) => {
-            const tasks = result[0] ? result[0].tasks : [];
+            const tasks = result[0]
+              ? result[0].tasks
+              : { daily: [], important: [], notImportant: [] };
             res.json({ tasks });
           });
         })
@@ -70,7 +82,9 @@ router.post('/', (req, res) => {
       User.findOneAndUpdate({}, { $push: { 'tasks.daily': { $each: [task], $position: 0 } } }, opts)
         .then(() => {
           User.find({}).then((result) => {
-            const tasks = result[0] ? result[0].tasks : [];
+            const tasks = result[0]
+              ? result[0].tasks
+              : { daily: [], important: [], notImportant: [] };
             res.json({ tasks });
           });
         })
@@ -79,10 +93,16 @@ router.post('/', (req, res) => {
         });
       break;
     default:
-      User.findOneAndUpdate({}, { $push: { 'tasks.notImportant': { $each: [task], $position: 0 } } }, opts)
+      User.findOneAndUpdate(
+        {},
+        { $push: { 'tasks.notImportant': { $each: [task], $position: 0 } } },
+        opts
+      )
         .then(() => {
           User.find({}).then((result) => {
-            const tasks = result[0] ? result[0].tasks : [];
+            const tasks = result[0]
+              ? result[0].tasks
+              : { daily: [], important: [], notImportant: [] };
             res.json({ tasks });
           });
         })
@@ -94,23 +114,23 @@ router.post('/', (req, res) => {
 });
 
 router.put('/:_id', (req, res) => {
-  const { text, time, sector, matrixQuarter } = req.body;
+  const { text, time, area, quadrant } = req.body;
   const _id = req.params._id;
-  let label = req.body.label;
   let query = {};
   let doc = {};
+  let label = req.body.label;
   if (!label) {
     label = 'plain';
   }
-  switch (matrixQuarter) {
+  switch (quadrant) {
     case 'first':
     case 'second':
       query = { 'tasks.important._id': _id };
       doc = {
         'tasks.important.$.text': text,
         'tasks.important.$.time': time,
-        'tasks.important.$.sector': sector,
-        'tasks.important.$.matrixQuarter': matrixQuarter,
+        'tasks.important.$.area': area,
+        'tasks.important.$.quadrant': quadrant,
         'tasks.important.$.label': label,
       };
       break;
@@ -119,8 +139,8 @@ router.put('/:_id', (req, res) => {
       doc = {
         'tasks.daily.$.text': text,
         'tasks.daily.$.time': time,
-        'tasks.daily.$.sector': sector,
-        'tasks.daily.$.matrixQuarter': matrixQuarter,
+        'tasks.daily.$.area': area,
+        'tasks.daily.$.quadrant': quadrant,
         'tasks.daily.$.label': label,
       };
       break;
@@ -129,18 +149,16 @@ router.put('/:_id', (req, res) => {
       doc = {
         'tasks.notImportant.$.text': text,
         'tasks.notImportant.$.time': time,
-        'tasks.notImportant.$.sector': sector,
-        'tasks.notImportant.$.matrixQuarter': matrixQuarter,
+        'tasks.notImportant.$.area': area,
+        'tasks.notImportant.$.quadrant': quadrant,
         'tasks.notImportant.$.label': label,
       };
       break;
   }
   const opts = { runValidators: true };
-  User.findOneAndUpdate(query, { $set: doc }, opts, (err, result) => {
-    if (err) {
-      handleError(err, res);
-    } else {
-      // task changed a matrixQuarter
+  User.findOneAndUpdate(query, { $set: doc }, opts)
+    .then((result) => {
+      // task changed a quadrant
       // not updated because not match any task with new query
       // for example, task became from important to notImportant
       // result is null
@@ -148,141 +166,116 @@ router.put('/:_id', (req, res) => {
       if (!result) {
         // task updated from notImportant to important
         // task updated from daily to important
-        if (matrixQuarter === 'first' || matrixQuarter === 'second') {
+        if (quadrant === 'first' || quadrant === 'second') {
           // delete task from notImportant
-          User.update({}, { $pull: { 'tasks.notImportant': { _id } } })
-            .then(() => {
-              const task = {
-                text,
-                time,
-                sector,
-                matrixQuarter,
-                label,
-              };
-              // add task to important
-              User.update({}, { $push: { 'tasks.important': { $each: [task], $position: 0 } } })
-                .then(() => {
-                  // send updated tasks
-                  User.find({})
-                    .then((result) => {
-                      const tasks = result[0] ? result[0].tasks : [];
-                      res.json({ tasks });
-                    })
-                    .catch((error) => {
-                      handleError(error, res);
-                    });
-                })
-                .catch((error) => {
-                  handleError(error, res);
-                });
-            })
-            .catch((error) => {
-              handleError(error, res);
+          User.update({}, { $pull: { 'tasks.notImportant': { _id } } }).then(() => {
+            const task = {
+              text,
+              time,
+              area,
+              quadrant,
+              label,
+            };
+            // add task to important
+            User.update(
+              {},
+              { $push: { 'tasks.important': { $each: [task], $position: 0 } } }
+            ).then(() => {
+              // send updated tasks
+              User.find({}).then((result) => {
+                const tasks = result[0]
+                  ? result[0].tasks
+                  : { daily: [], important: [], notImportant: [] };
+                res.json({ tasks });
+              });
             });
+          });
         }
         // task updated from important to notImportant
         // task updated from daily to notImportant
-        if (matrixQuarter === 'third' || matrixQuarter === 'fourth') {
+        if (quadrant === 'third' || quadrant === 'fourth') {
           // delete task from important
-          User.update({}, { $pull: { 'tasks.important': { _id } } })
-            .then(() => {
-              const task = {
-                text,
-                time,
-                sector,
-                matrixQuarter,
-                label,
-              };
-              // add task to notImportant
-              User.update({}, { $push: { 'tasks.notImportant': { $each: [task], $position: 0 } } })
-                .then(() => {
-                  // send updated tasks
-                  User.find({})
-                    .then((result) => {
-                      const tasks = result[0] ? result[0].tasks : [];
-                      res.json({ tasks });
-                    })
-                    .catch((error) => {
-                      handleError(error, res);
-                    });
-                })
-                .catch((error) => {
-                  handleError(error, res);
-                });
-            })
-            .catch((error) => {
-              handleError(error, res);
+          User.update({}, { $pull: { 'tasks.important': { _id } } }).then(() => {
+            const task = {
+              text,
+              time,
+              area,
+              quadrant,
+              label,
+            };
+            // add task to notImportant
+            User.update(
+              {},
+              { $push: { 'tasks.notImportant': { $each: [task], $position: 0 } } }
+            ).then(() => {
+              // send updated tasks
+              User.find({}).then((result) => {
+                const tasks = result[0]
+                  ? result[0].tasks
+                  : { daily: [], important: [], notImportant: [] };
+                res.json({ tasks });
+              });
             });
+          });
         }
         // task updated from important to daily
         // task updated from notImportant to daily
-        if (matrixQuarter === 'daily') {
+        if (quadrant === 'daily') {
           // delete task from important
-          User.update({}, { $pull: { 'tasks.important': { _id } } })
-            .then(() => {
-              const task = {
-                text,
-                time,
-                sector,
-                matrixQuarter,
-                label,
-              };
-              // add task to daily
-              User.update({}, { $push: { 'tasks.daily': { $each: [task], $position: 0 } } })
-                .then(() => {
-                  // send updated tasks
-                  User.find({})
-                    .then((result) => {
-                      const tasks = result[0] ? result[0].tasks : [];
-                      res.json({ tasks });
-                    })
-                    .catch((error) => {
-                      handleError(error, res);
-                    });
-                })
-                .catch((error) => {
-                  handleError(error, res);
-                });
-            })
-            .catch((error) => {
-              handleError(error, res);
+          User.update({}, { $pull: { 'tasks.important': { _id } } }).then(() => {
+            const task = {
+              text,
+              time,
+              area,
+              quadrant,
+              label,
+            };
+            // add task to daily
+            User.update(
+              {},
+              { $push: { 'tasks.daily': { $each: [task], $position: 0 } } }
+            ).then(() => {
+              // send updated tasks
+              User.find({}).then((result) => {
+                const tasks = result[0]
+                  ? result[0].tasks
+                  : { daily: [], important: [], notImportant: [] };
+                res.json({ tasks });
+              });
             });
+          });
         }
       } else {
         // new model request because in otherwise result with old data
-        User.find({})
-          .then((result) => {
-            const tasks = result[0] ? result[0].tasks : [];
-            res.json({ tasks });
-          })
-          .catch((error) => {
-            handleError(error, res);
-          });
+        User.find({}).then((result) => {
+          const tasks = result[0]
+            ? result[0].tasks
+            : { daily: [], important: [], notImportant: [] };
+          res.json({ tasks });
+        });
       }
-    }
-  });
+    })
+    .catch((error) => {
+      handleError(error, res);
+    });
 });
 
 router.delete('/:_id', (req, res) => {
   const _id = req.params._id;
-  User.update({}, { $pull: { 'tasks.important': { _id } } }, (err) => {
-    if (err) {
-      handleError(err, res);
-    } else {
+  User.update({}, { $pull: { 'tasks.important': { _id } } })
+    .then((result) => {
       // new model request because in otherwise result is object of $pull operator
-      User.find({})
-        .then((result) => {
-          const tasks = result[0] ? result[0].tasks : [];
-          res.json({ tasks });
-        })
-        .catch((error) => {
-          handleError(error, res);
-        });
-    }
-  });
+      User.find({}).then((result) => {
+        const tasks = result[0] ? result[0].tasks : { daily: [], important: [], notImportant: [] };
+        res.json({ tasks });
+      });
+    })
+    .catch((error) => {
+      handleError(error, res);
+    });
 });
 
-router.put('/tasksImportantOrder/:_id', (req, res) => {
+router.put('/taskListImportantOrder/:_id', (req, res) => {
   const _id = req.params._id;
   const oldIndex = req.body.indexes.oldIndex;
   const newIndex = req.body.indexes.newIndex;
@@ -294,25 +287,16 @@ router.put('/tasksImportantOrder/:_id', (req, res) => {
       return task;
     })
     .then((task) => {
-      User.update({}, { $pull: { 'tasks.important': { _id } } })
-        .then(() => {
-          User.update({}, { $push: { 'tasks.important': { $each: task, $position: newIndex } } })
-            .then(() => {
-              User.find({})
-                .then((result) => {
-                  res.json({ tasks: result[0].tasks.important });
-                })
-                .catch((err) => {
-                  console.log(err);
-                });
-            })
-            .catch((err) => {
-              console.log(err);
-            });
-        })
-        .catch((err) => {
-          console.log(err);
+      User.update({}, { $pull: { 'tasks.important': { _id } } }).then(() => {
+        User.update(
+          {},
+          { $push: { 'tasks.important': { $each: task, $position: newIndex } } }
+        ).then(() => {
+          User.find({}).then((result) => {
+            res.json({ tasks: result[0].tasks.important });
+          });
         });
+      });
     })
     .catch((err) => {
       handleError(err, res);

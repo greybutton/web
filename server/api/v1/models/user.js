@@ -3,22 +3,22 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = mongoose.Schema.Types.ObjectId;
 
-const Sector = new Schema({
+const Area = new Schema({
   title: {
     type: String,
-    required: 'Title sector is required',
+    required: 'Title area is required',
   },
   score: {
     type: Number,
     min: [0, 'The value of score {VALUE} is beneath the limit {MIN}'],
     max: [10, 'The value of score {VALUE} exceeds the limit {MAX}'],
-    required: 'Score sector is required',
+    required: 'Score area is required',
   },
   desirableScore: {
     type: Number,
     min: [0, 'The value of desirable score {VALUE} is beneath the limit {MIN}'],
     max: [10, 'The value of desirable score {VALUE} exceeds the limit {MAX}'],
-    required: 'Desirable score sector is required',
+    required: 'Desirable score area is required',
   },
 });
 
@@ -31,14 +31,14 @@ const Task = new Schema({
     type: String,
     required: 'Time task is required',
   },
-  sector: {
+  area: {
     type: ObjectId,
-    ref: 'Sector',
-    required: 'Sector task is required',
+    ref: 'Area',
+    required: 'Area task is required',
   },
-  matrixQuarter: {
+  quadrant: {
     type: String,
-    required: 'Matrix quater is required',
+    required: 'Matrix quadrant is required',
   },
   label: {
     type: String,
@@ -47,7 +47,7 @@ const Task = new Schema({
 });
 
 const User = new Schema({
-  sectors: [Sector],
+  areas: [Area],
   tasks: {
     daily: [Task],
     important: [Task],

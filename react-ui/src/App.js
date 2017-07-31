@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Route, NavLink } from 'react-router-dom';
 import { Grid, Row, Col } from 'react-bootstrap';
 import HomePage from './containers/HomePage';
-import SectorFormPage from './containers/SectorFormPage';
+import AreaFormPage from './containers/AreaFormPage';
 import TaskFormPage from './containers/TaskFormPage';
 
 import logo from './laura.svg';
@@ -19,19 +19,19 @@ class App extends Component {
             </NavLink>
             <Row>
               <Col xs={6}>
-                <NavLink to="/task/new">Add task</NavLink>
+                <NavLink to="/tasks/new">Add task</NavLink>
               </Col>
               <Col xs={6}>
-                <NavLink to="/sector/new">Add sector</NavLink>
+                <NavLink to="/areas/new">Add area</NavLink>
               </Col>
             </Row>
           </Col>
         </Row>
         <Route exact path="/" component={HomePage} />
-        <Route path="/task/new" component={TaskFormPage} />
-        <Route path="/task/edit/:_id" component={TaskFormPage} />
-        <Route path="/sector/new" component={SectorFormPage} />
-        <Route path="/sector/edit/:_id" component={SectorFormPage} />
+        <Route path="/tasks/new" component={TaskFormPage} />
+        <Route path="/tasks/edit/:_id" component={TaskFormPage} />
+        <Route path="/areas/new" component={AreaFormPage} />
+        <Route path="/areas/edit/:_id" component={AreaFormPage} />
       </Grid>
     );
   }

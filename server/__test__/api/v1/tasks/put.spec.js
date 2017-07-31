@@ -7,12 +7,12 @@ import User from '../../../../api/v1/models/user';
 import app from '../../../../'; // api/index.js folder
 
 const api = '/api/v1';
-const apiSectors = `${api}/sectors`;
-const apiTasks = `${api}/tasks`;
+const apiArea = `${api}/areas`;
+const apiTask = `${api}/tasks`;
 
-describe(`Task ${apiTasks}`, () => {
-  const sectorTest = {
-    title: 'Test sector',
+describe(`Task ${apiTask}`, () => {
+  const areaTest = {
+    title: 'Test area',
     score: 1,
     desirableScore: 10,
   };
@@ -25,21 +25,21 @@ describe(`Task ${apiTasks}`, () => {
     it('should not update a task without text field', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const task = {
             text: 'test put task',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'first',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'first',
+            label: area.title,
           };
-          return request(app).post(apiTasks).send(task).then((res) => {
+          return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.important[0];
             return taskAdded;
           });
@@ -47,11 +47,11 @@ describe(`Task ${apiTasks}`, () => {
         .then((taskAdded) => {
           const taskUpdate = {
             time: '00:30',
-            sector: taskAdded.sector,
-            matrixQuarter: 'first',
+            area: taskAdded.area,
+            quadrant: 'first',
             label: taskAdded.label,
           };
-          return request(app).put(`${apiTasks}/${taskAdded._id}`).send(taskUpdate).then((res) => {
+          return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body;
             const expected = {
               errors: {},
@@ -65,21 +65,21 @@ describe(`Task ${apiTasks}`, () => {
     it('should not update a task without time field', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const task = {
             text: 'test put task',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'first',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'first',
+            label: area.title,
           };
-          return request(app).post(apiTasks).send(task).then((res) => {
+          return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.important[0];
             return taskAdded;
           });
@@ -87,11 +87,11 @@ describe(`Task ${apiTasks}`, () => {
         .then((taskAdded) => {
           const taskUpdate = {
             text: 'test put update task',
-            sector: taskAdded.sector,
-            matrixQuarter: 'first',
+            area: taskAdded.area,
+            quadrant: 'first',
             label: taskAdded.label,
           };
-          return request(app).put(`${apiTasks}/${taskAdded._id}`).send(taskUpdate).then((res) => {
+          return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body;
             const expected = {
               errors: {},
@@ -102,24 +102,24 @@ describe(`Task ${apiTasks}`, () => {
           });
         });
     });
-    it('should not update a task without sector field', () => {
+    it('should not update a task without area field', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const task = {
             text: 'test put task',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'first',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'first',
+            label: area.title,
           };
-          return request(app).post(apiTasks).send(task).then((res) => {
+          return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.important[0];
             return taskAdded;
           });
@@ -128,10 +128,10 @@ describe(`Task ${apiTasks}`, () => {
           const taskUpdate = {
             text: 'test put update task',
             time: '00:30',
-            matrixQuarter: 'first',
+            quadrant: 'first',
             label: taskAdded.label,
           };
-          return request(app).put(`${apiTasks}/${taskAdded._id}`).send(taskUpdate).then((res) => {
+          return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body;
             const expected = {
               errors: {},
@@ -142,24 +142,24 @@ describe(`Task ${apiTasks}`, () => {
           });
         });
     });
-    it('should not update a task without matrixQuarter field', () => {
+    it('should not update a task without quadrant field', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const task = {
             text: 'test put task',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'first',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'first',
+            label: area.title,
           };
-          return request(app).post(apiTasks).send(task).then((res) => {
+          return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.important[0];
             return taskAdded;
           });
@@ -168,10 +168,10 @@ describe(`Task ${apiTasks}`, () => {
           const taskUpdate = {
             text: 'test put update task',
             time: '00:30',
-            sector: taskAdded.sector,
+            area: taskAdded.area,
             label: taskAdded.label,
           };
-          return request(app).put(`${apiTasks}/${taskAdded._id}`).send(taskUpdate).then((res) => {
+          return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body;
             const expected = {
               errors: {},
@@ -185,21 +185,21 @@ describe(`Task ${apiTasks}`, () => {
     it('should update a task without label field', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const task = {
             text: 'test put task',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'first',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'first',
+            label: area.title,
           };
-          return request(app).post(apiTasks).send(task).then((res) => {
+          return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.important[0];
             return taskAdded;
           });
@@ -208,16 +208,16 @@ describe(`Task ${apiTasks}`, () => {
           const taskUpdate = {
             text: 'test put update task',
             time: '00:30',
-            sector: taskAdded.sector,
-            matrixQuarter: 'first',
+            area: taskAdded.area,
+            quadrant: 'first',
           };
-          return request(app).put(`${apiTasks}/${taskAdded._id}`).send(taskUpdate).then((res) => {
+          return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body.tasks.important[0];
             const expected = {
               text: 'test put update task',
               time: '00:30',
-              sector: taskAdded.sector,
-              matrixQuarter: 'first',
+              area: taskAdded.area,
+              quadrant: 'first',
               label: 'plain',
             };
             expect(res.status).toBe(200);
@@ -228,21 +228,21 @@ describe(`Task ${apiTasks}`, () => {
     it('should update a task from important to notImportant', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const task = {
             text: 'test put task',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'first',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'first',
+            label: area.title,
           };
-          return request(app).post(apiTasks).send(task).then((res) => {
+          return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.important[0];
             return taskAdded;
           });
@@ -251,11 +251,11 @@ describe(`Task ${apiTasks}`, () => {
           const taskUpdate = {
             text: 'test put update task',
             time: '00:30',
-            sector: taskAdded.sector,
-            matrixQuarter: 'third',
+            area: taskAdded.area,
+            quadrant: 'third',
             label: taskAdded.label,
           };
-          return request(app).put(`${apiTasks}/${taskAdded._id}`).send(taskUpdate).then((res) => {
+          return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body.tasks.notImportant[0];
             expect(res.status).toBe(200);
             expect(recevied).toMatchObject(taskUpdate);
@@ -265,21 +265,21 @@ describe(`Task ${apiTasks}`, () => {
     it('should update a task from important to daily', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const task = {
             text: 'test put task',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'first',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'first',
+            label: area.title,
           };
-          return request(app).post(apiTasks).send(task).then((res) => {
+          return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.important[0];
             return taskAdded;
           });
@@ -288,11 +288,11 @@ describe(`Task ${apiTasks}`, () => {
           const taskUpdate = {
             text: 'test put update task',
             time: '00:30',
-            sector: taskAdded.sector,
-            matrixQuarter: 'daily',
+            area: taskAdded.area,
+            quadrant: 'daily',
             label: taskAdded.label,
           };
-          return request(app).put(`${apiTasks}/${taskAdded._id}`).send(taskUpdate).then((res) => {
+          return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body.tasks.daily[0];
             expect(res.status).toBe(200);
             expect(recevied).toMatchObject(taskUpdate);
@@ -302,21 +302,21 @@ describe(`Task ${apiTasks}`, () => {
     it('should update a task from notImportant to important', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const task = {
             text: 'test put task',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'third',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'third',
+            label: area.title,
           };
-          return request(app).post(apiTasks).send(task).then((res) => {
+          return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.notImportant[0];
             return taskAdded;
           });
@@ -325,11 +325,11 @@ describe(`Task ${apiTasks}`, () => {
           const taskUpdate = {
             text: 'test put update task',
             time: '00:30',
-            sector: taskAdded.sector,
-            matrixQuarter: 'first',
+            area: taskAdded.area,
+            quadrant: 'first',
             label: taskAdded.label,
           };
-          return request(app).put(`${apiTasks}/${taskAdded._id}`).send(taskUpdate).then((res) => {
+          return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body.tasks.important[0];
             expect(res.status).toBe(200);
             expect(recevied).toMatchObject(taskUpdate);
@@ -339,21 +339,21 @@ describe(`Task ${apiTasks}`, () => {
     it('should update a task from notImportant to daily', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const task = {
             text: 'test put task',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'third',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'third',
+            label: area.title,
           };
-          return request(app).post(apiTasks).send(task).then((res) => {
+          return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.notImportant[0];
             return taskAdded;
           });
@@ -362,11 +362,11 @@ describe(`Task ${apiTasks}`, () => {
           const taskUpdate = {
             text: 'test put update task',
             time: '00:30',
-            sector: taskAdded.sector,
-            matrixQuarter: 'daily',
+            area: taskAdded.area,
+            quadrant: 'daily',
             label: taskAdded.label,
           };
-          return request(app).put(`${apiTasks}/${taskAdded._id}`).send(taskUpdate).then((res) => {
+          return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body.tasks.daily[0];
             expect(res.status).toBe(200);
             expect(recevied).toMatchObject(taskUpdate);
@@ -376,21 +376,21 @@ describe(`Task ${apiTasks}`, () => {
     it('should update a task from daily to important', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const task = {
             text: 'test put task',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'daily',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'daily',
+            label: area.title,
           };
-          return request(app).post(apiTasks).send(task).then((res) => {
+          return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.daily[0];
             return taskAdded;
           });
@@ -399,11 +399,11 @@ describe(`Task ${apiTasks}`, () => {
           const taskUpdate = {
             text: 'test put update task',
             time: '00:30',
-            sector: taskAdded.sector,
-            matrixQuarter: 'first',
+            area: taskAdded.area,
+            quadrant: 'first',
             label: taskAdded.label,
           };
-          return request(app).put(`${apiTasks}/${taskAdded._id}`).send(taskUpdate).then((res) => {
+          return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body.tasks.important[0];
             expect(res.status).toBe(200);
             expect(recevied).toMatchObject(taskUpdate);
@@ -413,21 +413,21 @@ describe(`Task ${apiTasks}`, () => {
     it('should update a task from daily to notImportant', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const task = {
             text: 'test put task',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'daily',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'daily',
+            label: area.title,
           };
-          return request(app).post(apiTasks).send(task).then((res) => {
+          return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.daily[0];
             return taskAdded;
           });
@@ -436,11 +436,11 @@ describe(`Task ${apiTasks}`, () => {
           const taskUpdate = {
             text: 'test put update task',
             time: '00:30',
-            sector: taskAdded.sector,
-            matrixQuarter: 'third',
+            area: taskAdded.area,
+            quadrant: 'third',
             label: taskAdded.label,
           };
-          return request(app).put(`${apiTasks}/${taskAdded._id}`).send(taskUpdate).then((res) => {
+          return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body.tasks.notImportant[0];
             expect(res.status).toBe(200);
             expect(recevied).toMatchObject(taskUpdate);
@@ -450,21 +450,21 @@ describe(`Task ${apiTasks}`, () => {
     it('should update a task from important to important', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const task = {
             text: 'test put task',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'first',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'first',
+            label: area.title,
           };
-          return request(app).post(apiTasks).send(task).then((res) => {
+          return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.important[0];
             return taskAdded;
           });
@@ -473,11 +473,11 @@ describe(`Task ${apiTasks}`, () => {
           const taskUpdate = {
             text: 'test put update task',
             time: '00:30',
-            sector: taskAdded.sector,
-            matrixQuarter: 'first',
+            area: taskAdded.area,
+            quadrant: 'first',
             label: taskAdded.label,
           };
-          return request(app).put(`${apiTasks}/${taskAdded._id}`).send(taskUpdate).then((res) => {
+          return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body.tasks.important[0];
             expect(res.status).toBe(200);
             expect(recevied).toMatchObject(taskUpdate);
@@ -487,21 +487,21 @@ describe(`Task ${apiTasks}`, () => {
     it('should update a task from notImportant to notImportant', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const task = {
             text: 'test put task',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'third',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'third',
+            label: area.title,
           };
-          return request(app).post(apiTasks).send(task).then((res) => {
+          return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.notImportant[0];
             return taskAdded;
           });
@@ -510,11 +510,11 @@ describe(`Task ${apiTasks}`, () => {
           const taskUpdate = {
             text: 'test put update task',
             time: '00:30',
-            sector: taskAdded.sector,
-            matrixQuarter: 'third',
+            area: taskAdded.area,
+            quadrant: 'third',
             label: taskAdded.label,
           };
-          return request(app).put(`${apiTasks}/${taskAdded._id}`).send(taskUpdate).then((res) => {
+          return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body.tasks.notImportant[0];
             expect(res.status).toBe(200);
             expect(recevied).toMatchObject(taskUpdate);
@@ -524,21 +524,21 @@ describe(`Task ${apiTasks}`, () => {
     it('should update a task from daily to daily', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const task = {
             text: 'test put task',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'daily',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'daily',
+            label: area.title,
           };
-          return request(app).post(apiTasks).send(task).then((res) => {
+          return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.daily[0];
             return taskAdded;
           });
@@ -547,11 +547,11 @@ describe(`Task ${apiTasks}`, () => {
           const taskUpdate = {
             text: 'test put update task',
             time: '00:30',
-            sector: taskAdded.sector,
-            matrixQuarter: 'daily',
+            area: taskAdded.area,
+            quadrant: 'daily',
             label: taskAdded.label,
           };
-          return request(app).put(`${apiTasks}/${taskAdded._id}`).send(taskUpdate).then((res) => {
+          return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body.tasks.daily[0];
             expect(res.status).toBe(200);
             expect(recevied).toMatchObject(taskUpdate);

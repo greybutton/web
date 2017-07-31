@@ -7,42 +7,38 @@ import User from '../../../../api/v1/models/user';
 import app from '../../../../'; // api/index.js folder
 
 const api = '/api/v1';
-const apiTasks = `${api}/tasks`;
-const apiSectors = `${api}/sectors`;
+const apiTask = `${api}/tasks`;
+const apiArea = `${api}/areas`;
 
-describe(`Task ${apiTasks}`, () => {
-  const sectorTest = {
-    title: 'Test sector',
+describe(`Task ${apiTask}`, () => {
+  const areaTest = {
+    title: 'Test area',
     score: 1,
     desirableScore: 10,
   };
   beforeEach((done) => {
-    User.remove({})
-      .then(() => {
-        done();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    User.remove({}).then(() => {
+      done();
+    });
   });
   describe('post task', () => {
     it('should not post a task without text field', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const task = {
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'first',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'first',
+            label: area.title,
           };
-          return request(app).post(apiTasks).send(task).then((res) => {
+          return request(app).post(apiTask).send(task).then((res) => {
             const recevied = res.body;
             const expected = {
               errors: {},
@@ -51,28 +47,25 @@ describe(`Task ${apiTasks}`, () => {
             expect(res.status).toBe(400);
             expect(recevied).toMatchObject(expected);
           });
-        })
-        .catch((err) => {
-          console.log(err);
         });
     });
     it('should not post a task without time field', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const task = {
             text: 'test post task',
-            sector: sector._id.toString(),
-            matrixQuarter: 'first',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'first',
+            label: area.title,
           };
-          return request(app).post(apiTasks).send(task).then((res) => {
+          return request(app).post(apiTask).send(task).then((res) => {
             const recevied = res.body;
             const expected = {
               errors: {},
@@ -81,28 +74,25 @@ describe(`Task ${apiTasks}`, () => {
             expect(res.status).toBe(400);
             expect(recevied).toMatchObject(expected);
           });
-        })
-        .catch((err) => {
-          console.log(err);
         });
     });
-    it('should not post a task without sector field', () => {
+    it('should not post a task without area field', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const task = {
             text: 'test post task',
             time: '00:30',
-            matrixQuarter: 'first',
-            label: sector.title,
+            quadrant: 'first',
+            label: area.title,
           };
-          return request(app).post(apiTasks).send(task).then((res) => {
+          return request(app).post(apiTask).send(task).then((res) => {
             const recevied = res.body;
             const expected = {
               errors: {},
@@ -111,28 +101,25 @@ describe(`Task ${apiTasks}`, () => {
             expect(res.status).toBe(400);
             expect(recevied).toMatchObject(expected);
           });
-        })
-        .catch((err) => {
-          console.log(err);
         });
     });
-    it('should not post a task without matrixQuarter field', () => {
+    it('should not post a task without quadrant field', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const task = {
             text: 'test post task',
             time: '00:30',
-            sector: sector._id.toString(),
-            label: sector.title,
+            area: area._id.toString(),
+            label: area.title,
           };
-          return request(app).post(apiTasks).send(task).then((res) => {
+          return request(app).post(apiTask).send(task).then((res) => {
             const recevied = res.body;
             const expected = {
               errors: {},
@@ -141,143 +128,128 @@ describe(`Task ${apiTasks}`, () => {
             expect(res.status).toBe(400);
             expect(recevied).toMatchObject(expected);
           });
-        })
-        .catch((err) => {
-          console.log(err);
         });
     });
     it('should post a task without label field', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const task = {
             text: 'test post task',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'first',
+            area: area._id.toString(),
+            quadrant: 'first',
           };
-          return request(app).post(apiTasks).send(task).then((res) => {
+          return request(app).post(apiTask).send(task).then((res) => {
             const recevied = res.body.tasks.important[0];
             expect(res.status).toBe(200);
             expect(recevied).toMatchObject(task);
           });
-        })
-        .catch((err) => {
-          console.log(err);
         });
     });
     it('should post a task to important', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const taskFirst = {
             text: 'test post task first',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'first',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'first',
+            label: area.title,
           };
           const taskSecond = {
             text: 'test post task second',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'first',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'first',
+            label: area.title,
           };
-          request(app).post(apiTasks).send(taskFirst).then(() => {});
-          return request(app).post(apiTasks).send(taskSecond).then((res) => {
+          request(app).post(apiTask).send(taskFirst).then(() => {});
+          return request(app).post(apiTask).send(taskSecond).then((res) => {
             const recevied = res.body.tasks.important;
             expect(res.status).toBe(200);
             expect(recevied[0]).toMatchObject(taskSecond);
             expect(recevied[1]).toMatchObject(taskFirst);
           });
-        })
-        .catch((err) => {
-          console.log(err);
         });
     });
     it('should post a task to notImportant', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const taskFirst = {
             text: 'test post task first',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'third',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'third',
+            label: area.title,
           };
           const taskSecond = {
             text: 'test post task second',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'third',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'third',
+            label: area.title,
           };
-          request(app).post(apiTasks).send(taskFirst).then(() => {});
-          return request(app).post(apiTasks).send(taskSecond).then((res) => {
+          request(app).post(apiTask).send(taskFirst).then(() => {});
+          return request(app).post(apiTask).send(taskSecond).then((res) => {
             const recevied = res.body.tasks.notImportant;
             expect(res.status).toBe(200);
             expect(recevied[0]).toMatchObject(taskSecond);
             expect(recevied[1]).toMatchObject(taskFirst);
           });
-        })
-        .catch((err) => {
-          console.log(err);
         });
     });
     it('should post a task to daily', () => {
       expect.hasAssertions();
       return request(app)
-        .post(apiSectors)
-        .send(sectorTest)
+        .post(apiArea)
+        .send(areaTest)
         .then((res) => {
-          const sector = res.body.sectors[0];
-          return sector;
+          const area = res.body.areas[0];
+          return area;
         })
-        .then((sector) => {
+        .then((area) => {
           const taskFirst = {
             text: 'test post task first',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'daily',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'daily',
+            label: area.title,
           };
           const taskSecond = {
             text: 'test post task second',
             time: '00:30',
-            sector: sector._id.toString(),
-            matrixQuarter: 'daily',
-            label: sector.title,
+            area: area._id.toString(),
+            quadrant: 'daily',
+            label: area.title,
           };
-          request(app).post(apiTasks).send(taskFirst).then(() => {});
-          return request(app).post(apiTasks).send(taskSecond).then((res) => {
+          request(app).post(apiTask).send(taskFirst).then(() => {});
+          return request(app).post(apiTask).send(taskSecond).then((res) => {
             const recevied = res.body.tasks.daily;
             expect(res.status).toBe(200);
             expect(recevied[0]).toMatchObject(taskSecond);
             expect(recevied[1]).toMatchObject(taskFirst);
           });
-        })
-        .catch((err) => {
-          console.log(err);
         });
     });
   });

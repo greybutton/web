@@ -1,65 +1,65 @@
 import * as types from '../constants/actionTypes';
 
 export const defaultState = {
-  sectors: [],
-  sector: {},
-  sectorSearchResult: [],
+  areaList: [],
+  area: {},
+  areaSearchResult: [],
   loading: false,
   errors: {},
 };
 
 export default (state = defaultState, action = {}) => {
   switch (action.type) {
-    case types.REQUEST_SECTORS: {
+    case types.REQUEST_AREA_LIST: {
       return {
         ...state,
         loading: true,
       };
     }
-    case types.RECEIVE_SECTORS: {
+    case types.RECEIVE_AREA_LIST: {
       return {
         ...state,
-        sectors: action.payload.data.sectors,
+        areaList: action.payload.data.areas,
         loading: false,
       };
     }
-    case types.REQUEST_SECTOR: {
+    case types.REQUEST_AREA: {
       return {
         ...state,
         loading: true,
-        sector: {},
+        area: {},
       };
     }
-    case types.RECEIVE_SECTOR: {
+    case types.RECEIVE_AREA: {
       return {
         ...state,
-        sector: action.payload.data.sector,
+        area: action.payload.data.area,
         loading: false,
       };
     }
-    case types.NEW_SECTOR: {
+    case types.NEW_AREA: {
       return {
         ...state,
-        sector: {},
+        area: {},
       };
     }
-    case types.SAVE_SECTOR_PENDING: {
+    case types.SAVE_AREA_PENDING: {
       return {
         ...state,
         loading: true,
       };
     }
-    case types.SAVE_SECTOR_FULFILLED: {
+    case types.SAVE_AREA_FULFILLED: {
       return {
         ...state,
-        sectors: [...action.payload.data.sectors],
+        areaList: [...action.payload.data.areas],
         loading: false,
         errors: {},
       };
     }
-    case types.SAVE_SECTOR_REJECTED: {
+    case types.SAVE_AREA_REJECTED: {
       const data = action.payload.response.data;
-      const { title, score, desirableScore } = data.errors.sectors.errors;
+      const { title, score, desirableScore } = data.errors.areas.errors;
       const errors = { global: data.message, title, score, desirableScore };
       return {
         ...state,
@@ -67,26 +67,26 @@ export default (state = defaultState, action = {}) => {
         errors,
       };
     }
-    case types.UPDATE_SECTOR_PENDING: {
+    case types.UPDATE_AREA_PENDING: {
       return {
         ...state,
         loading: true,
       };
     }
-    case types.UPDATE_SECTOR_FULFILLED: {
+    case types.UPDATE_AREA_FULFILLED: {
       return {
         ...state,
-        sectors: [...action.payload.data.sectors],
+        areaList: [...action.payload.data.areas],
         loading: false,
         errors: {},
       };
     }
-    case types.UPDATE_SECTOR_REJECTED: {
+    case types.UPDATE_AREA_REJECTED: {
       const data = action.payload.response.data;
       const {
-        'sectors.0.title': title,
-        'sectors.0.score': score,
-        'sectors.0.desirableScore': desirableScore,
+        'areas.0.title': title,
+        'areas.0.score': score,
+        'areas.0.desirableScore': desirableScore,
       } = data.errors;
       const errors = { global: data.message, title, score, desirableScore };
       return {
@@ -95,21 +95,21 @@ export default (state = defaultState, action = {}) => {
         errors,
       };
     }
-    case types.UPDATE_SECTOR_ORDER_PENDING: {
+    case types.UPDATE_AREA_LIST_ORDER_PENDING: {
       return {
         ...state,
         loading: true,
       };
     }
-    case types.UPDATE_SECTOR_ORDER_FULFILLED: {
+    case types.UPDATE_AREA_LIST_ORDER_FULFILLED: {
       return {
         ...state,
-        sectors: [...action.payload.data.sectors],
+        areaList: [...action.payload.data.areas],
         loading: false,
         errors: {},
       };
     }
-    case types.UPDATE_SECTOR_ORDER_REJECTED: {
+    case types.UPDATE_AREA_LIST_ORDER_REJECTED: {
       const data = action.payload.data.errors;
       return {
         ...state,

@@ -1,34 +1,34 @@
 import { takeLatest } from 'redux-saga/effects';
-import * as SectorSagas from './SectorSagas';
+import * as AreaSagas from './AreaSagas';
 import * as TaskSagas from './TaskSagas';
 import * as types from '../constants/actionTypes';
 
-export function* watchSaveSector() {
-  yield takeLatest(types.SAVE_SECTOR, SectorSagas.saveSector);
+export function* watchSaveArea() {
+  yield takeLatest(types.SAVE_AREA, AreaSagas.saveArea);
 }
 
-export function* watchRequestSectors() {
-  yield takeLatest(types.REQUEST_SECTORS, SectorSagas.fetchSectors);
+export function* watchRequestAreaList() {
+  yield takeLatest(types.REQUEST_AREA_LIST, AreaSagas.fetchAreaList);
 }
 
-export function* watchRequestSector() {
-  yield takeLatest(types.REQUEST_SECTOR, SectorSagas.fetchSector);
+export function* watchRequestArea() {
+  yield takeLatest(types.REQUEST_AREA, AreaSagas.fetchArea);
 }
 
-export function* watchUpdateSector() {
-  yield takeLatest(types.UPDATE_SECTOR, SectorSagas.updateSector);
+export function* watchUpdateArea() {
+  yield takeLatest(types.UPDATE_AREA, AreaSagas.updateArea);
 }
 
-export function* watchUpdateSectorOrder() {
-  yield takeLatest(types.UPDATE_SECTOR_ORDER, SectorSagas.updateSectorOrder);
+export function* watchUpdateAreaListOrder() {
+  yield takeLatest(types.UPDATE_AREA_LIST_ORDER, AreaSagas.updateAreaListOrder);
 }
 
 export function* watchSaveTask() {
   yield takeLatest(types.SAVE_TASK, TaskSagas.saveTask);
 }
 
-export function* watchRequestTasks() {
-  yield takeLatest(types.REQUEST_TASKS, TaskSagas.fetchTasks);
+export function* watchRequestTaskList() {
+  yield takeLatest(types.REQUEST_TASK_LIST, TaskSagas.fetchTaskList);
 }
 
 export function* watchRequestTask() {
@@ -43,6 +43,6 @@ export function* watchDeleteTask() {
   yield takeLatest(types.DELETE_TASK, TaskSagas.deleteTask);
 }
 
-export function* watchUpdateImportantTasksOrder() {
-  yield takeLatest(types.UPDATE_IMPORTANT_TASKS_ORDER, TaskSagas.updateImportantTasksOrder);
+export function* watchUpdateTaskListImportantOrder() {
+  yield takeLatest(types.UPDATE_TASK_LIST_IMPORTANT_ORDER, TaskSagas.updateTaskListImportantOrder);
 }

@@ -1,9 +1,9 @@
 const express = require('express');
-const sectors = require('./routes/sectors');
+const areas = require('./routes/areas');
 const tasks = require('./routes/tasks');
 
 const app = express();
-app.use('/sectors', sectors);
+app.use('/areas', areas);
 app.use('/tasks', tasks);
 
 module.exports = app;
