@@ -214,11 +214,6 @@ class TaskForm extends Component {
       notImportant: notImportant,
     });
   };
-  handleChangeArea = () => {
-    const index = this.area.options.selectedIndex;
-    const title = this.area.options[index].dataset.title;
-    this.props.change('label', title);
-  };
   render() {
     const { task, handleSubmit, loading, pristine, submitting } = this.props;
     return (
@@ -247,7 +242,6 @@ class TaskForm extends Component {
                 name="area"
                 type="select"
                 component={this.renderField}
-                onChange={this.handleChangeArea}
                 label="Pick area of the wheel of life"
               />
               <Field

@@ -3,9 +3,17 @@ import { Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
 import Sortable from 'react-sortablejs';
 import DailyTaskCard from './DailyTaskCard';
 
-const DailyTaskList = ({ dailyTaskList, loading, updateTaskListDailyOrder, deleteTask }) => {
+const DailyTaskList = ({
+  dailyTaskList,
+  areaList,
+  loading,
+  updateTaskListDailyOrder,
+  deleteTask,
+}) => {
   const cards = () =>
-    dailyTaskList.map(task => <DailyTaskCard key={task._id} task={task} deleteTask={deleteTask} />);
+    dailyTaskList.map(task =>
+      <DailyTaskCard key={task._id} task={task} areaList={areaList} deleteTask={deleteTask} />,
+    );
   const onEnd = evt =>
     new Promise((resolve, reject) =>
       updateTaskListDailyOrder({

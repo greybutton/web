@@ -9,7 +9,6 @@ describe('Task sagas tests', () => {
     time: '00:15',
     area: 2,
     quadrant: 'first',
-    label: 'area title',
   };
   describe('post task saga', () => {
     const payload = {
@@ -111,13 +110,7 @@ describe('Task sagas tests', () => {
   });
   describe('update task list important order', () => {
     const payload = {
-      task: {
-        text: 'test task actions',
-        time: '00:15',
-        area: 2,
-        quadrant: 'first',
-        label: 'area title',
-      },
+      task,
       resolve: () => {},
       reject: () => {},
     };
@@ -143,13 +136,7 @@ describe('Task sagas tests', () => {
   });
   describe('update task list daily order', () => {
     const payload = {
-      task: {
-        text: 'test task actions',
-        time: '00:15',
-        area: 2,
-        quadrant: 'first',
-        label: 'area title',
-      },
+      task,
       resolve: () => {},
       reject: () => {},
     };

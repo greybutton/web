@@ -8,7 +8,6 @@ describe('Task Reducer', () => {
     time: '00:15',
     area: 2,
     quadrant: 'first',
-    label: 'area title',
   };
   it('should return the initial state', () => {
     expect(TaskReducer(undefined, {})).toEqual(defaultState);

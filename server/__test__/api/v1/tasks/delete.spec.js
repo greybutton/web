@@ -43,7 +43,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'first',
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.important[0];
@@ -74,7 +73,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'third',
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.notImportant[0];
@@ -105,7 +103,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'daily',
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.daily[0];

@@ -36,14 +36,12 @@ describe(`Task ${apiTask}`, () => {
           time: '00:30',
           area: area._id.toString(),
           quadrant: 'first',
-          label: area.title,
         };
         const taskSecond = {
           text: 'test post task second',
           time: '00:30',
           area: area._id.toString(),
           quadrant: 'first',
-          label: area.title,
         };
         request(app).post(apiTask).send(taskFirst).then(() => {});
         return request(app)

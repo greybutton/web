@@ -5,8 +5,12 @@ import { ListGroupItem, Label, ButtonToolbar, Button, Collapse } from 'react-boo
 
 class DailyTaskCard extends Component {
   state = { open: false };
+  label = (task, areaList) => {
+    const area = areaList.filter(areaItem => areaItem._id === task.area)[0];
+    return area.title;
+  };
   render() {
-    const { task, deleteTask } = this.props;
+    const { task, areaList, deleteTask } = this.props;
     return (
       <ListGroupItem
         data-id={task._id}
@@ -14,7 +18,7 @@ class DailyTaskCard extends Component {
       >
         <div>
           <Label bsStyle="default">{task.time}</Label>&nbsp;
-          <Label bsStyle="default">{task.label}</Label>&nbsp;
+          <Label bsStyle="default">{this.label(task, areaList)}</Label>&nbsp;
           {task.text}
         </div>
         <Collapse in={this.state.open}>

@@ -8,7 +8,6 @@ describe('Task Actions', () => {
     time: '00:15',
     area: 2,
     quadrant: 'first',
-    label: 'area title',
   };
   it('should create an action new task', () => {
     const expectedAction = {

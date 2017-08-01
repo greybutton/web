@@ -36,7 +36,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'first',
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const recevied = res.body;
@@ -63,7 +62,6 @@ describe(`Task ${apiTask}`, () => {
             text: 'test post task',
             area: area._id.toString(),
             quadrant: 'first',
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const recevied = res.body;
@@ -90,7 +88,6 @@ describe(`Task ${apiTask}`, () => {
             text: 'test post task',
             time: '00:30',
             quadrant: 'first',
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const recevied = res.body;
@@ -117,7 +114,6 @@ describe(`Task ${apiTask}`, () => {
             text: 'test post task',
             time: '00:30',
             area: area._id.toString(),
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const recevied = res.body;
@@ -127,29 +123,6 @@ describe(`Task ${apiTask}`, () => {
             };
             expect(res.status).toBe(400);
             expect(recevied).toMatchObject(expected);
-          });
-        });
-    });
-    it('should post a task without label field', () => {
-      expect.hasAssertions();
-      return request(app)
-        .post(apiArea)
-        .send(areaTest)
-        .then((res) => {
-          const area = res.body.areas[0];
-          return area;
-        })
-        .then((area) => {
-          const task = {
-            text: 'test post task',
-            time: '00:30',
-            area: area._id.toString(),
-            quadrant: 'first',
-          };
-          return request(app).post(apiTask).send(task).then((res) => {
-            const recevied = res.body.tasks.important[0];
-            expect(res.status).toBe(200);
-            expect(recevied).toMatchObject(task);
           });
         });
     });
@@ -168,14 +141,12 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'first',
-            label: area.title,
           };
           const taskSecond = {
             text: 'test post task second',
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'first',
-            label: area.title,
           };
           request(app).post(apiTask).send(taskFirst).then(() => {});
           return request(app).post(apiTask).send(taskSecond).then((res) => {
@@ -201,14 +172,12 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'third',
-            label: area.title,
           };
           const taskSecond = {
             text: 'test post task second',
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'third',
-            label: area.title,
           };
           request(app).post(apiTask).send(taskFirst).then(() => {});
           return request(app).post(apiTask).send(taskSecond).then((res) => {
@@ -234,14 +203,12 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'daily',
-            label: area.title,
           };
           const taskSecond = {
             text: 'test post task second',
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'daily',
-            label: area.title,
           };
           request(app).post(apiTask).send(taskFirst).then(() => {});
           return request(app).post(apiTask).send(taskSecond).then((res) => {

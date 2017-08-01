@@ -40,10 +40,6 @@ const Task = new Schema({
     type: String,
     required: 'Matrix quadrant is required',
   },
-  label: {
-    type: String,
-    default: 'plain',
-  },
 });
 
 const User = new Schema({

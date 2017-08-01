@@ -118,10 +118,6 @@ router.put('/:_id', (req, res) => {
   const _id = req.params._id;
   let query = {};
   let doc = {};
-  let label = req.body.label;
-  if (!label) {
-    label = 'plain';
-  }
   switch (quadrant) {
     case 'first':
     case 'second':
@@ -131,7 +127,6 @@ router.put('/:_id', (req, res) => {
         'tasks.important.$.time': time,
         'tasks.important.$.area': area,
         'tasks.important.$.quadrant': quadrant,
-        'tasks.important.$.label': label,
       };
       break;
     case 'daily':
@@ -141,7 +136,6 @@ router.put('/:_id', (req, res) => {
         'tasks.daily.$.time': time,
         'tasks.daily.$.area': area,
         'tasks.daily.$.quadrant': quadrant,
-        'tasks.daily.$.label': label,
       };
       break;
     default:
@@ -151,7 +145,6 @@ router.put('/:_id', (req, res) => {
         'tasks.notImportant.$.time': time,
         'tasks.notImportant.$.area': area,
         'tasks.notImportant.$.quadrant': quadrant,
-        'tasks.notImportant.$.label': label,
       };
       break;
   }
@@ -174,7 +167,6 @@ router.put('/:_id', (req, res) => {
               time,
               area,
               quadrant,
-              label,
             };
             // add task to important
             User.update(
@@ -201,7 +193,6 @@ router.put('/:_id', (req, res) => {
               time,
               area,
               quadrant,
-              label,
             };
             // add task to notImportant
             User.update(
@@ -228,7 +219,6 @@ router.put('/:_id', (req, res) => {
               time,
               area,
               quadrant,
-              label,
             };
             // add task to daily
             User.update(

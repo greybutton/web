@@ -54,7 +54,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'first',
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const task = res.body.tasks.important[0];

@@ -21,6 +21,7 @@ class HomePage extends Component {
         <Col xs={12} sm={6}>
           <DailyTaskList
             dailyTaskList={this.props.dailyTaskList}
+            areaList={this.props.areaList}
             loading={this.props.loadingTask}
             deleteTask={this.props.TaskActions.deleteTask}
             updateTaskListDailyOrder={this.props.TaskActions.updateTaskListDailyOrder}

@@ -37,7 +37,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'first',
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.important[0];
@@ -49,7 +48,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: taskAdded.area,
             quadrant: 'first',
-            label: taskAdded.label,
           };
           return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body;
@@ -77,7 +75,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'first',
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.important[0];
@@ -89,7 +86,6 @@ describe(`Task ${apiTask}`, () => {
             text: 'test put update task',
             area: taskAdded.area,
             quadrant: 'first',
-            label: taskAdded.label,
           };
           return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body;
@@ -117,7 +113,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'first',
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.important[0];
@@ -129,7 +124,6 @@ describe(`Task ${apiTask}`, () => {
             text: 'test put update task',
             time: '00:30',
             quadrant: 'first',
-            label: taskAdded.label,
           };
           return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body;
@@ -157,7 +151,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'first',
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.important[0];
@@ -169,7 +162,6 @@ describe(`Task ${apiTask}`, () => {
             text: 'test put update task',
             time: '00:30',
             area: taskAdded.area,
-            label: taskAdded.label,
           };
           return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body;
@@ -178,49 +170,6 @@ describe(`Task ${apiTask}`, () => {
               name: 'ValidationError',
             };
             expect(res.status).toBe(400);
-            expect(recevied).toMatchObject(expected);
-          });
-        });
-    });
-    it('should update a task without label field', () => {
-      expect.hasAssertions();
-      return request(app)
-        .post(apiArea)
-        .send(areaTest)
-        .then((res) => {
-          const area = res.body.areas[0];
-          return area;
-        })
-        .then((area) => {
-          const task = {
-            text: 'test put task',
-            time: '00:30',
-            area: area._id.toString(),
-            quadrant: 'first',
-            label: area.title,
-          };
-          return request(app).post(apiTask).send(task).then((res) => {
-            const taskAdded = res.body.tasks.important[0];
-            return taskAdded;
-          });
-        })
-        .then((taskAdded) => {
-          const taskUpdate = {
-            text: 'test put update task',
-            time: '00:30',
-            area: taskAdded.area,
-            quadrant: 'first',
-          };
-          return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
-            const recevied = res.body.tasks.important[0];
-            const expected = {
-              text: 'test put update task',
-              time: '00:30',
-              area: taskAdded.area,
-              quadrant: 'first',
-              label: 'plain',
-            };
-            expect(res.status).toBe(200);
             expect(recevied).toMatchObject(expected);
           });
         });
@@ -240,7 +189,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'first',
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.important[0];
@@ -253,7 +201,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: taskAdded.area,
             quadrant: 'third',
-            label: taskAdded.label,
           };
           return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body.tasks.notImportant[0];
@@ -277,7 +224,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'first',
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.important[0];
@@ -290,7 +236,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: taskAdded.area,
             quadrant: 'daily',
-            label: taskAdded.label,
           };
           return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body.tasks.daily[0];
@@ -314,7 +259,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'third',
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.notImportant[0];
@@ -327,7 +271,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: taskAdded.area,
             quadrant: 'first',
-            label: taskAdded.label,
           };
           return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body.tasks.important[0];
@@ -351,7 +294,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'third',
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.notImportant[0];
@@ -364,7 +306,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: taskAdded.area,
             quadrant: 'daily',
-            label: taskAdded.label,
           };
           return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body.tasks.daily[0];
@@ -388,7 +329,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'daily',
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.daily[0];
@@ -401,7 +341,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: taskAdded.area,
             quadrant: 'first',
-            label: taskAdded.label,
           };
           return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body.tasks.important[0];
@@ -425,7 +364,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'daily',
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.daily[0];
@@ -438,7 +376,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: taskAdded.area,
             quadrant: 'third',
-            label: taskAdded.label,
           };
           return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body.tasks.notImportant[0];
@@ -462,7 +399,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'first',
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.important[0];
@@ -475,7 +411,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: taskAdded.area,
             quadrant: 'first',
-            label: taskAdded.label,
           };
           return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body.tasks.important[0];
@@ -499,7 +434,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'third',
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.notImportant[0];
@@ -512,7 +446,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: taskAdded.area,
             quadrant: 'third',
-            label: taskAdded.label,
           };
           return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body.tasks.notImportant[0];
@@ -536,7 +469,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'daily',
-            label: area.title,
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.daily[0];
@@ -549,7 +481,6 @@ describe(`Task ${apiTask}`, () => {
             time: '00:30',
             area: taskAdded.area,
             quadrant: 'daily',
-            label: taskAdded.label,
           };
           return request(app).put(`${apiTask}/${taskAdded._id}`).send(taskUpdate).then((res) => {
             const recevied = res.body.tasks.daily[0];
