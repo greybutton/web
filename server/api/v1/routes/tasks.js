@@ -264,11 +264,54 @@ router.delete('/:_id', (req, res) => {
   const _id = req.params._id;
   User.update({}, { $pull: { 'tasks.important': { _id } } })
     .then((result) => {
-      // new model request because in otherwise result is object of $pull operator
-      User.find({}).then((result) => {
-        const tasks = result[0] ? result[0].tasks : { daily: [], important: [], notImportant: [] };
-        res.json({ tasks });
-      });
+      if (result.nModified === 1) {
+        // new model request because in otherwise result is object of $pull operator
+        User.find({}).then((result) => {
+          const tasks = result[0]
+            ? result[0].tasks
+            : { daily: [], important: [], notImportant: [] };
+          res.json({ tasks });
+        });
+      } else {
+        return false;
+      }
+      return true;
+    })
+    .then((prev) => {
+      if (!prev) {
+        User.update({}, { $pull: { 'tasks.notImportant': { _id } } }).then((result) => {
+          if (result.nModified === 1) {
+            // new model request because in otherwise result is object of $pull operator
+            User.find({}).then((result) => {
+              const tasks = result[0]
+                ? result[0].tasks
+                : { daily: [], important: [], notImportant: [] };
+              res.json({ tasks });
+            });
+          } else {
+            return false;
+          }
+          return true;
+        });
+      }
+    })
+    .then((prev) => {
+      if (!prev) {
+        User.update({}, { $pull: { 'tasks.daily': { _id } } }).then((result) => {
+          if (result.nModified === 1) {
+            // new model request because in otherwise result is object of $pull operator
+            User.find({}).then((result) => {
+              const tasks = result[0]
+                ? result[0].tasks
+                : { daily: [], important: [], notImportant: [] };
+              res.json({ tasks });
+            });
+          } else {
+            return false;
+          }
+          return true;
+        });
+      }
     })
     .catch((error) => {
       handleError(error, res);
@@ -294,6 +337,34 @@ router.put('/taskListImportantOrder/:_id', (req, res) => {
         ).then(() => {
           User.find({}).then((result) => {
             res.json({ tasks: result[0].tasks.important });
+          });
+        });
+      });
+    })
+    .catch((err) => {
+      handleError(err, res);
+    });
+});
+
+router.put('/taskListDailyOrder/:_id', (req, res) => {
+  const _id = req.params._id;
+  const oldIndex = req.body.indexes.oldIndex;
+  const newIndex = req.body.indexes.newIndex;
+
+  User.find({}, {})
+    .then((result) => {
+      const tasks = result[0].tasks.daily;
+      const task = tasks.splice(oldIndex, 1);
+      return task;
+    })
+    .then((task) => {
+      User.update({}, { $pull: { 'tasks.daily': { _id } } }).then(() => {
+        User.update(
+          {},
+          { $push: { 'tasks.daily': { $each: task, $position: newIndex } } }
+        ).then(() => {
+          User.find({}).then((result) => {
+            res.json({ tasks: result[0].tasks.daily });
           });
         });
       });

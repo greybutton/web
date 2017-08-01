@@ -277,4 +277,45 @@ describe('Task Reducer', () => {
       });
     });
   });
+  describe('update task list daily order', () => {
+    it('should handle UPDATE_TASK_LIST_DAILY_ORDER_PENDING', () => {
+      expect(
+        TaskReducer(defaultState, {
+          type: types.UPDATE_TASK_LIST_DAILY_ORDER_PENDING,
+        }),
+      ).toEqual({
+        ...defaultState,
+        loading: true,
+      });
+    });
+    it('should handle UPDATE_TASK_LIST_DAILY_ORDER_FULFILLED', () => {
+      const data = {
+        tasks: [task],
+      };
+      expect(
+        TaskReducer(defaultState, {
+          type: types.UPDATE_TASK_LIST_DAILY_ORDER_FULFILLED,
+          payload: { data },
+        }),
+      ).toEqual({
+        ...defaultState,
+        dailyTaskList: [...data.tasks],
+      });
+    });
+    it('should handle UPDATE_TASK_LIST_DAILY_ORDER_REJECTED', () => {
+      const data = {
+        message: 'OrderError',
+        errors: {},
+      };
+      expect(
+        TaskReducer(defaultState, {
+          type: types.UPDATE_TASK_LIST_DAILY_ORDER_REJECTED,
+          payload: { data },
+        }),
+      ).toEqual({
+        ...defaultState,
+        errors: {},
+      });
+    });
+  });
 });

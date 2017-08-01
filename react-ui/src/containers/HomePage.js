@@ -6,6 +6,7 @@ import * as AreaActions from '../actions/AreaActions';
 import * as TaskActions from '../actions/TaskActions';
 import AreaList from '../components/AreaList';
 import TaskList from '../components/TaskList';
+import DailyTaskList from '../components/DailyTaskList';
 
 class HomePage extends Component {
   componentDidMount() {
@@ -18,6 +19,12 @@ class HomePage extends Component {
     return (
       <Row>
         <Col xs={12} sm={6}>
+          <DailyTaskList
+            dailyTaskList={this.props.dailyTaskList}
+            loading={this.props.loadingTask}
+            deleteTask={this.props.TaskActions.deleteTask}
+            updateTaskListDailyOrder={this.props.TaskActions.updateTaskListDailyOrder}
+          />
           <TaskList
             importantTaskList={this.props.importantTaskList}
             areaList={this.props.areaList}
@@ -43,6 +50,7 @@ function mapStateToProps(state) {
     loadingArea: state.areaStore.loading,
     areaList: state.areaStore.areaList,
     loadingTask: state.taskStore.loading,
+    dailyTaskList: state.taskStore.dailyTaskList,
     importantTaskList: state.taskStore.importantTaskList,
   };
 }

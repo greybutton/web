@@ -17,6 +17,7 @@ describe('test root saga', () => {
         fork(Watchers.watchUpdateTask),
         fork(Watchers.watchDeleteTask),
         fork(Watchers.watchUpdateTaskListImportantOrder),
+        fork(Watchers.watchUpdateTaskListDailyOrder),
       ]),
     );
   });

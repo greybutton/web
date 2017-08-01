@@ -119,4 +119,15 @@ describe('test watch save task', () => {
       expect(gen.next().done).toEqual(true);
     });
   });
+  describe('update task list daily order', () => {
+    const gen = Watchers.watchUpdateTaskListDailyOrder();
+    it('should call watchUpdateTaskListDailyOrder', () => {
+      expect(gen.next().value).toEqual(
+        takeLatest(types.UPDATE_TASK_LIST_DAILY_ORDER, TaskSagas.updateTaskListDailyOrder),
+      );
+    });
+    it('should be done', () => {
+      expect(gen.next().done).toEqual(true);
+    });
+  });
 });

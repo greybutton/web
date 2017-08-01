@@ -28,7 +28,7 @@ describe(`Task ${apiTask}`, () => {
         expect(res.status).toBe(500);
       });
     });
-    it('should delete a task', () => {
+    it('should delete important task', () => {
       expect.hasAssertions();
       return request(app)
         .post(apiArea)
@@ -39,7 +39,7 @@ describe(`Task ${apiTask}`, () => {
         })
         .then((area) => {
           const task = {
-            text: 'test delete task',
+            text: 'test delete important task',
             time: '00:30',
             area: area._id.toString(),
             quadrant: 'first',
@@ -47,6 +47,68 @@ describe(`Task ${apiTask}`, () => {
           };
           return request(app).post(apiTask).send(task).then((res) => {
             const taskAdded = res.body.tasks.important[0];
+            return taskAdded;
+          });
+        })
+        .then(taskAdded =>
+          request(app).delete(`${apiTask}/${taskAdded._id}`).then((result) => {
+            const recevied = result.body;
+            const expected = { tasks: { important: [], notImportant: [], daily: [] } };
+            expect(result.status).toBe(200);
+            expect(recevied).toEqual(expected);
+          }),
+        );
+    });
+    it('should delete not important task', () => {
+      expect.hasAssertions();
+      return request(app)
+        .post(apiArea)
+        .send(areaTest)
+        .then((res) => {
+          const area = res.body.areas[0];
+          return area;
+        })
+        .then((area) => {
+          const task = {
+            text: 'test delete not important task',
+            time: '00:30',
+            area: area._id.toString(),
+            quadrant: 'third',
+            label: area.title,
+          };
+          return request(app).post(apiTask).send(task).then((res) => {
+            const taskAdded = res.body.tasks.notImportant[0];
+            return taskAdded;
+          });
+        })
+        .then(taskAdded =>
+          request(app).delete(`${apiTask}/${taskAdded._id}`).then((result) => {
+            const recevied = result.body;
+            const expected = { tasks: { important: [], notImportant: [], daily: [] } };
+            expect(result.status).toBe(200);
+            expect(recevied).toEqual(expected);
+          }),
+        );
+    });
+    it('should delete daily task', () => {
+      expect.hasAssertions();
+      return request(app)
+        .post(apiArea)
+        .send(areaTest)
+        .then((res) => {
+          const area = res.body.areas[0];
+          return area;
+        })
+        .then((area) => {
+          const task = {
+            text: 'test delete daily task',
+            time: '00:30',
+            area: area._id.toString(),
+            quadrant: 'daily',
+            label: area.title,
+          };
+          return request(app).post(apiTask).send(task).then((res) => {
+            const taskAdded = res.body.tasks.daily[0];
             return taskAdded;
           });
         })

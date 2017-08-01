@@ -134,3 +134,30 @@ export function updateTaskListImportantOrderRejected(error) {
     payload: error,
   };
 }
+
+export function updateTaskListDailyOrder(payload) {
+  return {
+    type: types.UPDATE_TASK_LIST_DAILY_ORDER,
+    payload,
+  };
+}
+
+export function updateTaskListDailyOrderPending() {
+  return {
+    type: types.UPDATE_TASK_LIST_DAILY_ORDER_PENDING,
+  };
+}
+
+export function updateTaskListDailyOrderFulfilled(taskList) {
+  return {
+    type: types.UPDATE_TASK_LIST_DAILY_ORDER_FULFILLED,
+    payload: taskList,
+  };
+}
+
+export function updateTaskListDailyOrderRejected(error) {
+  return {
+    type: types.UPDATE_TASK_LIST_DAILY_ORDER_REJECTED,
+    payload: error,
+  };
+}

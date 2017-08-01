@@ -166,6 +166,28 @@ export default (state = defaultState, action = {}) => {
         errors: data,
       };
     }
+    case types.UPDATE_TASK_LIST_DAILY_ORDER_PENDING: {
+      return {
+        ...state,
+        loading: true,
+      };
+    }
+    case types.UPDATE_TASK_LIST_DAILY_ORDER_FULFILLED: {
+      return {
+        ...state,
+        dailyTaskList: action.payload.data.tasks,
+        loading: false,
+        errors: {},
+      };
+    }
+    case types.UPDATE_TASK_LIST_DAILY_ORDER_REJECTED: {
+      const data = action.payload.data.errors;
+      return {
+        ...state,
+        loading: false,
+        errors: data,
+      };
+    }
     default:
       return state;
   }

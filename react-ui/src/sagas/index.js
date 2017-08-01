@@ -14,5 +14,6 @@ export default function* root() {
     fork(Watchers.watchUpdateTask),
     fork(Watchers.watchDeleteTask),
     fork(Watchers.watchUpdateTaskListImportantOrder),
+    fork(Watchers.watchUpdateTaskListDailyOrder),
   ]);
 }

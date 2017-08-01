@@ -30,6 +30,12 @@ export function updateTaskListImportantOrderApi(payload) {
   });
 }
 
+export function updateTaskListDailyOrderApi(payload) {
+  return axios.put(`${url}/taskListDailyOrder/${payload._id}`, {
+    indexes: { oldIndex: payload.oldIndex, newIndex: payload.newIndex },
+  });
+}
+
 export function* saveTask({ payload }) {
   yield put(TaskActions.saveTaskPending());
   try {
@@ -80,6 +86,17 @@ export function* updateTaskListImportantOrder({ payload }) {
     yield call(payload.resolve);
   } catch (e) {
     yield put(TaskActions.updateTaskListImportantOrderRejected(e));
+    yield call(payload.reject);
+  }
+}
+
+export function* updateTaskListDailyOrder({ payload }) {
+  try {
+    const taskList = yield call(updateTaskListDailyOrderApi, payload);
+    yield put(TaskActions.updateTaskListDailyOrderFulfilled(taskList));
+    yield call(payload.resolve);
+  } catch (e) {
+    yield put(TaskActions.updateTaskListDailyOrderRejected(e));
     yield call(payload.reject);
   }
 }

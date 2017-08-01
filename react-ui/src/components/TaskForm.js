@@ -224,7 +224,7 @@ class TaskForm extends Component {
     return (
       <Grid>
         <h1>
-          {task.id ? 'Edit Task' : 'Add New Task'}
+          {task._id ? 'Edit Task' : 'Add New Task'}
         </h1>
         {loading
           ? 'Loading...'

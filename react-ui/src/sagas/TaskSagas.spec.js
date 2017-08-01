@@ -141,4 +141,36 @@ describe('Task sagas tests', () => {
       expect(gen.next().done).toEqual(true);
     });
   });
+  describe('update task list daily order', () => {
+    const payload = {
+      task: {
+        text: 'test task actions',
+        time: '00:15',
+        area: 2,
+        quadrant: 'first',
+        label: 'area title',
+      },
+      resolve: () => {},
+      reject: () => {},
+    };
+    const gen = TaskSagas.updateTaskListDailyOrder({ payload });
+    it('should call update task list daily order api', () => {
+      expect(gen.next().value).toEqual(call(TaskSagas.updateTaskListDailyOrderApi, payload));
+    });
+    it('should put update task list daily order fulfilled', () => {
+      expect(gen.next().value).toEqual(put(TaskActions.updateTaskListDailyOrderFulfilled()));
+    });
+    it('should call resolve', () => {
+      expect(gen.next().value).toEqual(call(payload.resolve));
+    });
+    it('should put update task list daily order reject', () => {
+      expect(gen.throw().value).toEqual(put(TaskActions.updateTaskListDailyOrderRejected()));
+    });
+    it('should call reject', () => {
+      expect(gen.next().value).toEqual(call(payload.reject));
+    });
+    it('should be done', () => {
+      expect(gen.next().done).toEqual(true);
+    });
+  });
 });

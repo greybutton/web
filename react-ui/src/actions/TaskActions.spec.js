@@ -194,4 +194,46 @@ describe('Task Actions', () => {
       expect(TaskActions.updateTaskListImportantOrderRejected(error)).toEqual(expectedAction);
     });
   });
+  describe('update task list daily order', () => {
+    it('should create an action to update a task list daily order', () => {
+      const payload = {
+        oldIndex: 0,
+        newIndex: 1,
+        _id: task._id,
+        resolve: () => {},
+        reject: () => {},
+      };
+      const expectedAction = {
+        type: types.UPDATE_TASK_LIST_DAILY_ORDER,
+        payload,
+      };
+      expect(TaskActions.updateTaskListDailyOrder(payload)).toEqual(expectedAction);
+    });
+    it('should create an action to update pending a task list daily order', () => {
+      const expectedAction = {
+        type: types.UPDATE_TASK_LIST_DAILY_ORDER_PENDING,
+      };
+      expect(TaskActions.updateTaskListDailyOrderPending()).toEqual(expectedAction);
+    });
+    it('should create an action to update fulfilled a task list daily order', () => {
+      const expectedAction = {
+        type: types.UPDATE_TASK_LIST_DAILY_ORDER_FULFILLED,
+        payload: task,
+      };
+      expect(TaskActions.updateTaskListDailyOrderFulfilled(task)).toEqual(expectedAction);
+    });
+    it('should create an action to update rejected a task list daily order', () => {
+      const error = {
+        data: {
+          message: 'OrderError',
+          errors: {},
+        },
+      };
+      const expectedAction = {
+        type: types.UPDATE_TASK_LIST_DAILY_ORDER_REJECTED,
+        payload: error,
+      };
+      expect(TaskActions.updateTaskListDailyOrderRejected(error)).toEqual(expectedAction);
+    });
+  });
 });
