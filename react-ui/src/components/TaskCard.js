@@ -11,6 +11,7 @@ class TaskCard extends Component {
       <ListGroupItem
         data-id={task._id}
         onDoubleClick={() => this.setState({ open: !this.state.open })}
+        bsStyle={task.quadrant === 'first' ? 'danger' : task.quadrant === 'second' ? 'warning' : ''}
       >
         <div>
           <Label bsStyle="default">{task.time}</Label>&nbsp;
