@@ -43,7 +43,7 @@ const TaskList = ({
       console.log(err);
     });
   return (
-    <Panel header="List of Tasks">
+    <Panel header="List of Tasks" collapsible defaultExpanded>
       <Tab.Container id="tabs" defaultActiveKey="all" fill>
         <Row className="clearfix" style={{ marginLeft: 0, marginRight: 0 }}>
           <Col>

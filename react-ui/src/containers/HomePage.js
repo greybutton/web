@@ -19,7 +19,7 @@ class HomePage extends Component {
   render() {
     return (
       <Row>
-        <Col xs={12} sm={6}>
+        <Col xs={10} xsOffset={1} sm={6} smOffset={0}>
           <DailyTaskList
             dailyTaskList={this.props.dailyTaskList}
             areaList={this.props.areaList}
@@ -37,7 +37,7 @@ class HomePage extends Component {
             pickAreaTaskList={this.props.TaskActions.pickAreaTaskList}
           />
         </Col>
-        <Col xs={12} sm={6}>
+        <Col xs={10} xsOffset={1} sm={6} smOffset={0}>
           <AreaList
             areaList={this.props.areaList}
             loading={this.props.loadingArea}

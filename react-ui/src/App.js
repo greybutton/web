@@ -1,28 +1,37 @@
 import React, { Component } from 'react';
 import { Route, NavLink } from 'react-router-dom';
-import { Grid, Row, Col } from 'react-bootstrap';
+import { Grid, Row, Col, Button, Glyphicon } from 'react-bootstrap';
 import HomePage from './containers/HomePage';
 import AreaFormPage from './containers/AreaFormPage';
 import TaskFormPage from './containers/TaskFormPage';
 
 import logo from './laura.svg';
-import './App.css';
 
 class App extends Component {
   render() {
     return (
       <Grid>
         <Row>
-          <Col xs={12}>
-            <NavLink to="/">
-              <img src={logo} className="App-logo" alt="logo" />
-            </NavLink>
+          <Col xs={10} xsOffset={1} sm={12} smOffset={0}>
+            <Row style={{ textAlign: 'center' }}>
+              <NavLink to="/">
+                <img src={logo} alt="logo" style={{ margin: '12px 0' }} />
+              </NavLink>
+            </Row>
             <Row>
               <Col xs={6}>
-                <NavLink to="/tasks/new">Add task</NavLink>
+                <NavLink to="/tasks/new">
+                  <Button bsStyle="link" bsSize="large">
+                    <Glyphicon glyph="plus" /> Add task
+                  </Button>
+                </NavLink>
               </Col>
               <Col xs={6}>
-                <NavLink to="/areas/new">Add area</NavLink>
+                <NavLink to="/areas/new">
+                  <Button bsStyle="link" bsSize="large">
+                    <Glyphicon glyph="plus" /> Add area
+                  </Button>
+                </NavLink>
               </Col>
             </Row>
           </Col>

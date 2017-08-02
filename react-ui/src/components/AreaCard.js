@@ -11,11 +11,12 @@ class AreaCard extends Component {
       <ListGroupItem
         data-id={area._id}
         onDoubleClick={() => this.setState({ open: !this.state.open })}
+        style={{ paddingTop: 0 }}
       >
         <h4>
           {area.title}
         </h4>
-        <ProgressBar>
+        <ProgressBar style={{ marginBottom: 10 }}>
           <ProgressBar
             min={0}
             max={10}

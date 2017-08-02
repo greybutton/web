@@ -18,7 +18,7 @@ const AreaList = ({ areaList, loading, updateAreaListOrder }) => {
       console.log(err);
     });
   return (
-    <Panel header="The wheel of life">
+    <Panel header="The wheel of life" collapsible>
       <ListGroup fill>
         {loading
           ? 'loading...'

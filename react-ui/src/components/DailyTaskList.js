@@ -41,7 +41,7 @@ const DailyTaskList = ({
     return { hours, minutes };
   };
   return (
-    <Panel header="Daily list of tasks">
+    <Panel header="Daily list of tasks" collapsible defaultExpanded>
       <ListGroup fill>
         {loading
           ? 'loading...'

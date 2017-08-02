@@ -16,7 +16,7 @@ const EisenhowerMatrix = ({ matrixTaskList, areaTaskList, loading, deleteTask })
       .map(task => <EisenhowerMatrixCard key={task._id} task={task} deleteTask={deleteTask} />);
   };
   return (
-    <Panel header="The Eisonhower matrix">
+    <Panel header="The Eisonhower matrix" collapsible>
       {loading
         ? 'loading...'
         : <div fill className="eisenhower-matrix">
