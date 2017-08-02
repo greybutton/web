@@ -50,3 +50,7 @@ export function* watchUpdateTaskListImportantOrder() {
 export function* watchUpdateTaskListDailyOrder() {
   yield takeLatest(types.UPDATE_TASK_LIST_DAILY_ORDER, TaskSagas.updateTaskListDailyOrder);
 }
+
+export function* watchPickAreaTaskList() {
+  yield takeLatest(types.PICK_AREA_TASK_LIST, TaskSagas.pickAreaTaskList);
+}

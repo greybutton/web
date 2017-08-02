@@ -30,9 +30,11 @@ class HomePage extends Component {
           <TaskList
             importantTaskList={this.props.importantTaskList}
             areaList={this.props.areaList}
+            areaTaskList={this.props.areaTaskList}
             loading={this.props.loadingTask}
             deleteTask={this.props.TaskActions.deleteTask}
             updateTaskListImportantOrder={this.props.TaskActions.updateTaskListImportantOrder}
+            pickAreaTaskList={this.props.TaskActions.pickAreaTaskList}
           />
         </Col>
         <Col xs={12} sm={6}>
@@ -44,6 +46,7 @@ class HomePage extends Component {
           <EisenhowerMatrix
             matrixTaskList={this.props.matrixTaskList}
             loading={this.props.loadingTask}
+            areaTaskList={this.props.areaTaskList}
             deleteTask={this.props.TaskActions.deleteTask}
           />
         </Col>
@@ -60,6 +63,7 @@ function mapStateToProps(state) {
     dailyTaskList: state.taskStore.dailyTaskList,
     importantTaskList: state.taskStore.importantTaskList,
     matrixTaskList: state.taskStore.matrixTaskList,
+    areaTaskList: state.taskStore.areaTaskList,
   };
 }
 

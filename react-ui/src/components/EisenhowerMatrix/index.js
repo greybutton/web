@@ -4,11 +4,17 @@ import EisenhowerMatrixCard from '../EisenhowerMatrixCard';
 
 import './index.css';
 
-const EisenhowerMatrix = ({ matrixTaskList, loading, deleteTask }) => {
-  const cards = quadrant =>
-    matrixTaskList
+const EisenhowerMatrix = ({ matrixTaskList, areaTaskList, loading, deleteTask }) => {
+  const cards = (quadrant) => {
+    if (areaTaskList.length === 0) {
+      return matrixTaskList
+        .filter(task => task.quadrant === quadrant)
+        .map(task => <EisenhowerMatrixCard key={task._id} task={task} deleteTask={deleteTask} />);
+    }
+    return areaTaskList
       .filter(task => task.quadrant === quadrant)
       .map(task => <EisenhowerMatrixCard key={task._id} task={task} deleteTask={deleteTask} />);
+  };
   return (
     <Panel header="The Eisonhower matrix">
       {loading

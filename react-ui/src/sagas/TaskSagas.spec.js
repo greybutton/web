@@ -160,4 +160,13 @@ describe('Task sagas tests', () => {
       expect(gen.next().done).toEqual(true);
     });
   });
+  describe('pick area task list', () => {
+    const gen = TaskSagas.pickAreaTaskList(task.area);
+    it('should put pick area task list', () => {
+      expect(gen.next().value).toEqual(put(TaskActions.pickAreaTaskList(task.area)));
+    });
+    it('should be done', () => {
+      expect(gen.next().done).toEqual(true);
+    });
+  });
 });

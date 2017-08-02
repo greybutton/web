@@ -4,6 +4,7 @@ export const defaultState = {
   dailyTaskList: [],
   importantTaskList: [],
   matrixTaskList: [],
+  areaTaskList: [],
   task: {},
   taskSearchResult: [],
   loading: false,
@@ -189,6 +190,13 @@ export default (state = defaultState, action = {}) => {
         ...state,
         loading: false,
         errors: data,
+      };
+    }
+    case types.PICK_AREA_TASK_LIST: {
+      const id = action.payload;
+      return {
+        ...state,
+        areaTaskList: state.matrixTaskList.filter(task => task.area === id),
       };
     }
     default:

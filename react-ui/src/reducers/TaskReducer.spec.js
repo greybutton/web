@@ -318,4 +318,15 @@ describe('Task Reducer', () => {
       });
     });
   });
+  describe('pick area task list', () => {
+    expect(
+      TaskReducer(
+        { ...defaultState, matrixTaskList: [task] },
+        {
+          type: types.PICK_AREA_TASK_LIST,
+          payload: task.area,
+        },
+      ),
+    ).toEqual({ ...defaultState, matrixTaskList: [task], areaTaskList: [task] });
+  });
 });

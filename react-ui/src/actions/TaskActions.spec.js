@@ -235,4 +235,13 @@ describe('Task Actions', () => {
       expect(TaskActions.updateTaskListDailyOrderRejected(error)).toEqual(expectedAction);
     });
   });
+  describe('pick area task list', () => {
+    it('should create an action pick area task list', () => {
+      const expectedAction = {
+        type: types.PICK_AREA_TASK_LIST,
+        payload: task.area,
+      };
+      expect(TaskActions.pickAreaTaskList(task.area)).toEqual(expectedAction);
+    });
+  });
 });

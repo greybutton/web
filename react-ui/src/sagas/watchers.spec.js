@@ -130,4 +130,15 @@ describe('test watch save task', () => {
       expect(gen.next().done).toEqual(true);
     });
   });
+  describe('pick area task list', () => {
+    const gen = Watchers.watchPickAreaTaskList();
+    it('should call watchPickAreaTaskList', () => {
+      expect(gen.next().value).toEqual(
+        takeLatest(types.PICK_AREA_TASK_LIST, TaskSagas.pickAreaTaskList),
+      );
+    });
+    it('should be done', () => {
+      expect(gen.next().done).toEqual(true);
+    });
+  });
 });

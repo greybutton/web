@@ -100,3 +100,7 @@ export function* updateTaskListDailyOrder({ payload }) {
     yield call(payload.reject);
   }
 }
+
+export function* pickAreaTaskList(_id) {
+  yield put(TaskActions.pickAreaTaskList(_id));
+}

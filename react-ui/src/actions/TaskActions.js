@@ -161,3 +161,10 @@ export function updateTaskListDailyOrderRejected(error) {
     payload: error,
   };
 }
+
+export function pickAreaTaskList(_id) {
+  return {
+    type: types.PICK_AREA_TASK_LIST,
+    payload: _id,
+  };
+}
