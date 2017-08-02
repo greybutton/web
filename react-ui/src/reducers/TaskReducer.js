@@ -153,7 +153,10 @@ export default (state = defaultState, action = {}) => {
     case types.UPDATE_TASK_LIST_IMPORTANT_ORDER_FULFILLED: {
       return {
         ...state,
-        importantTaskList: action.payload.data.tasks,
+        importantTaskList: action.payload.data.tasks.important,
+        matrixTaskList: action.payload.data.tasks.important.concat(
+          action.payload.data.tasks.notImportant,
+        ),
         loading: false,
         errors: {},
       };

@@ -326,7 +326,7 @@ router.put('/taskListImportantOrder/:_id', (req, res) => {
           { $push: { 'tasks.important': { $each: task, $position: newIndex } } }
         ).then(() => {
           User.find({}).then((result) => {
-            res.json({ tasks: result[0].tasks.important });
+            res.json({ tasks: result[0].tasks });
           });
         });
       });

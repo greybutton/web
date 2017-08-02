@@ -248,7 +248,7 @@ describe('Task Reducer', () => {
     });
     it('should handle UPDATE_TASK_LIST_IMPORTANT_ORDER_FULFILLED', () => {
       const data = {
-        tasks: [task],
+        tasks: { important: [task], notImportant: [task], daily: [task] },
       };
       expect(
         TaskReducer(defaultState, {
@@ -257,7 +257,8 @@ describe('Task Reducer', () => {
         }),
       ).toEqual({
         ...defaultState,
-        importantTaskList: [...data.tasks],
+        importantTaskList: data.tasks.important,
+        matrixTaskList: data.tasks.important.concat(data.tasks.notImportant),
       });
     });
     it('should handle UPDATE_TASK_LIST_IMPORTANT_ORDER_REJECTED', () => {

@@ -56,7 +56,7 @@ describe(`Task ${apiTask}`, () => {
               .put(`${apiTask}/taskListImportantOrder/${tasks[0]._id}`)
               .send({ indexes: { oldIndex: 0, newIndex: 1 } })
               .then((result) => {
-                const recevied = result.body.tasks;
+                const recevied = result.body.tasks.important;
                 expect(result.status).toBe(200);
                 expect(recevied[0]).toMatchObject(taskFirst);
                 expect(recevied[1]).toMatchObject(taskSecond);

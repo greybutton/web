@@ -7,6 +7,7 @@ import * as TaskActions from '../actions/TaskActions';
 import AreaList from '../components/AreaList';
 import TaskList from '../components/TaskList';
 import DailyTaskList from '../components/DailyTaskList';
+import EisenhowerMatrix from '../components/EisenhowerMatrix/';
 
 class HomePage extends Component {
   componentDidMount() {
@@ -40,6 +41,11 @@ class HomePage extends Component {
             loading={this.props.loadingArea}
             updateAreaListOrder={this.props.AreaActions.updateAreaListOrder}
           />
+          <EisenhowerMatrix
+            matrixTaskList={this.props.matrixTaskList}
+            loading={this.props.loadingTask}
+            deleteTask={this.props.TaskActions.deleteTask}
+          />
         </Col>
       </Row>
     );
@@ -53,6 +59,7 @@ function mapStateToProps(state) {
     loadingTask: state.taskStore.loading,
     dailyTaskList: state.taskStore.dailyTaskList,
     importantTaskList: state.taskStore.importantTaskList,
+    matrixTaskList: state.taskStore.matrixTaskList,
   };
 }
 

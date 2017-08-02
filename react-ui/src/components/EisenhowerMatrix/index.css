@@ -1,0 +1,32 @@
+.eisenhower-matrix {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.eisenhower-matrix__panel {
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.eisenhower-matrix__panel.panel {
+  border-radius: 0;
+}
+
+.eisenhower-matrix__panel .panel-heading {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.eisenhower-matrix__panel > .list-group:last-child .list-group-item:last-child,
+.eisenhower-matrix__panel
+  > .panel-collapse
+  > .list-group:last-child .list-group-item:last-child {
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+@media (min-width: 64em) {
+  .eisenhower-matrix__panel {
+    width: 50%;
+  }
+}
