@@ -47,7 +47,7 @@ describe('Task Reducer', () => {
         ...defaultState,
         dailyTaskList: data.tasks.daily,
         importantTaskList: data.tasks.important,
-        matrixTaskList: data.tasks.important.concat(data.tasks.notImportant),
+        allTaskList: data.tasks.important.concat(data.tasks.notImportant),
       });
     });
     it('should handle SAVE_TASK_REJECTED', () => {
@@ -108,7 +108,7 @@ describe('Task Reducer', () => {
         ...defaultState,
         dailyTaskList: data.tasks.daily,
         importantTaskList: data.tasks.important,
-        matrixTaskList: data.tasks.important.concat(data.tasks.notImportant),
+        allTaskList: data.tasks.important.concat(data.tasks.notImportant),
         loading: false,
       });
     });
@@ -164,7 +164,7 @@ describe('Task Reducer', () => {
         ...defaultState,
         dailyTaskList: data.tasks.daily,
         importantTaskList: data.tasks.important,
-        matrixTaskList: data.tasks.important.concat(data.tasks.notImportant),
+        allTaskList: data.tasks.important.concat(data.tasks.notImportant),
       });
     });
     it('should handle UPDATE_TASK_REJECTED', () => {
@@ -211,7 +211,7 @@ describe('Task Reducer', () => {
         ...defaultState,
         dailyTaskList: data.tasks.daily,
         importantTaskList: data.tasks.important,
-        matrixTaskList: data.tasks.important.concat(data.tasks.notImportant),
+        allTaskList: data.tasks.important.concat(data.tasks.notImportant),
       });
     });
     it('should handle DELETE_TASK_REJECTED', () => {
@@ -258,7 +258,7 @@ describe('Task Reducer', () => {
       ).toEqual({
         ...defaultState,
         importantTaskList: data.tasks.important,
-        matrixTaskList: data.tasks.important.concat(data.tasks.notImportant),
+        allTaskList: data.tasks.important.concat(data.tasks.notImportant),
       });
     });
     it('should handle UPDATE_TASK_LIST_IMPORTANT_ORDER_REJECTED', () => {
@@ -321,12 +321,12 @@ describe('Task Reducer', () => {
   describe('pick area task list', () => {
     expect(
       TaskReducer(
-        { ...defaultState, matrixTaskList: [task] },
+        { ...defaultState, allTaskList: [task] },
         {
           type: types.PICK_AREA_TASK_LIST,
           payload: task.area,
         },
       ),
-    ).toEqual({ ...defaultState, matrixTaskList: [task], areaTaskList: [task] });
+    ).toEqual({ ...defaultState, allTaskList: [task], areaTaskList: [task] });
   });
 });

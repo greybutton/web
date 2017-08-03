@@ -44,7 +44,7 @@ class HomePage extends Component {
             updateAreaListOrder={this.props.AreaActions.updateAreaListOrder}
           />
           <EisenhowerMatrix
-            matrixTaskList={this.props.matrixTaskList}
+            allTaskList={this.props.allTaskList}
             loading={this.props.loadingTask}
             areaTaskList={this.props.areaTaskList}
             deleteTask={this.props.TaskActions.deleteTask}
@@ -62,7 +62,7 @@ function mapStateToProps(state) {
     loadingTask: state.taskStore.loading,
     dailyTaskList: state.taskStore.dailyTaskList,
     importantTaskList: state.taskStore.importantTaskList,
-    matrixTaskList: state.taskStore.matrixTaskList,
+    allTaskList: state.taskStore.allTaskList,
     areaTaskList: state.taskStore.areaTaskList,
   };
 }

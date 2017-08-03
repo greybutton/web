@@ -3,7 +3,7 @@ import * as types from '../constants/actionTypes';
 export const defaultState = {
   dailyTaskList: [],
   importantTaskList: [],
-  matrixTaskList: [],
+  allTaskList: [],
   areaTaskList: [],
   task: {},
   taskSearchResult: [],
@@ -24,7 +24,7 @@ export default (state = defaultState, action = {}) => {
         ...state,
         dailyTaskList: action.payload.data.tasks.daily,
         importantTaskList: action.payload.data.tasks.important,
-        matrixTaskList: action.payload.data.tasks.important.concat(
+        allTaskList: action.payload.data.tasks.important.concat(
           action.payload.data.tasks.notImportant,
         ),
         loading: false,
@@ -61,7 +61,7 @@ export default (state = defaultState, action = {}) => {
         ...state,
         dailyTaskList: action.payload.data.tasks.daily,
         importantTaskList: action.payload.data.tasks.important,
-        matrixTaskList: action.payload.data.tasks.important.concat(
+        allTaskList: action.payload.data.tasks.important.concat(
           action.payload.data.tasks.notImportant,
         ),
         loading: false,
@@ -92,7 +92,7 @@ export default (state = defaultState, action = {}) => {
         ...state,
         dailyTaskList: action.payload.data.tasks.daily,
         importantTaskList: action.payload.data.tasks.important,
-        matrixTaskList: action.payload.data.tasks.important.concat(
+        allTaskList: action.payload.data.tasks.important.concat(
           action.payload.data.tasks.notImportant,
         ),
         loading: false,
@@ -129,7 +129,7 @@ export default (state = defaultState, action = {}) => {
         ...state,
         dailyTaskList: action.payload.data.tasks.daily,
         importantTaskList: action.payload.data.tasks.important,
-        matrixTaskList: action.payload.data.tasks.important.concat(
+        allTaskList: action.payload.data.tasks.important.concat(
           action.payload.data.tasks.notImportant,
         ),
         loading: false,
@@ -155,7 +155,7 @@ export default (state = defaultState, action = {}) => {
       return {
         ...state,
         importantTaskList: action.payload.data.tasks.important,
-        matrixTaskList: action.payload.data.tasks.important.concat(
+        allTaskList: action.payload.data.tasks.important.concat(
           action.payload.data.tasks.notImportant,
         ),
         loading: false,
@@ -196,7 +196,7 @@ export default (state = defaultState, action = {}) => {
       const id = action.payload;
       return {
         ...state,
-        areaTaskList: state.matrixTaskList.filter(task => task.area === id),
+        areaTaskList: state.allTaskList.filter(task => task.area === id),
       };
     }
     default:
