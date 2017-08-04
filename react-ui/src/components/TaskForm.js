@@ -214,6 +214,19 @@ class TaskForm extends Component {
       notImportant: notImportant,
     });
   };
+  time = value => {
+    if (!value) {
+      return value;
+    }
+    const onlyNums = value.replace(/[^\d]/g, '');
+    if (onlyNums.length <= 2) {
+      return onlyNums;
+    }
+    if (onlyNums.length <= 4) {
+      return `${onlyNums.slice(0, 2)}:${onlyNums.slice(2)}`;
+    }
+    return `${onlyNums.slice(0, 2)}:${onlyNums.slice(2, 4)}`;
+  };
   render() {
     const { task, handleSubmit, loading, pristine, submitting } = this.props;
     return (
@@ -237,6 +250,7 @@ class TaskForm extends Component {
                 component={this.renderField}
                 label="Task time"
                 placeholder="Enter time hh:mm"
+                normalize={this.time}
               />
               <Field
                 name="area"
@@ -296,6 +310,10 @@ const validate = values => {
   if (!values.time) {
     errors.time = {
       message: 'You need to provide time',
+    };
+  } else if (values.time.length < 5) {
+    errors.time = {
+      message: 'Time must be hh:mm (15 minutes = 00:15)',
     };
   }
   if (!values.area) {
