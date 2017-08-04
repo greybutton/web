@@ -1,38 +1,47 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Panel, ListGroup } from 'react-bootstrap';
 import Sortable from 'react-sortablejs';
 import AreaCard from './AreaCard';
 
-const AreaList = ({ areaList, loading, updateAreaListOrder }) => {
-  const cards = () => areaList.map(area => <AreaCard key={area._id} area={area} />);
-  const onEnd = evt =>
-    new Promise((resolve, reject) =>
-      updateAreaListOrder({
-        oldIndex: evt.oldIndex,
-        newIndex: evt.newIndex,
-        _id: evt.item.dataset.id,
-        resolve,
-        reject,
-      }),
-    ).catch((err) => {
-      console.log(err);
-    });
-  return (
-    <Panel header="The wheel of life" collapsible>
-      <ListGroup fill>
-        {loading
-          ? 'loading...'
-          : <Sortable
-            options={{
-              animation: 150,
-              onEnd,
-            }}
-          >
-            {cards()}
-          </Sortable>}
-      </ListGroup>
-    </Panel>
-  );
-};
+class AreaList extends Component {
+  state = {
+    expanded: false,
+  };
+  render() {
+    const { areaList, loading, updateAreaListOrder } = this.props;
+    const cards = () => areaList.map(area => <AreaCard key={area._id} area={area} />);
+    const onEnd = evt =>
+      new Promise((resolve, reject) =>
+        updateAreaListOrder({
+          oldIndex: evt.oldIndex,
+          newIndex: evt.newIndex,
+          _id: evt.item.dataset.id,
+          resolve,
+          reject,
+        }),
+      ).catch(err => {
+        console.log(err);
+      });
+    const title = (
+      <h3 onClick={() => this.setState({ expanded: !this.state.expanded })}>The wheel of life</h3>
+    );
+    return (
+      <Panel header={title} collapsible expanded={this.state.expanded}>
+        <ListGroup fill>
+          {loading
+            ? 'loading...'
+            : <Sortable
+                options={{
+                  animation: 150,
+                  onEnd,
+                }}
+              >
+                {cards()}
+              </Sortable>}
+        </ListGroup>
+      </Panel>
+    );
+  }
+}
 
 export default AreaList;
