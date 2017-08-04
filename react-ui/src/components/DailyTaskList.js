@@ -41,13 +41,13 @@ const DailyTaskList = ({
     return { hours, minutes };
   };
   return (
-    <Panel header="Daily list of tasks" collapsible defaultExpanded>
+    <Panel header="Daily task list" collapsible defaultExpanded={dailyTaskList.length === 0 ? false : true}>
       <ListGroup fill>
         {loading
           ? 'loading...'
           : <div>
             <ListGroupItem bsStyle="info">
-                Total time on daily tasks {countTime().hours}h {countTime().minutes}m
+              Total time on daily tasks {countTime().hours}h {countTime().minutes}m
               </ListGroupItem>
             <Sortable
               options={{

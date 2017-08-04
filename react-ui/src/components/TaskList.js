@@ -43,7 +43,7 @@ const TaskList = ({
       console.log(err);
     });
   return (
-    <Panel header="List of Tasks" collapsible defaultExpanded>
+    <Panel header="Task list" collapsible defaultExpanded={importantTaskList.length === 0 ? false : true}>
       <Tab.Container id="tabs" defaultActiveKey="all" fill>
         <Row className="clearfix" style={{ marginLeft: 0, marginRight: 0 }}>
           <Col>
