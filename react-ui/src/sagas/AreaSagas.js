@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { put, call } from 'redux-saga/effects';
+import Alert from 'react-s-alert';
 import * as AreaActions from '../actions/AreaActions';
 
 const url = '/api/v1/areas';
@@ -32,9 +33,19 @@ export function* saveArea({ payload }) {
     const areaList = yield call(saveAreaApi, payload.area);
     yield put(AreaActions.saveAreaFulfilled(areaList));
     yield call(payload.resolve);
+    Alert.success('Area add success', {
+      customFields: {
+        bsStyle: 'success',
+      },
+    });
   } catch (e) {
     yield put(AreaActions.saveAreaRejected(e));
     yield call(payload.reject);
+    Alert.error('Area add fail', {
+      customFields: {
+        bsStyle: 'danger',
+      },
+    });
   }
 }
 
@@ -54,9 +65,19 @@ export function* updateArea({ payload }) {
     const areaList = yield call(updateAreaApi, payload.area);
     yield put(AreaActions.updateAreaFulfilled(areaList));
     yield call(payload.resolve);
+    Alert.info('Area update success', {
+      customFields: {
+        bsStyle: 'info',
+      },
+    });
   } catch (e) {
     yield put(AreaActions.updateAreaRejected(e));
     yield call(payload.reject);
+    Alert.error('Area update fail', {
+      customFields: {
+        bsStyle: 'danger',
+      },
+    });
   }
 }
 

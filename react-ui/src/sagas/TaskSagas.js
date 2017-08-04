@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { put, call } from 'redux-saga/effects';
+import Alert from 'react-s-alert';
 import * as TaskActions from '../actions/TaskActions';
 
 const url = '/api/v1/tasks';
@@ -42,9 +43,19 @@ export function* saveTask({ payload }) {
     const taskList = yield call(saveTaskApi, payload.task);
     yield put(TaskActions.saveTaskFulfilled(taskList));
     yield call(payload.resolve);
+    Alert.success('Task add success', {
+      customFields: {
+        bsStyle: 'success',
+      },
+    });
   } catch (e) {
     yield put(TaskActions.saveTaskRejected(e));
     yield call(payload.reject);
+    Alert.error('Task add fail', {
+      customFields: {
+        bsStyle: 'danger',
+      },
+    });
   }
 }
 
@@ -64,9 +75,19 @@ export function* updateTask({ payload }) {
     const taskList = yield call(updateTaskApi, payload.task);
     yield put(TaskActions.updateTaskFulfilled(taskList));
     yield call(payload.resolve);
+    Alert.info('Task update success', {
+      customFields: {
+        bsStyle: 'info',
+      },
+    });
   } catch (e) {
     yield put(TaskActions.updateTaskRejected(e));
     yield call(payload.reject);
+    Alert.error('Task update fail', {
+      customFields: {
+        bsStyle: 'danger',
+      },
+    });
   }
 }
 
@@ -74,8 +95,18 @@ export function* deleteTask({ payload }) {
   try {
     const taskList = yield call(deleteTaskApi, payload);
     yield put(TaskActions.deleteTaskFulfilled(taskList));
+    Alert.info('Task delete success', {
+      customFields: {
+        bsStyle: 'warning',
+      },
+    });
   } catch (e) {
     yield put(TaskActions.deleteTaskRejected(e));
+    Alert.error('Task delete fail', {
+      customFields: {
+        bsStyle: 'danger',
+      },
+    });
   }
 }
 

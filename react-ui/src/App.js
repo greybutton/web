@@ -1,16 +1,20 @@
 import React, { Component } from 'react';
 import { Route, NavLink } from 'react-router-dom';
 import { Grid, Row, Col, Button, Glyphicon } from 'react-bootstrap';
+import Alert from 'react-s-alert';
+import 'react-s-alert/dist/s-alert-default.css';
 import HomePage from './containers/HomePage';
 import AreaFormPage from './containers/AreaFormPage';
 import TaskFormPage from './containers/TaskFormPage';
+import AlertMessage from './components/AlertMessage';
 
 import logo from './laura.svg';
 
 class App extends Component {
   render() {
     return (
-      <Grid>
+      <Grid style={{ position: 'relative' }}>
+        <Alert contentTemplate={AlertMessage} />
         <Row>
           <Col xs={10} xsOffset={1} sm={12} smOffset={0}>
             <Row style={{ textAlign: 'center' }}>
