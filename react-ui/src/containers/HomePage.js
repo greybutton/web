@@ -31,7 +31,7 @@ class HomePage extends Component {
           <TaskList
             importantTaskList={this.props.importantTaskList}
             areaList={this.props.areaList}
-            areaTaskList={this.props.areaTaskList}
+            areaImportantTaskList={this.props.areaImportantTaskList}
             loading={this.props.loadingTask}
             deleteTask={this.props.TaskActions.deleteTask}
             updateTaskListImportantOrder={this.props.TaskActions.updateTaskListImportantOrder}
@@ -65,6 +65,7 @@ function mapStateToProps(state) {
     importantTaskList: state.taskStore.importantTaskList,
     allTaskList: state.taskStore.allTaskList,
     areaTaskList: state.taskStore.areaTaskList,
+    areaImportantTaskList: state.taskStore.areaImportantTaskList,
   };
 }
 
@@ -83,6 +84,7 @@ HomePage.propTypes = {
   importantTaskList: PropTypes.array.isRequired,
   allTaskList: PropTypes.array.isRequired,
   areaTaskList: PropTypes.array.isRequired,
+  areaImportantTaskList: PropTypes.array.isRequired,
   AreaActions: PropTypes.object.isRequired,
   TaskActions: PropTypes.object.isRequired,
 };

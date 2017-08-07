@@ -5,6 +5,7 @@ export const defaultState = {
   importantTaskList: [],
   allTaskList: [],
   areaTaskList: [],
+  areaImportantTaskList: [],
   task: {},
   taskSearchResult: [],
   loading: false,
@@ -197,6 +198,7 @@ export default (state = defaultState, action = {}) => {
       return {
         ...state,
         areaTaskList: state.allTaskList.filter(task => task.area === id),
+        areaImportantTaskList: state.importantTaskList.filter(task => task.area === id),
       };
     }
     default:

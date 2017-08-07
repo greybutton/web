@@ -20,7 +20,7 @@ class TaskList extends Component {
       updateTaskListImportantOrder,
       deleteTask,
       pickAreaTaskList,
-      areaTaskList,
+      areaImportantTaskList,
     } = this.props;
     const cardList = () =>
       importantTaskList.map(task =>
@@ -33,12 +33,14 @@ class TaskList extends Component {
         </NavItem>),
       );
     const areaCardList = () =>
-      areaTaskList.map(task => <TaskCard key={task._id} task={task} deleteTask={deleteTask} />);
+      areaImportantTaskList.map(task =>
+        <TaskCard key={task._id} task={task} deleteTask={deleteTask} />,
+      );
     const tabPaneList = () =>
       areaList.map(area =>
         (<Tab.Pane key={area._id} eventKey={area.title}>
           <ListGroup>
-            {areaTaskList.length === 0 ? '' : areaCardList()}
+            {areaImportantTaskList.length === 0 ? '' : areaCardList()}
           </ListGroup>
         </Tab.Pane>),
       );
@@ -107,7 +109,7 @@ TaskList.propTypes = {
   updateTaskListImportantOrder: PropTypes.func.isRequired,
   deleteTask: PropTypes.func.isRequired,
   pickAreaTaskList: PropTypes.func.isRequired,
-  areaTaskList: PropTypes.array.isRequired,
+  areaImportantTaskList: PropTypes.array.isRequired,
 };
 
 export default TaskList;
