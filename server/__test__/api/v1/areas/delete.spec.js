@@ -22,7 +22,7 @@ describe(`Area ${apiArea}`, () => {
         expect(res.status).toBe(500);
       });
     });
-    it('should delete a area', () => {
+    it('should delete an area', () => {
       const area = {
         title: 'test delete area',
         score: 3,

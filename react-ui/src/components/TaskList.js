@@ -1,12 +1,17 @@
+/* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Panel, ListGroup, Tab, Row, Col, Nav, NavItem } from 'react-bootstrap';
 import Sortable from 'react-sortablejs';
 import TaskCard from './TaskCard';
 
 class TaskList extends Component {
-  state = {
-    expanded: true,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      expanded: true,
+    };
+  }
   render() {
     const {
       importantTaskList,
@@ -17,26 +22,26 @@ class TaskList extends Component {
       pickAreaTaskList,
       areaTaskList,
     } = this.props;
-    const cards = () =>
+    const cardList = () =>
       importantTaskList.map(task =>
         <TaskCard key={task._id} task={task} deleteTask={deleteTask} />,
       );
-    const navItems = () =>
+    const navItemList = () =>
       areaList.map(area =>
-        <NavItem key={area._id} eventKey={area.title} onSelect={() => pickAreaTaskList(area._id)}>
+        (<NavItem key={area._id} eventKey={area.title} onSelect={() => pickAreaTaskList(area._id)}>
           {area.title}
-        </NavItem>,
+        </NavItem>),
       );
-    const tabPanes = () =>
-      areaList.map(area =>
-        <Tab.Pane key={area._id} eventKey={area.title}>
-          <ListGroup>
-            {areaTaskList.length === 0 ? '' : areaCards()}
-          </ListGroup>
-        </Tab.Pane>,
-      );
-    const areaCards = () =>
+    const areaCardList = () =>
       areaTaskList.map(task => <TaskCard key={task._id} task={task} deleteTask={deleteTask} />);
+    const tabPaneList = () =>
+      areaList.map(area =>
+        (<Tab.Pane key={area._id} eventKey={area.title}>
+          <ListGroup>
+            {areaTaskList.length === 0 ? '' : areaCardList()}
+          </ListGroup>
+        </Tab.Pane>),
+      );
     const onEnd = evt =>
       new Promise((resolve, reject) =>
         updateTaskListImportantOrder({
@@ -46,14 +51,12 @@ class TaskList extends Component {
           resolve,
           reject,
         }),
-      ).catch(err => {
+      ).catch((err) => {
         console.log(err);
       });
-    const isImportantTaskListEmpty = () => {
-      return importantTaskList.length === 0 ? true : false;
-    };
+    const isImportantTaskListEmpty = () => importantTaskList.length === 0;
     const title = (
-      <h3 onClick={() => this.setState({ expanded: !this.state.expanded })}>Task list</h3>
+      <h4 onClick={() => this.setState({ expanded: !this.state.expanded })}>Task list</h4>
     );
     return (
       <Panel
@@ -68,7 +71,7 @@ class TaskList extends Component {
                 <NavItem eventKey="all" onClick={() => pickAreaTaskList()}>
                   All
                 </NavItem>
-                {navItems()}
+                {navItemList()}
               </Nav>
             </Col>
             <Col>
@@ -78,16 +81,16 @@ class TaskList extends Component {
                     {loading
                       ? 'loading...'
                       : <Sortable
-                          options={{
-                            animation: 150,
-                            onEnd,
-                          }}
-                        >
-                          {cards()}
-                        </Sortable>}
+                        options={{
+                          animation: 150,
+                          onEnd,
+                        }}
+                      >
+                        {cardList()}
+                      </Sortable>}
                   </ListGroup>
                 </Tab.Pane>
-                {tabPanes()}
+                {tabPaneList()}
               </Tab.Content>
             </Col>
           </Row>
@@ -96,5 +99,15 @@ class TaskList extends Component {
     );
   }
 }
+
+TaskList.propTypes = {
+  importantTaskList: PropTypes.array.isRequired,
+  areaList: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired,
+  updateTaskListImportantOrder: PropTypes.func.isRequired,
+  deleteTask: PropTypes.func.isRequired,
+  pickAreaTaskList: PropTypes.func.isRequired,
+  areaTaskList: PropTypes.array.isRequired,
+};
 
 export default TaskList;

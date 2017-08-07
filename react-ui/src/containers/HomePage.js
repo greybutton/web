@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Row, Col } from 'react-bootstrap';
@@ -73,5 +74,17 @@ function mapDispatchToProps(dispatch) {
     TaskActions: bindActionCreators(TaskActions, dispatch),
   };
 }
+
+HomePage.propTypes = {
+  loadingArea: PropTypes.bool.isRequired,
+  loadingTask: PropTypes.bool.isRequired,
+  areaList: PropTypes.array.isRequired,
+  dailyTaskList: PropTypes.array.isRequired,
+  importantTaskList: PropTypes.array.isRequired,
+  allTaskList: PropTypes.array.isRequired,
+  areaTaskList: PropTypes.array.isRequired,
+  AreaActions: PropTypes.object.isRequired,
+  TaskActions: PropTypes.object.isRequired,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

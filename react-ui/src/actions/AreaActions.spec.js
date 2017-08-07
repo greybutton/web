@@ -1,7 +1,14 @@
-import * as AreaActions from './AreaActions.js';
+/* eslint no-underscore-dangle: 0 */
+import * as AreaActions from './AreaActions';
 import * as types from '../constants/actionTypes';
 
 describe('Area Actions', () => {
+  const area = {
+    _id: 123,
+    title: 'test area actions',
+    score: 1,
+    desirableScore: 2,
+  };
   it('should create an action new area', () => {
     const expectedAction = {
       type: types.NEW_AREA,
@@ -10,12 +17,6 @@ describe('Area Actions', () => {
   });
   describe('post area', () => {
     it('should create an action to save an area', () => {
-      const area = {
-        _id: 1,
-        title: 'test area actions',
-        score: 1,
-        desirableScore: 2,
-      };
       const expectedAction = {
         type: types.SAVE_AREA,
         payload: area,
@@ -29,12 +30,6 @@ describe('Area Actions', () => {
       expect(AreaActions.saveAreaPending()).toEqual(expectedAction);
     });
     it('should create an action to save fulfilled an area', () => {
-      const area = {
-        _id: 1,
-        title: 'test area actions',
-        score: 1,
-        desirableScore: 2,
-      };
       const expectedAction = {
         type: types.SAVE_AREA_FULFILLED,
         payload: area,
@@ -68,12 +63,6 @@ describe('Area Actions', () => {
       expect(AreaActions.requestAreaList()).toEqual(expectedAction);
     });
     it('should create an action receive areas', () => {
-      const area = {
-        _id: 1,
-        title: 'test area actions',
-        score: 1,
-        desirableScore: 2,
-      };
       const expectedAction = {
         type: types.RECEIVE_AREA_LIST,
         payload: area,
@@ -83,20 +72,13 @@ describe('Area Actions', () => {
   });
   describe('put area', () => {
     it('should creata an action to request an area', () => {
-      const _id = 123;
       const expectedAction = {
         type: types.REQUEST_AREA,
-        payload: _id,
+        payload: area._id,
       };
-      expect(AreaActions.requestArea(_id)).toEqual(expectedAction);
+      expect(AreaActions.requestArea(area._id)).toEqual(expectedAction);
     });
     it('should create an action to receive an area', () => {
-      const area = {
-        _id: 1,
-        title: 'test area actions',
-        score: 1,
-        desirableScore: 2,
-      };
       const expectedAction = {
         type: types.RECEIVE_AREA,
         payload: area,
@@ -104,12 +86,6 @@ describe('Area Actions', () => {
       expect(AreaActions.receiveArea(area)).toEqual(expectedAction);
     });
     it('should create an action to update an area', () => {
-      const area = {
-        _id: 1,
-        title: 'test area actions',
-        score: 1,
-        desirableScore: 2,
-      };
       const expectedAction = {
         type: types.UPDATE_AREA,
         payload: area,
@@ -123,12 +99,6 @@ describe('Area Actions', () => {
       expect(AreaActions.updateAreaPending()).toEqual(expectedAction);
     });
     it('should create an action to update fulfilled an area', () => {
-      const area = {
-        _id: 1,
-        title: 'test area actions',
-        score: 1,
-        desirableScore: 2,
-      };
       const expectedAction = {
         type: types.UPDATE_AREA_FULFILLED,
         payload: area,
@@ -156,12 +126,6 @@ describe('Area Actions', () => {
   });
   describe('update area order', () => {
     it('should create an action to update an area list order', () => {
-      const area = {
-        _id: 1,
-        title: 'test area actions',
-        score: 1,
-        desirableScore: 2,
-      };
       const payload = {
         oldIndex: 0,
         newIndex: 1,
@@ -182,12 +146,6 @@ describe('Area Actions', () => {
       expect(AreaActions.updateAreaListOrderPending()).toEqual(expectedAction);
     });
     it('should create an action to update fulfilled an area list order', () => {
-      const area = {
-        _id: 1,
-        title: 'test area actions',
-        score: 1,
-        desirableScore: 2,
-      };
       const expectedAction = {
         type: types.UPDATE_AREA_LIST_ORDER_FULFILLED,
         payload: area,

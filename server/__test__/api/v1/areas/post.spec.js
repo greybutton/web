@@ -16,7 +16,7 @@ describe(`Area ${apiArea}`, () => {
     });
   });
   describe('post area', () => {
-    it('should not post a area without title field', () => {
+    it('should not post an area without title field', () => {
       const area = {
         score: 1,
         desirableScore: 2,
@@ -32,7 +32,7 @@ describe(`Area ${apiArea}`, () => {
         expect(recevied).toMatchObject(expected);
       });
     });
-    it('should not post a area without score field', () => {
+    it('should not post an area without score field', () => {
       const area = {
         title: 'test post area without score',
         desirableScore: 2,
@@ -48,7 +48,7 @@ describe(`Area ${apiArea}`, () => {
         expect(recevied).toMatchObject(expected);
       });
     });
-    it('should not post a area without desirableScore field', () => {
+    it('should not post an area without desirableScore field', () => {
       const area = {
         title: 'test post area without desirableScore',
         score: 1,
@@ -64,7 +64,7 @@ describe(`Area ${apiArea}`, () => {
         expect(recevied).toMatchObject(expected);
       });
     });
-    it('should not post a area with score field more than 10', () => {
+    it('should not post an area with score field more than 10', () => {
       const area = {
         title: 'test post area with score more than 10',
         score: 20,
@@ -81,7 +81,7 @@ describe(`Area ${apiArea}`, () => {
         expect(recevied).toMatchObject(expected);
       });
     });
-    it('should not post a area with desirable score field more than 10', () => {
+    it('should not post an area with desirable score field more than 10', () => {
       const area = {
         title: 'test post area with desirable score more than 10',
         score: 5,
@@ -98,7 +98,7 @@ describe(`Area ${apiArea}`, () => {
         expect(recevied).toMatchObject(expected);
       });
     });
-    it('should not post a area with score field less than 0', () => {
+    it('should not post an area with score field less than 0', () => {
       const area = {
         title: 'test post area with score less than 0',
         score: -10,
@@ -115,7 +115,7 @@ describe(`Area ${apiArea}`, () => {
         expect(recevied).toMatchObject(expected);
       });
     });
-    it('should not post a area with desirable score field less than 0', () => {
+    it('should not post an area with desirable score field less than 0', () => {
       const area = {
         title: 'test post area with desirable score less than 0',
         score: 5,
@@ -132,7 +132,7 @@ describe(`Area ${apiArea}`, () => {
         expect(recevied).toMatchObject(expected);
       });
     });
-    it('should post a area', () => {
+    it('should post an area', () => {
       const areaFirst = {
         title: 'test post area first',
         score: 1,

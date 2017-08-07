@@ -88,7 +88,7 @@ router.put('/:_id', (req, res) => {
 router.delete('/:_id', (req, res) => {
   const _id = req.params._id;
   User.update({}, { $pull: { areas: { _id } } })
-    .then((result) => {
+    .then(() => {
       // new model request because in otherwise result is object of $pull operator
       User.find({}).then((result) => {
         const areas = result[0] ? result[0].areas : [];

@@ -1,3 +1,4 @@
+/* eslint no-underscore-dangle: 0 */
 import TaskReducer, { defaultState } from './TaskReducer';
 import * as types from '../constants/actionTypes';
 

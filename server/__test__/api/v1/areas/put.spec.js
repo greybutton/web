@@ -16,7 +16,7 @@ describe(`Area ${apiArea}`, () => {
     });
   });
   describe('put area', () => {
-    it('should not update a area without title field', () => {
+    it('should not update an area without title field', () => {
       const area = {
         title: 'test put area',
         score: 3,
@@ -40,7 +40,7 @@ describe(`Area ${apiArea}`, () => {
         });
       });
     });
-    it('should not update a area without score field', () => {
+    it('should not update an area without score field', () => {
       const area = {
         title: 'test put area',
         score: 3,
@@ -64,7 +64,7 @@ describe(`Area ${apiArea}`, () => {
         });
       });
     });
-    it('should not update a area without desirableScore field', () => {
+    it('should not update an area without desirableScore field', () => {
       const area = {
         title: 'test put area',
         score: 3,
@@ -88,7 +88,7 @@ describe(`Area ${apiArea}`, () => {
         });
       });
     });
-    it('should not update a area with score field more than 10', () => {
+    it('should not update an area with score field more than 10', () => {
       const area = {
         title: 'test put area',
         score: 3,
@@ -113,7 +113,7 @@ describe(`Area ${apiArea}`, () => {
         });
       });
     });
-    it('should not update a area with desirable score field more than 10', () => {
+    it('should not update an area with desirable score field more than 10', () => {
       const area = {
         title: 'test put area',
         score: 3,
@@ -138,7 +138,7 @@ describe(`Area ${apiArea}`, () => {
         });
       });
     });
-    it('should not update a area with score field less than 0', () => {
+    it('should not update an area with score field less than 0', () => {
       const area = {
         title: 'test put area',
         score: 3,
@@ -163,7 +163,7 @@ describe(`Area ${apiArea}`, () => {
         });
       });
     });
-    it('should not update a area with desirable score field less than 0', () => {
+    it('should not update an area with desirable score field less than 0', () => {
       const area = {
         title: 'test put area',
         score: 3,
@@ -188,7 +188,7 @@ describe(`Area ${apiArea}`, () => {
         });
       });
     });
-    it('should update a area', () => {
+    it('should update an area', () => {
       const area = {
         title: 'test put area',
         score: 3,

@@ -33,7 +33,7 @@ describe(`Area ${apiArea}`, () => {
         expect(res.status).toBe(400);
       });
     });
-    it('should get a area', () => {
+    it('should get an area', () => {
       const area = {
         title: 'test get area',
         score: 3,

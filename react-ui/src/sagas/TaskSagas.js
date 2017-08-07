@@ -1,3 +1,4 @@
+/* eslint no-underscore-dangle: 0 */
 import axios from 'axios';
 import { put, call } from 'redux-saga/effects';
 import Alert from 'react-s-alert';

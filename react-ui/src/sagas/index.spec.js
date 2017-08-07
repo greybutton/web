@@ -1,5 +1,5 @@
 import { fork, all } from 'redux-saga/effects';
-import root from './index.js';
+import root from './index';
 import * as Watchers from './watchers';
 
 describe('test root saga', () => {

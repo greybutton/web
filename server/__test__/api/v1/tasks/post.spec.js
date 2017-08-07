@@ -76,29 +76,22 @@ describe(`Task ${apiTask}`, () => {
     });
     it('should not post a task without area field', () => {
       expect.hasAssertions();
-      return request(app)
-        .post(apiArea)
-        .send(areaTest)
-        .then((res) => {
-          const area = res.body.areas[0];
-          return area;
-        })
-        .then((area) => {
-          const task = {
-            text: 'test post task',
-            time: '00:30',
-            quadrant: 'first',
+      return request(app).post(apiArea).send(areaTest).then(() => {
+        const task = {
+          text: 'test post task',
+          time: '00:30',
+          quadrant: 'first',
+        };
+        return request(app).post(apiTask).send(task).then((res) => {
+          const recevied = res.body;
+          const expected = {
+            errors: {},
+            name: 'ValidationError',
           };
-          return request(app).post(apiTask).send(task).then((res) => {
-            const recevied = res.body;
-            const expected = {
-              errors: {},
-              name: 'ValidationError',
-            };
-            expect(res.status).toBe(400);
-            expect(recevied).toMatchObject(expected);
-          });
+          expect(res.status).toBe(400);
+          expect(recevied).toMatchObject(expected);
         });
+      });
     });
     it('should not post a task without quadrant field', () => {
       expect.hasAssertions();

@@ -56,8 +56,8 @@ describe(`Task ${apiTask}`, () => {
             quadrant: 'first',
           };
           return request(app).post(apiTask).send(task).then((res) => {
-            const task = res.body.tasks.important[0];
-            return task;
+            const taskAdded = res.body.tasks.important[0];
+            return taskAdded;
           });
         })
         .then(task =>

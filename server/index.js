@@ -9,7 +9,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/web', {
+mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/laura', {
   useMongoClient: true,
 });
 

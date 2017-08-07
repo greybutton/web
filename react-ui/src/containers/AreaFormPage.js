@@ -1,4 +1,6 @@
+/* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import { SubmissionError } from 'redux-form';
 import { connect } from 'react-redux';
@@ -6,9 +8,12 @@ import * as AreaActions from '../actions/AreaActions';
 import AreaForm from '../components/AreaForm';
 
 class AreaFormPage extends Component {
-  state = {
-    redirect: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      redirect: false,
+    };
+  }
   componentDidMount() {
     const { _id } = this.props.match.params;
     if (_id) {
@@ -17,35 +22,34 @@ class AreaFormPage extends Component {
       this.props.dispatch(AreaActions.newArea());
     }
   }
-  handleSubmit = area => {
-    if (!area._id) {
-      return new Promise((resolve, reject) => {
-        this.props.dispatch(AreaActions.saveArea({ area, resolve, reject }));
-      })
-        .then(response => this.setState({ redirect: true }))
-        .catch(err => {
-          throw new SubmissionError(this.props.errors);
-        });
-    } else {
+  render() {
+    const handleSubmit = (area) => {
+      if (!area._id) {
+        return new Promise((resolve, reject) => {
+          this.props.dispatch(AreaActions.saveArea({ area, resolve, reject }));
+        })
+          .then(() => this.setState({ redirect: true }))
+          .catch(() => {
+            throw new SubmissionError(this.props.errors);
+          });
+      }
       return new Promise((resolve, reject) => {
         this.props.dispatch(AreaActions.updateArea({ area, resolve, reject }));
       })
-        .then(response => this.setState({ redirect: true }))
-        .catch(err => {
+        .then(() => this.setState({ redirect: true }))
+        .catch(() => {
           throw new SubmissionError(this.props.errors);
         });
-    }
-  };
-  render() {
+    };
     return (
       <div>
         {this.state.redirect
           ? <Redirect to="/" />
           : <AreaForm
-              area={this.props.area}
-              loading={this.props.loading}
-              onSubmit={this.handleSubmit}
-            />}
+            area={this.props.area}
+            loading={this.props.loading}
+            onSubmit={handleSubmit}
+          />}
       </div>
     );
   }
@@ -58,5 +62,13 @@ function mapStateToProps(state) {
     errors: state.areaStore.errors,
   };
 }
+
+AreaFormPage.propTypes = {
+  area: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
+  errors: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default connect(mapStateToProps)(AreaFormPage);

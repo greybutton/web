@@ -1,7 +1,14 @@
+/* eslint no-underscore-dangle: 0 */
 import AreaReducer, { defaultState } from './AreaReducer';
 import * as types from '../constants/actionTypes';
 
 describe('Area Reducer', () => {
+  const area = {
+    _id: 123,
+    title: 'test area reducer',
+    score: 1,
+    desirableScore: 2,
+  };
   it('should return the initial state', () => {
     expect(AreaReducer(undefined, {})).toEqual(defaultState);
     expect(AreaReducer(undefined)).toEqual(defaultState);
@@ -28,12 +35,6 @@ describe('Area Reducer', () => {
       });
     });
     it('should handle SAVE_AREA_FULFILLED', () => {
-      const area = {
-        _id: 1,
-        title: 'test area reducer',
-        score: 1,
-        desirableScore: 2,
-      };
       const data = {
         areas: [area],
       };
@@ -91,12 +92,6 @@ describe('Area Reducer', () => {
       });
     });
     it('should handle RECEIVE_AREA_LIST', () => {
-      const area = {
-        _id: 1,
-        title: 'test area reducer',
-        score: 1,
-        desirableScore: 2,
-      };
       const data = {
         areas: [area],
       };
@@ -114,7 +109,7 @@ describe('Area Reducer', () => {
   });
   describe('put area', () => {
     it('should handle REQUEST_AREA', () => {
-      const payload = 123;
+      const payload = area._id;
       expect(
         AreaReducer(defaultState, {
           type: types.REQUEST_AREA,
@@ -127,12 +122,6 @@ describe('Area Reducer', () => {
       });
     });
     it('should handle RECEIVE_AREA', () => {
-      const area = {
-        _id: 1,
-        title: 'test area reducer',
-        score: 1,
-        desirableScore: 2,
-      };
       const data = {
         area,
       };
@@ -158,12 +147,6 @@ describe('Area Reducer', () => {
       });
     });
     it('should handle UPDATE_AREA_FULFILLED', () => {
-      const area = {
-        _id: 1,
-        title: 'test area reducer',
-        score: 1,
-        desirableScore: 2,
-      };
       const data = {
         areas: [area],
       };
@@ -217,12 +200,6 @@ describe('Area Reducer', () => {
       });
     });
     it('should handle UPDATE_AREA_LIST_ORDER_FULFILLED', () => {
-      const area = {
-        _id: 1,
-        title: 'test area reducer',
-        score: 1,
-        desirableScore: 2,
-      };
       const data = {
         areas: [area],
       };

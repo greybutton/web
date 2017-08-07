@@ -1,17 +1,30 @@
+/* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { ListGroupItem, Label, ButtonToolbar, Button, Collapse, Row, Col } from 'react-bootstrap';
 
 class TaskCard extends Component {
-  state = { open: false };
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+    };
+  }
   render() {
     const { task, deleteTask } = this.props;
+    let style = '';
+    if (task.quadrant === 'first') {
+      style = 'danger';
+    }
+    if (task.quadrant === 'second') {
+      style = 'warning';
+    }
     return (
       <ListGroupItem
         data-id={task._id}
         onDoubleClick={() => this.setState({ open: !this.state.open })}
-        bsStyle={task.quadrant === 'first' ? 'danger' : task.quadrant === 'second' ? 'warning' : ''}
+        bsStyle={style}
       >
         <div>
           <Label bsStyle="default">{task.time}</Label>&nbsp;
@@ -40,6 +53,7 @@ class TaskCard extends Component {
 
 TaskCard.propTypes = {
   task: PropTypes.object.isRequired,
+  deleteTask: PropTypes.func.isRequired,
 };
 
 export default TaskCard;

@@ -1,15 +1,21 @@
+/* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { ListGroupItem, Label, ButtonToolbar, Button, Collapse, Row, Col } from 'react-bootstrap';
 
 class DailyTaskCard extends Component {
-  state = { open: false };
-  label = (task, areaList) => {
-    const area = areaList.filter(areaItem => areaItem._id === task.area)[0];
-    return area.title;
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+    };
+  }
   render() {
+    const label = (task, areaList) => {
+      const area = areaList.filter(areaItem => areaItem._id === task.area)[0];
+      return area.title;
+    };
     const { task, areaList, deleteTask } = this.props;
     return (
       <ListGroupItem
@@ -18,7 +24,7 @@ class DailyTaskCard extends Component {
       >
         <div>
           <Label bsStyle="default">{task.time}</Label>&nbsp;
-          <Label bsStyle="default">{this.label(task, areaList)}</Label>&nbsp;
+          <Label bsStyle="default">{label(task, areaList)}</Label>&nbsp;
           {task.text}
         </div>
         <Collapse in={this.state.open}>
@@ -44,6 +50,8 @@ class DailyTaskCard extends Component {
 
 DailyTaskCard.propTypes = {
   task: PropTypes.object.isRequired,
+  areaList: PropTypes.array.isRequired,
+  deleteTask: PropTypes.func.isRequired,
 };
 
 export default DailyTaskCard;

@@ -1,20 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Alert } from 'react-bootstrap';
 
-class AlertMessage extends Component {
-  render() {
-    return (
-      <Alert
-        id={this.props.id}
-        style={{ position: 'absolute', zIndex: 1000 }}
-        className="s-alert-top"
-        bsStyle={this.props.customFields.bsStyle}
-        onDismiss={this.props.handleClose}
-      >
-        {this.props.message}
-      </Alert>
-    );
-  }
-}
+const AlertMessage = ({ id, customFields, handleClose, message }) =>
+  (<Alert
+    id={id}
+    style={{ position: 'absolute', zIndex: 1000 }}
+    className="s-alert-top"
+    bsStyle={customFields.bsStyle}
+    onDismiss={handleClose}
+  >
+    {message}
+  </Alert>);
+
+AlertMessage.propTypes = {
+  id: PropTypes.string.isRequired,
+  customFields: PropTypes.object.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  message: PropTypes.string.isRequired,
+};
 
 export default AlertMessage;

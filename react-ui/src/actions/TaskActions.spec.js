@@ -1,4 +1,5 @@
-import * as TaskActions from './TaskActions.js';
+/* eslint no-underscore-dangle: 0 */
+import * as TaskActions from './TaskActions';
 import * as types from '../constants/actionTypes';
 
 describe('Task Actions', () => {

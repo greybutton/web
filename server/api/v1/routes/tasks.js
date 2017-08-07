@@ -150,13 +150,13 @@ router.put('/:_id', (req, res) => {
   }
   const opts = { runValidators: true };
   User.findOneAndUpdate(query, { $set: doc }, opts)
-    .then((result) => {
+    .then((resultUpdate) => {
       // task changed a quadrant
       // not updated because not match any task with new query
       // for example, task became from important to notImportant
       // result is null
       /* eslint no-lonely-if: 1*/
-      if (!result) {
+      if (!resultUpdate) {
         // task updated from notImportant to important
         // task updated from daily to important
         if (quadrant === 'first' || quadrant === 'second') {
@@ -253,8 +253,8 @@ router.put('/:_id', (req, res) => {
 router.delete('/:_id', (req, res) => {
   const _id = req.params._id;
   User.update({}, { $pull: { 'tasks.important': { _id } } })
-    .then((result) => {
-      if (result.nModified === 1) {
+    .then((resultDeleteImportant) => {
+      if (resultDeleteImportant.nModified === 1) {
         // new model request because in otherwise result is object of $pull operator
         User.find({}).then((result) => {
           const tasks = result[0]
@@ -269,8 +269,8 @@ router.delete('/:_id', (req, res) => {
     })
     .then((prev) => {
       if (!prev) {
-        User.update({}, { $pull: { 'tasks.notImportant': { _id } } }).then((result) => {
-          if (result.nModified === 1) {
+        User.update({}, { $pull: { 'tasks.notImportant': { _id } } }).then((resultDeleteNotImportant) => {
+          if (resultDeleteNotImportant.nModified === 1) {
             // new model request because in otherwise result is object of $pull operator
             User.find({}).then((result) => {
               const tasks = result[0]
@@ -287,8 +287,8 @@ router.delete('/:_id', (req, res) => {
     })
     .then((prev) => {
       if (!prev) {
-        User.update({}, { $pull: { 'tasks.daily': { _id } } }).then((result) => {
-          if (result.nModified === 1) {
+        User.update({}, { $pull: { 'tasks.daily': { _id } } }).then((resultDeleteDaily) => {
+          if (resultDeleteDaily.nModified === 1) {
             // new model request because in otherwise result is object of $pull operator
             User.find({}).then((result) => {
               const tasks = result[0]

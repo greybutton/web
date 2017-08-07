@@ -1,10 +1,16 @@
+/* eslint no-underscore-dangle: 0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { ProgressBar, ListGroupItem, Button, Collapse } from 'react-bootstrap';
 
 class AreaCard extends Component {
-  state = { open: false };
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false,
+    };
+  }
   render() {
     const { area } = this.props;
     return (

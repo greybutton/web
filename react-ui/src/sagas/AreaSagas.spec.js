@@ -1,16 +1,18 @@
+/* eslint no-underscore-dangle: 0 */
 import { put, call } from 'redux-saga/effects';
 import * as AreaSagas from './AreaSagas';
 import * as AreaActions from '../actions/AreaActions';
 
 describe('Area sagas tests', () => {
+  const area = {
+    _id: 123,
+    title: 'test area sagas',
+    score: 1,
+    desirableScore: 2,
+  };
   describe('post area saga', () => {
     const payload = {
-      area: {
-        _id: 1,
-        title: 'test area sagas',
-        score: 1,
-        desirableScore: 2,
-      },
+      area,
       resolve: () => {},
       reject: () => {},
     };
@@ -51,7 +53,7 @@ describe('Area sagas tests', () => {
   });
   describe('put area saga', () => {
     describe('fetch area', () => {
-      const payload = 123;
+      const payload = area._id;
       const gen = AreaSagas.fetchArea({ payload });
       it('should call get area api', () => {
         expect(gen.next().value).toEqual(call(AreaSagas.fetchAreaApi, payload));
@@ -65,12 +67,7 @@ describe('Area sagas tests', () => {
     });
     describe('update area', () => {
       const payload = {
-        area: {
-          _id: 1,
-          title: 'test area sagas',
-          score: 1,
-          desirableScore: 2,
-        },
+        area,
         resolve: () => {},
         reject: () => {},
       };
@@ -100,12 +97,7 @@ describe('Area sagas tests', () => {
   });
   describe('update area list order', () => {
     const payload = {
-      area: {
-        _id: 1,
-        title: 'test update area order sagas',
-        score: 1,
-        desirableScore: 2,
-      },
+      area,
       resolve: () => {},
       reject: () => {},
     };
