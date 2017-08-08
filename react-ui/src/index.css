@@ -3,3 +3,15 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.panel .panel-heading {
+  padding: 0;
+}
+
+.panel .panel-heading:hover {
+  cursor: pointer;
+}
+
+.panel-title {
+  padding: 10px 15px;
+}

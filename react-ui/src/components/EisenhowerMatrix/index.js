@@ -11,6 +11,10 @@ class EisenhowerMatrix extends Component {
     super(props);
     this.state = {
       expanded: false,
+      expandedFirstQuadrant: true,
+      expandedSecondQuadrant: true,
+      expandedThirdQuadrant: true,
+      expandedFourthQuadrant: true,
     };
   }
   render() {
@@ -30,36 +34,90 @@ class EisenhowerMatrix extends Component {
         The Eisonhower matrix
       </h4>
     );
+    const titleFirstQuadrant = (
+      <div
+        onClick={() => this.setState({ expandedFirstQuadrant: !this.state.expandedFirstQuadrant })}
+        style={{ fontSize: 14 }}
+        role="button"
+        tabIndex={0}
+      >
+        Urgent and Important
+      </div>
+    );
+    const titleSecondQuadrant = (
+      <div
+        onClick={() =>
+          this.setState({ expandedSecondQuadrant: !this.state.expandedSecondQuadrant })}
+        style={{ fontSize: 14 }}
+        role="button"
+        tabIndex={-1}
+      >
+        Not Urgent and Important
+      </div>
+    );
+    const titleThirdQuadrant = (
+      <div
+        onClick={() => this.setState({ expandedThirdQuadrant: !this.state.expandedThirdQuadrant })}
+        style={{ fontSize: 14 }}
+        role="button"
+        tabIndex={-1}
+      >
+        Urgent and Not Important
+      </div>
+    );
+    const titleFourthQuadrant = (
+      <div
+        onClick={() =>
+          this.setState({ expandedFourthQuadrant: !this.state.expandedFourthQuadrant })}
+        style={{ fontSize: 14 }}
+        role="button"
+        tabIndex={-1}
+      >
+        Not Urgent and Not Important
+      </div>
+    );
     return (
       <Panel header={title} collapsible expanded={this.state.expanded}>
         {loading
           ? 'loading...'
           : <div fill className="eisenhower-matrix">
             <Panel
-              header="Urgent and Important"
+              header={titleFirstQuadrant}
               bsStyle="danger"
               className="eisenhower-matrix__panel"
             >
-              <ListGroup fill>
+              <ListGroup
+                fill
+                style={{ display: this.state.expandedFirstQuadrant ? 'block' : 'none' }}
+              >
                 {cardList('first')}
               </ListGroup>
             </Panel>
             <Panel
-              header="Not Urgent and Important"
+              header={titleSecondQuadrant}
               bsStyle="warning"
               className="eisenhower-matrix__panel"
             >
-              <ListGroup fill>
+              <ListGroup
+                fill
+                style={{ display: this.state.expandedSecondQuadrant ? 'block' : 'none' }}
+              >
                 {cardList('second')}
               </ListGroup>
             </Panel>
-            <Panel header="Urgent and Not Important" className="eisenhower-matrix__panel">
-              <ListGroup fill>
+            <Panel header={titleThirdQuadrant} className="eisenhower-matrix__panel">
+              <ListGroup
+                fill
+                style={{ display: this.state.expandedSecondQuadrant ? 'block' : 'none' }}
+              >
                 {cardList('third')}
               </ListGroup>
             </Panel>
-            <Panel header="Not Urgent and Not Important" className="eisenhower-matrix__panel">
-              <ListGroup fill>
+            <Panel header={titleFourthQuadrant} className="eisenhower-matrix__panel">
+              <ListGroup
+                fill
+                style={{ display: this.state.expandedFourthQuadrant ? 'block' : 'none' }}
+              >
                 {cardList('fourth')}
               </ListGroup>
             </Panel>
