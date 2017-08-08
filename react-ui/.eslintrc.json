@@ -2,10 +2,9 @@
   "root": true,
   "extends": "airbnb",
   "plugins": ["react", "jsx-a11y", "import"],
-  "globals": {
-    "describe": true,
-    "it": true,
-    "expect": true
+  "env": {
+    "browser": true,
+    "jest": true
   },
   "rules": {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
