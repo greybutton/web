@@ -320,14 +320,33 @@ describe('Task Reducer', () => {
     });
   });
   describe('pick area task list', () => {
-    expect(
-      TaskReducer(
-        { ...defaultState, allTaskList: [task] },
-        {
-          type: types.PICK_AREA_TASK_LIST,
-          payload: task.area,
-        },
-      ),
-    ).toEqual({ ...defaultState, allTaskList: [task], areaTaskList: [task] });
+    it('should handle PICK_AREA_TASK_LIST', () => {
+      expect(
+        TaskReducer(
+          { ...defaultState, allTaskList: [task], importantTaskList: [task] },
+          {
+            type: types.PICK_AREA_TASK_LIST,
+            payload: task.area,
+          },
+        ),
+      ).toEqual({
+        ...defaultState,
+        allTaskList: [task],
+        importantTaskList: [task],
+        areaTaskList: [task],
+        areaImportantTaskList: [task],
+      });
+    });
+    it('should handle UPDATE_PICK_AREA_TASK_LIST', () => {
+      expect(
+        TaskReducer(
+          { ...defaultState, areaTaskList: [task], areaImportantTaskList: [task] },
+          {
+            type: types.UPDATE_PICK_AREA_TASK_LIST,
+            payload: task._id,
+          },
+        ),
+      ).toEqual({ ...defaultState, areaTaskList: [], areaImportantTaskList: [] });
+    });
   });
 });

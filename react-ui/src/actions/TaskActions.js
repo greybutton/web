@@ -168,3 +168,10 @@ export function pickAreaTaskList(_id) {
     payload: _id,
   };
 }
+
+export function updatePickAreaTaskList(payload) {
+  return {
+    type: types.UPDATE_PICK_AREA_TASK_LIST,
+    payload,
+  };
+}

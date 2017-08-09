@@ -105,8 +105,14 @@ describe('Task sagas tests', () => {
     it('should put delete task fulfilled', () => {
       expect(gen.next().value).toEqual(put(TaskActions.deleteTaskFulfilled()));
     });
+    it('should put update pick area task list', () => {
+      expect(gen.next().value).toEqual(put(TaskActions.updatePickAreaTaskList(payload)));
+    });
     it('should put delete task reject', () => {
       expect(gen.throw().value).toEqual(put(TaskActions.deleteTaskRejected()));
+    });
+    it('should be done', () => {
+      expect(gen.next().done).toEqual(true);
     });
   });
   describe('update task list important order', () => {

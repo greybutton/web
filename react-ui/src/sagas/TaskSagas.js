@@ -96,6 +96,7 @@ export function* deleteTask({ payload }) {
   try {
     const taskList = yield call(deleteTaskApi, payload);
     yield put(TaskActions.deleteTaskFulfilled(taskList));
+    yield put(TaskActions.updatePickAreaTaskList(payload));
     Alert.info('Task delete success', {
       customFields: {
         bsStyle: 'warning',

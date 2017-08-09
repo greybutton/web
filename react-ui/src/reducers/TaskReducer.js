@@ -1,3 +1,4 @@
+/* eslint no-underscore-dangle: 0 */
 import * as types from '../constants/actionTypes';
 
 export const defaultState = {
@@ -199,6 +200,14 @@ export default (state = defaultState, action = {}) => {
         ...state,
         areaTaskList: state.allTaskList.filter(task => task.area === id),
         areaImportantTaskList: state.importantTaskList.filter(task => task.area === id),
+      };
+    }
+    case types.UPDATE_PICK_AREA_TASK_LIST: {
+      const id = action.payload;
+      return {
+        ...state,
+        areaTaskList: state.areaTaskList.filter(task => task._id !== id),
+        areaImportantTaskList: state.areaImportantTaskList.filter(task => task._id !== id),
       };
     }
     default:

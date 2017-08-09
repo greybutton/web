@@ -244,5 +244,12 @@ describe('Task Actions', () => {
       };
       expect(TaskActions.pickAreaTaskList(task.area)).toEqual(expectedAction);
     });
+    it('should create an action update pick area task list', () => {
+      const expectedAction = {
+        type: types.UPDATE_PICK_AREA_TASK_LIST,
+        payload: task._id,
+      };
+      expect(TaskActions.updatePickAreaTaskList(task._id)).toEqual(expectedAction);
+    });
   });
 });
