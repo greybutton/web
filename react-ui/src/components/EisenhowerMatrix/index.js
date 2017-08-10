@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Panel, ListGroup } from 'react-bootstrap';
+import { Scrollbars } from 'react-custom-scrollbars';
 import EisenhowerMatrixCard from '../EisenhowerMatrixCard';
 
 import './index.css';
@@ -90,7 +91,9 @@ class EisenhowerMatrix extends Component {
                 fill
                 style={{ display: this.state.expandedFirstQuadrant ? 'block' : 'none' }}
               >
-                {cardList('first')}
+                <Scrollbars autoHeight autoHeightMax={420}>
+                  {cardList('first')}
+                </Scrollbars>
               </ListGroup>
             </Panel>
             <Panel
@@ -102,7 +105,9 @@ class EisenhowerMatrix extends Component {
                 fill
                 style={{ display: this.state.expandedSecondQuadrant ? 'block' : 'none' }}
               >
-                {cardList('second')}
+                <Scrollbars autoHeight autoHeightMax={420}>
+                  {cardList('second')}
+                </Scrollbars>
               </ListGroup>
             </Panel>
             <Panel header={titleThirdQuadrant} className="eisenhower-matrix__panel">
@@ -110,7 +115,9 @@ class EisenhowerMatrix extends Component {
                 fill
                 style={{ display: this.state.expandedSecondQuadrant ? 'block' : 'none' }}
               >
-                {cardList('third')}
+                <Scrollbars autoHeight autoHeightMax={420}>
+                  {cardList('third')}
+                </Scrollbars>
               </ListGroup>
             </Panel>
             <Panel header={titleFourthQuadrant} className="eisenhower-matrix__panel">
@@ -118,7 +125,9 @@ class EisenhowerMatrix extends Component {
                 fill
                 style={{ display: this.state.expandedFourthQuadrant ? 'block' : 'none' }}
               >
-                {cardList('fourth')}
+                <Scrollbars autoHeight autoHeightMax={420}>
+                  {cardList('fourth')}
+                </Scrollbars>
               </ListGroup>
             </Panel>
           </div>}

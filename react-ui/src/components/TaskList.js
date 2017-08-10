@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Panel, ListGroup, Tab, Row, Col, Nav, NavItem } from 'react-bootstrap';
 import Sortable from 'react-sortablejs';
+import { Scrollbars } from 'react-custom-scrollbars';
 import TaskCard from './TaskCard';
 
 class TaskList extends Component {
@@ -77,23 +78,25 @@ class TaskList extends Component {
               </Nav>
             </Col>
             <Col>
-              <Tab.Content animation>
-                <Tab.Pane eventKey="all">
-                  <ListGroup fill>
-                    {loading
-                      ? 'loading...'
-                      : <Sortable
-                        options={{
-                          animation: 150,
-                          onEnd,
-                        }}
-                      >
-                        {cardList()}
-                      </Sortable>}
-                  </ListGroup>
-                </Tab.Pane>
-                {tabPaneList()}
-              </Tab.Content>
+              <Scrollbars autoHeight autoHeightMax={430}>
+                <Tab.Content animation>
+                  <Tab.Pane eventKey="all">
+                    <ListGroup fill>
+                      {loading
+                        ? 'loading...'
+                        : <Sortable
+                          options={{
+                            animation: 150,
+                            onEnd,
+                          }}
+                        >
+                          {cardList()}
+                        </Sortable>}
+                    </ListGroup>
+                  </Tab.Pane>
+                  {tabPaneList()}
+                </Tab.Content>
+              </Scrollbars>
             </Col>
           </Row>
         </Tab.Container>

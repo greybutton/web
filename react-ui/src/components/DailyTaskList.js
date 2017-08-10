@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Panel, ListGroup, ListGroupItem } from 'react-bootstrap';
 import Sortable from 'react-sortablejs';
+import { Scrollbars } from 'react-custom-scrollbars';
 import DailyTaskCard from './DailyTaskCard';
 
 class DailyTaskList extends Component {
@@ -51,21 +52,23 @@ class DailyTaskList extends Component {
     return (
       <Panel header={title} collapsible expanded={!isDailyTaskListEmpty() && this.state.expanded}>
         <ListGroup fill>
-          {loading
-            ? 'loading...'
-            : <div>
-              <ListGroupItem bsStyle="info">
-                  Total time on daily tasks {countTime().hours}h {countTime().minutes}m
-                </ListGroupItem>
-              <Sortable
-                options={{
-                  animation: 150,
-                  onEnd,
-                }}
-              >
-                {cardList()}
-              </Sortable>
-            </div>}
+          <Scrollbars autoHeight autoHeightMax={250}>
+            {loading
+              ? 'loading...'
+              : <div>
+                <ListGroupItem bsStyle="info">
+                    Total time on daily tasks {countTime().hours}h {countTime().minutes}m
+                  </ListGroupItem>
+                <Sortable
+                  options={{
+                    animation: 150,
+                    onEnd,
+                  }}
+                >
+                  {cardList()}
+                </Sortable>
+              </div>}
+          </Scrollbars>
         </ListGroup>
       </Panel>
     );
