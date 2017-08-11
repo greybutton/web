@@ -1,31 +1,87 @@
 /* eslint no-underscore-dangle: 0 */
-import axios from 'axios';
+// import axios from 'axios';
 import { put, call } from 'redux-saga/effects';
 import Alert from 'react-s-alert';
 import * as AreaActions from '../actions/AreaActions';
 
-const url = '/api/v1/areas';
+const url = 'areas';
+
+if (!window.localStorage[url]) {
+  window.localStorage.setItem(url, JSON.stringify([]));
+}
 
 export function fetchAreaListApi() {
-  return axios.get(url);
+  const payload = { data: {} };
+  const areas = window.localStorage.getItem(url);
+  payload.data.areas = JSON.parse(areas);
+  return payload;
+  // return axios.get(url);
 }
 
 export function fetchAreaApi(_id) {
-  return axios.get(`${url}/${_id}`);
+  const payload = { data: {} };
+  const areas = fetchAreaListApi().data.areas;
+  const area = areas.filter(areaItem => areaItem._id === Number(_id))[0];
+  payload.data.area = area;
+  return payload;
+  // return axios.get(`${url}/${_id}`);
 }
 
 export function saveAreaApi(area) {
-  return axios.post(url, area);
+  const payload = {
+    data: {},
+  };
+  let areas = fetchAreaListApi().data.areas;
+  area._id = areas.length + 1;
+  areas.push(area);
+  window.localStorage.setItem(
+    url,
+    JSON.stringify(areas, (key, value) => {
+      if (key === 'score' || key === 'desirableScore') {
+        return Number(value);
+      }
+      return value;
+    }),
+  );
+  areas = window.localStorage.getItem(url);
+  payload.data.areas = JSON.parse(areas);
+  return payload;
+  // return axios.post(url, area);
 }
 
 export function updateAreaApi(area) {
-  return axios.put(`${url}/${area._id}`, area);
+  const payload = {
+    data: {},
+  };
+  const areas = fetchAreaListApi().data.areas;
+  areas.map((areaItem) => {
+    if (areaItem._id === area._id) {
+      areaItem.title = area.title;
+      areaItem.score = Number(area.score);
+      areaItem.desirableScore = Number(area.desirableScore);
+    }
+    return areaItem;
+  });
+  window.localStorage.setItem(url, JSON.stringify(areas));
+  payload.data.areas = areas;
+  return payload;
+  // return axios.put(`${url}/${area._id}`, area);
 }
 
 export function updateAreaListOrderApi(payload) {
-  return axios.put(`${url}/areaListOrder/${payload._id}`, {
-    indexes: { oldIndex: payload.oldIndex, newIndex: payload.newIndex },
-  });
+  const areas = fetchAreaListApi().data.areas;
+  const area = areas.splice(payload.oldIndex, 1);
+  areas.splice(payload.newIndex, 0, area[0]);
+  // window.localStorage.setItem(url, JSON.stringify([]));
+  window.localStorage.setItem(url, JSON.stringify(areas));
+  payload = {
+    data: {},
+  };
+  payload.data.areas = areas;
+  return payload;
+  // return axios.put(`${url}/areaListOrder/${payload._id}`, {
+  //   indexes: { oldIndex: payload.oldIndex, newIndex: payload.newIndex },
+  // });
 }
 
 export function* saveArea({ payload }) {

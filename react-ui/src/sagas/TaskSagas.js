@@ -1,41 +1,154 @@
 /* eslint no-underscore-dangle: 0 */
-import axios from 'axios';
+// import axios from 'axios';
 import { put, call } from 'redux-saga/effects';
 import Alert from 'react-s-alert';
 import * as TaskActions from '../actions/TaskActions';
 
-const url = '/api/v1/tasks';
+const url = 'tasks';
+
+if (!global.localStorage[url]) {
+  global.localStorage.setItem(url, JSON.stringify({ daily: [], important: [], notImportant: [] }));
+  global.localStorage.setItem('_id', JSON.stringify(1));
+}
+
+const getId = () => JSON.parse(global.localStorage.getItem('_id'));
+const incId = () => {
+  const currId = JSON.parse(global.localStorage.getItem('_id'));
+  const newId = currId + 1;
+  global.localStorage.setItem('_id', JSON.stringify(newId));
+};
 
 export function fetchTaskListApi() {
-  return axios.get(url);
+  const payload = { data: {} };
+  const tasks = window.localStorage.getItem(url);
+  payload.data.tasks = JSON.parse(tasks);
+  return payload;
+  // return axios.get(url);
 }
 
 export function fetchTaskApi(_id) {
-  return axios.get(`${url}/${_id}`);
+  const payload = { data: {} };
+  let tasks = fetchTaskListApi().data.tasks;
+  tasks = tasks.daily.concat(tasks.important, tasks.notImportant);
+  const task = tasks.filter(taskItem => taskItem._id === Number(_id))[0];
+  payload.data.task = task;
+  return payload;
+  // return axios.get(`${url}/${_id}`);
 }
 
 export function saveTaskApi(task) {
-  return axios.post(url, task);
+  const payload = {
+    data: {},
+  };
+  let tasks = fetchTaskListApi().data.tasks;
+  task._id = getId();
+  incId();
+  if (task.quadrant === 'daily') {
+    tasks.daily.unshift(task);
+  }
+  if (task.quadrant === 'first' || task.quadrant === 'second') {
+    tasks.important.unshift(task);
+  }
+  if (task.quadrant === 'third' || task.quadrant === 'fourth') {
+    tasks.notImportant.unshift(task);
+  }
+  window.localStorage.setItem(
+    url,
+    JSON.stringify(tasks, (key, value) => {
+      if (key === 'area') {
+        return Number(value);
+      }
+      return value;
+    }),
+  );
+  tasks = window.localStorage.getItem(url);
+  payload.data.tasks = JSON.parse(tasks);
+  return payload;
+  // return axios.post(url, task);
 }
 
 export function updateTaskApi(task) {
-  return axios.put(`${url}/${task._id}`, task);
+  const payload = {
+    data: {},
+  };
+  let taskList = fetchTaskListApi().data.tasks;
+  taskList = taskList.daily.concat(taskList.important, taskList.notImportant);
+  taskList.map((taskItem) => {
+    if (taskItem._id === task._id) {
+      taskItem.text = task.text;
+      taskItem.time = task.time;
+      taskItem.area = task.area;
+      taskItem.quadrant = task.quadrant;
+    }
+    return taskItem;
+  });
+  const tasks = {
+    daily: taskList.filter(taskItem => taskItem.quadrant === 'daily'),
+    important: taskList.filter(
+      taskItem => taskItem.quadrant === 'first' || taskItem.quadrant === 'second',
+    ),
+    notImportant: taskList.filter(
+      taskItem => taskItem.quadrant === 'third' || taskItem.quadrant === 'fourth',
+    ),
+  };
+  window.localStorage.setItem(url, JSON.stringify(tasks));
+  payload.data.tasks = tasks;
+  return payload;
+  // return axios.put(`${url}/${task._id}`, task);
 }
 
 export function deleteTaskApi(id) {
-  return axios.delete(`${url}/${id}`);
+  const payload = {
+    data: {},
+  };
+  let taskList1 = fetchTaskListApi().data.tasks;
+  taskList1 = taskList1.daily.concat(taskList1.important, taskList1.notImportant);
+  const taskList = taskList1.filter(taskItem => taskItem._id !== id);
+  const tasks = {
+    daily: taskList.filter(taskItem => taskItem.quadrant === 'daily'),
+    important: taskList.filter(
+      taskItem => taskItem.quadrant === 'first' || taskItem.quadrant === 'second',
+    ),
+    notImportant: taskList.filter(
+      taskItem => taskItem.quadrant === 'third' || taskItem.quadrant === 'fourth',
+    ),
+  };
+  window.localStorage.setItem(url, JSON.stringify(tasks));
+  payload.data.tasks = tasks;
+  return payload;
+  // return axios.delete(`${url}/${id}`);
 }
 
 export function updateTaskListImportantOrderApi(payload) {
-  return axios.put(`${url}/taskListImportantOrder/${payload._id}`, {
-    indexes: { oldIndex: payload.oldIndex, newIndex: payload.newIndex },
-  });
+  const tasks = fetchTaskListApi().data.tasks;
+  const task = tasks.important.splice(payload.oldIndex, 1);
+  tasks.important.splice(payload.newIndex, 0, task[0]);
+  // window.localStorage.setItem(url, JSON.stringify([]));
+  window.localStorage.setItem(url, JSON.stringify(tasks));
+  payload = {
+    data: {},
+  };
+  payload.data.tasks = tasks;
+  return payload;
+  // return axios.put(`${url}/taskListImportantOrder/${payload._id}`, {
+  //   indexes: { oldIndex: payload.oldIndex, newIndex: payload.newIndex },
+  // });
 }
 
 export function updateTaskListDailyOrderApi(payload) {
-  return axios.put(`${url}/taskListDailyOrder/${payload._id}`, {
-    indexes: { oldIndex: payload.oldIndex, newIndex: payload.newIndex },
-  });
+  const tasks = fetchTaskListApi().data.tasks;
+  const task = tasks.daily.splice(payload.oldIndex, 1);
+  tasks.daily.splice(payload.newIndex, 0, task[0]);
+  // window.localStorage.setItem(url, JSON.stringify([]));
+  window.localStorage.setItem(url, JSON.stringify(tasks));
+  payload = {
+    data: {},
+  };
+  payload.data.tasks = tasks.daily;
+  return payload;
+  // return axios.put(`${url}/taskListDailyOrder/${payload._id}`, {
+  //   indexes: { oldIndex: payload.oldIndex, newIndex: payload.newIndex },
+  // });
 }
 
 export function* saveTask({ payload }) {
