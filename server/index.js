@@ -2,11 +2,29 @@ const express = require('express');
 const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const auth = require('basic-auth');
 
 const apiV1 = require('./api/v1');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+
+const loginName = process.env.LOGIN;
+const loginPass = process.env.PASS;
+
+if (process.env.NODE_ENV === 'production') {
+  // Authenticator
+  app.use((req, res, next) => {
+    const credentials = auth(req);
+    if (!credentials || credentials.name !== loginName || credentials.pass !== loginPass) {
+      res.statusCode = 401;
+      res.setHeader('WWW-Authenticate', 'Basic realm="example"');
+      res.end('Access denied');
+    } else {
+      next();
+    }
+  });
+}
 
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/laura', {
