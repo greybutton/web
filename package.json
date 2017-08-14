@@ -12,7 +12,7 @@
     "develop": "nodemon server --ignore react-ui/ --ignore __test__",
     "test": "jest",
     "test:watch": "npm test -- --watch",
-    "heroku-postbuild": "cd react-ui/ && npm install && npm run build"
+    "heroku-postbuild": "cd react-ui/ && npm install --only=dev && npm install && npm run build"
   },
   "cacheDirectories": ["node_modules", "react-ui/node_modules"],
   "dependencies": {
