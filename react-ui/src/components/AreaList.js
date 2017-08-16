@@ -38,6 +38,7 @@ class AreaList extends Component {
             : <Sortable
               options={{
                 animation: 150,
+                delay: 50,
                 onEnd,
               }}
             >
