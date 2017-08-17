@@ -24,7 +24,7 @@ class TaskCard extends Component {
     return (
       <ListGroupItem
         data-id={task._id}
-        onDoubleClick={() => this.setState({ open: !this.state.open })}
+        onClick={() => this.setState({ open: !this.state.open })}
         bsStyle={style}
       >
         <Tappable

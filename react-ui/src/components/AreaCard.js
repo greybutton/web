@@ -17,7 +17,7 @@ class AreaCard extends Component {
     return (
       <ListGroupItem
         data-id={area._id}
-        onDoubleClick={() => this.setState({ open: !this.state.open })}
+        onClick={() => this.setState({ open: !this.state.open })}
         style={{ paddingTop: 0 }}
       >
         <Tappable

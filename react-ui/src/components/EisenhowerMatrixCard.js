@@ -15,10 +15,7 @@ class EisenhowerMatrixCard extends Component {
   render() {
     const { task, deleteTask } = this.props;
     return (
-      <ListGroupItem
-        data-id={task._id}
-        onDoubleClick={() => this.setState({ open: !this.state.open })}
-      >
+      <ListGroupItem data-id={task._id} onClick={() => this.setState({ open: !this.state.open })}>
         <Tappable
           pressDelay="500"
           onPress={() => this.setState({ open: !this.state.open })}
