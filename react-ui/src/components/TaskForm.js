@@ -246,7 +246,7 @@ class TaskForm extends Component {
               />
               <Field
                 name="time"
-                type="text"
+                type="tel"
                 component={this.renderField}
                 label="Task time"
                 placeholder="Enter time hh:mm"
