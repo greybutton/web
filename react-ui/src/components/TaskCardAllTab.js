@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { ListGroupItem, Label, ButtonToolbar, Button, Collapse, Row, Col } from 'react-bootstrap';
 import Tappable from 'react-tappable';
 
-class TaskCard extends Component {
+class TaskCardAllTab extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,7 +13,11 @@ class TaskCard extends Component {
     };
   }
   render() {
-    const { task, deleteTask } = this.props;
+    const label = (task, areaList) => {
+      const area = areaList.filter(areaItem => areaItem._id === task.area)[0];
+      return area.title;
+    };
+    const { task, areaList, deleteTask } = this.props;
     let style = '';
     if (task.quadrant === 'first') {
       style = 'danger';
@@ -34,6 +38,7 @@ class TaskCard extends Component {
         >
           <div>
             <Label bsStyle="default">{task.time}</Label>&nbsp;
+            <Label bsStyle="default">{label(task, areaList)}</Label>&nbsp;
             {task.text}
           </div>
           <Collapse in={this.state.open}>
@@ -58,9 +63,10 @@ class TaskCard extends Component {
   }
 }
 
-TaskCard.propTypes = {
+TaskCardAllTab.propTypes = {
   task: PropTypes.object.isRequired,
+  areaList: PropTypes.array.isRequired,
   deleteTask: PropTypes.func.isRequired,
 };
 
-export default TaskCard;
+export default TaskCardAllTab;

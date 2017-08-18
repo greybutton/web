@@ -5,6 +5,7 @@ import { Panel, ListGroup, Tab, Row, Col, Nav, NavItem } from 'react-bootstrap';
 import Sortable from 'react-sortablejs';
 import { Scrollbars } from 'react-custom-scrollbars';
 import TaskCard from './TaskCard';
+import TaskCardAllTab from './TaskCardAllTab';
 
 class TaskList extends Component {
   constructor(props) {
@@ -23,9 +24,9 @@ class TaskList extends Component {
       pickAreaTaskList,
       areaImportantTaskList,
     } = this.props;
-    const cardList = () =>
+    const allTabCardList = () =>
       importantTaskList.map(task =>
-        <TaskCard key={task._id} task={task} deleteTask={deleteTask} />,
+        <TaskCardAllTab key={task._id} task={task} areaList={areaList} deleteTask={deleteTask} />,
       );
     const navItemList = () =>
       areaList.map(area =>
@@ -68,7 +69,7 @@ class TaskList extends Component {
         expanded={!isImportantTaskListEmpty() && this.state.expanded}
       >
         <Tab.Container id="tabs" defaultActiveKey="all" fill>
-          <Row className="clearfix" style={{ marginLeft: 0, marginRight: 0 }}>
+          <Row className="clearfix task-list">
             <Col>
               <Nav bsStyle="tabs">
                 <NavItem eventKey="all" onClick={() => pickAreaTaskList()}>
@@ -87,10 +88,11 @@ class TaskList extends Component {
                         : <Sortable
                           options={{
                             animation: 150,
+                            delay: 50,
                             onEnd,
                           }}
                         >
-                          {cardList()}
+                          {allTabCardList()}
                         </Sortable>}
                     </ListGroup>
                   </Tab.Pane>

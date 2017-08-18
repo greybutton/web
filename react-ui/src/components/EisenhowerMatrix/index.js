@@ -32,13 +32,13 @@ class EisenhowerMatrix extends Component {
     };
     const title = (
       <h4 onClick={() => this.setState({ expanded: !this.state.expanded })}>
-        The Eisonhower matrix
+        The Eisenhower matrix
       </h4>
     );
     const titleFirstQuadrant = (
       <div
+        className="matrix-quadrant__title"
         onClick={() => this.setState({ expandedFirstQuadrant: !this.state.expandedFirstQuadrant })}
-        style={{ fontSize: 14 }}
         role="button"
         tabIndex={0}
       >
@@ -47,9 +47,9 @@ class EisenhowerMatrix extends Component {
     );
     const titleSecondQuadrant = (
       <div
+        className="matrix-quadrant__title"
         onClick={() =>
           this.setState({ expandedSecondQuadrant: !this.state.expandedSecondQuadrant })}
-        style={{ fontSize: 14 }}
         role="button"
         tabIndex={-1}
       >
@@ -58,8 +58,8 @@ class EisenhowerMatrix extends Component {
     );
     const titleThirdQuadrant = (
       <div
+        className="matrix-quadrant__title"
         onClick={() => this.setState({ expandedThirdQuadrant: !this.state.expandedThirdQuadrant })}
-        style={{ fontSize: 14 }}
         role="button"
         tabIndex={-1}
       >
@@ -68,9 +68,9 @@ class EisenhowerMatrix extends Component {
     );
     const titleFourthQuadrant = (
       <div
+        className="matrix-quadrant__title"
         onClick={() =>
           this.setState({ expandedFourthQuadrant: !this.state.expandedFourthQuadrant })}
-        style={{ fontSize: 14 }}
         role="button"
         tabIndex={-1}
       >

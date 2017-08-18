@@ -27,7 +27,7 @@ class AreaForm extends Component {
   render() {
     const { area, handleSubmit, loading, pristine, submitting } = this.props;
     const renderField = ({ input, label, type, placeholder, meta: { touched, error } }) =>
-      (<FormGroup validationState={touched && error ? 'error' : null}>
+      (<FormGroup bsSize="large" validationState={touched && error ? 'error' : null}>
         <ControlLabel>
           {label}
         </ControlLabel>
@@ -73,10 +73,15 @@ class AreaForm extends Component {
               placeholder="Enter number from 1 to 10"
             />
             <ButtonToolbar>
-              <Button type="submit" bsStyle="primary" disabled={pristine || submitting}>
+              <Button
+                type="submit"
+                bsStyle="primary"
+                bsSize="large"
+                disabled={pristine || submitting}
+              >
                   Submit
                 </Button>
-              <Button>
+              <Button bsSize="large">
                 <Link to="/">Cancel</Link>
               </Button>
             </ButtonToolbar>

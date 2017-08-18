@@ -5,8 +5,7 @@ import { Alert } from 'react-bootstrap';
 const AlertMessage = ({ id, customFields, handleClose, message }) =>
   (<Alert
     id={id}
-    style={{ position: 'absolute', zIndex: 1000 }}
-    className="s-alert-top"
+    className="s-alert-top alert-message"
     bsStyle={customFields.bsStyle}
     onDismiss={handleClose}
   >

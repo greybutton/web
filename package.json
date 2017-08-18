@@ -2,7 +2,6 @@
   "name": "laura",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/greybutton/web.git",
   "license": "MIT",
   "engines": {
     "node": "6.9.x"
@@ -15,11 +14,9 @@
     "test:watch": "npm test -- --watch",
     "heroku-postbuild": "cd react-ui/ && npm install --only=dev && npm install && npm run build"
   },
-  "cacheDirectories": [
-    "node_modules",
-    "react-ui/node_modules"
-  ],
+  "cacheDirectories": ["node_modules", "react-ui/node_modules"],
   "dependencies": {
+    "basic-auth": "^1.1.0",
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "mongoose": "^4.11.1"

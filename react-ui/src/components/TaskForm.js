@@ -59,7 +59,7 @@ class TaskForm extends Component {
   };
   renderField = ({ input, label, type, placeholder, meta: { touched, error } }) => {
     return (
-      <FormGroup validationState={touched && error ? 'error' : null}>
+      <FormGroup bsSize="large" validationState={touched && error ? 'error' : null}>
         <ControlLabel>
           {label}
         </ControlLabel>
@@ -107,7 +107,7 @@ class TaskForm extends Component {
       <div>
         <ControlLabel>Is task daily?</ControlLabel>
         <div>
-          <Button>
+          <Button bsSize="large">
             <Checkbox
               {...input}
               inline
@@ -134,7 +134,7 @@ class TaskForm extends Component {
       >
         <ControlLabel>Pick quadrant of the matrix</ControlLabel>
         <FormGroup>
-          <ButtonGroup>
+          <ButtonGroup bsSize="large">
             <Button>
               <Radio
                 name="urgent"
@@ -162,7 +162,7 @@ class TaskForm extends Component {
           </ButtonGroup>
         </FormGroup>
         <FormGroup>
-          <ButtonGroup>
+          <ButtonGroup bsSize="large">
             <Button>
               <Radio
                 name="important"
@@ -246,7 +246,7 @@ class TaskForm extends Component {
               />
               <Field
                 name="time"
-                type="text"
+                type="tel"
                 component={this.renderField}
                 label="Task time"
                 placeholder="Enter time hh:mm"
@@ -290,7 +290,12 @@ class TaskForm extends Component {
                 }}
               />
               <ButtonToolbar>
-                <Button type="submit" bsStyle="primary" disabled={pristine || submitting}>
+                <Button
+                  type="submit"
+                  bsStyle="primary"
+                  bsSize="large"
+                  disabled={pristine || submitting}
+                >
                   Submit
                 </Button>
               </ButtonToolbar>
