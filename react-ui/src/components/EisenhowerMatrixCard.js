@@ -15,7 +15,10 @@ class EisenhowerMatrixCard extends Component {
   render() {
     const { task, deleteTask } = this.props;
     return (
-      <ListGroupItem data-id={task._id} onClick={() => this.setState({ open: !this.state.open })}>
+      <ListGroupItem
+        data-id={task._id}
+        onDoubleClick={() => this.setState({ open: !this.state.open })}
+      >
         <Tappable
           pressDelay="500"
           onPress={() => this.setState({ open: !this.state.open })}
@@ -26,7 +29,7 @@ class EisenhowerMatrixCard extends Component {
             {task.text}
           </div>
           <Collapse in={this.state.open}>
-            <ButtonToolbar className="task-card__buttong-group">
+            <ButtonToolbar className="task-card__button-group">
               <Row>
                 <Col xs={7} sm={8} md={7} lg={8}>
                   <Link to={`/tasks/edit/${task._id}`}>

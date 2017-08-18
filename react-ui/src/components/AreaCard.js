@@ -18,7 +18,7 @@ class AreaCard extends Component {
       <ListGroupItem
         className="area__card"
         data-id={area._id}
-        onClick={() => this.setState({ open: !this.state.open })}
+        onDoubleClick={() => this.setState({ open: !this.state.open })}
       >
         <Tappable
           pressDelay="500"
