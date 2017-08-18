@@ -32,7 +32,7 @@ class EisenhowerMatrix extends Component {
     };
     const title = (
       <h4 onClick={() => this.setState({ expanded: !this.state.expanded })}>
-        The Eisonhower matrix
+        The Eisenhower matrix
       </h4>
     );
     const titleFirstQuadrant = (
