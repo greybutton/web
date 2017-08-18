@@ -4,6 +4,49 @@ body {
   font-family: sans-serif;
 }
 
+.alert-message {
+  position: absolute;
+  z-index: 1000;
+}
+
+/* Header */
+.row_header {
+  align-content: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  margin: 12px 0;
+}
+
+/* Area */
+
+.area__card {
+  padding-top: 0;
+}
+
+.area__progressbar {
+  margin-bottom: 10px;
+}
+
+/* Task */
+
+.task-card__button-group {
+  margin-top: 10px;
+  margin-left: 0;
+}
+
+.task-list {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/*
+  The Eisenhower matrix
+  rewrite bootstrap styles
+*/
+
 .panel .panel-heading {
   padding: 0;
 }
@@ -14,4 +57,10 @@ body {
 
 .panel-title {
   padding: 10px 15px;
+}
+
+/* The Eisenhower matrix */
+
+.matrix-quadrant__title {
+  font-size: 14px;
 }

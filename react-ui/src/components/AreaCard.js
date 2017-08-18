@@ -16,9 +16,9 @@ class AreaCard extends Component {
     const { area } = this.props;
     return (
       <ListGroupItem
+        className="area__card"
         data-id={area._id}
         onClick={() => this.setState({ open: !this.state.open })}
-        style={{ paddingTop: 0 }}
       >
         <Tappable
           pressDelay="500"
@@ -28,7 +28,7 @@ class AreaCard extends Component {
           <h4>
             {area.title}
           </h4>
-          <ProgressBar style={{ marginBottom: 10 }}>
+          <ProgressBar className="area__progressbar">
             <ProgressBar
               min={0}
               max={10}

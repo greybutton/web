@@ -42,7 +42,7 @@ class TaskCardAllTab extends Component {
             {task.text}
           </div>
           <Collapse in={this.state.open}>
-            <ButtonToolbar style={{ marginTop: 10, marginLeft: 0 }}>
+            <ButtonToolbar className="task-card__button-group">
               <Row>
                 <Col xs={7} sm={8} md={9} lg={10}>
                   <Link to={`/tasks/edit/${task._id}`}>

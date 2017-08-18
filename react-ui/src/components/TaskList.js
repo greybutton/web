@@ -69,7 +69,7 @@ class TaskList extends Component {
         expanded={!isImportantTaskListEmpty() && this.state.expanded}
       >
         <Tab.Container id="tabs" defaultActiveKey="all" fill>
-          <Row className="clearfix" style={{ marginLeft: 0, marginRight: 0 }}>
+          <Row className="clearfix task-list">
             <Col>
               <Nav bsStyle="tabs">
                 <NavItem eventKey="all" onClick={() => pickAreaTaskList()}>

@@ -10,20 +10,21 @@ import TaskFormPage from './containers/TaskFormPage';
 import AlertMessage from './components/AlertMessage';
 
 import logo from './laura.svg';
+import './index.css';
 
 const App = () =>
-  (<Grid style={{ position: 'relative' }}>
+  (<Grid>
     <Alert contentTemplate={AlertMessage} />
     <Row>
       <Col xs={10} xsOffset={1} sm={12} smOffset={0}>
-        <Row style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Row className="row_header">
           <NavLink to="/manual">
             <Button bsStyle="link" bsSize="large">
               Manual
             </Button>
           </NavLink>
           <NavLink to="/">
-            <img src={logo} alt="logo" style={{ margin: '12px 0px' }} />
+            <img className="logo" src={logo} alt="logo" />
           </NavLink>
           <NavLink to="https://github.com/applaura" target="_blank">
             <Button bsStyle="link" bsSize="large">
