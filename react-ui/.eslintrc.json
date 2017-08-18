@@ -1,0 +1,13 @@
+{
+  "root": true,
+  "extends": "airbnb",
+  "plugins": ["react", "jsx-a11y", "import"],
+  "env": {
+    "browser": true,
+    "jest": true
+  },
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/forbid-prop-types": [0, { "forbid": ["array", "object"] }]
+  }
+}

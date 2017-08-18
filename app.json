@@ -1,16 +1,16 @@
 {
-  "name": "laura",
-  "description": "Приложение для гибкого планирования времени",
+  "name": "Laura",
+  "description": "The application for flexible time management",
   "repository": "https://github.com/applaura/web",
   "env": {
     "MONGO_URI": {
-      "description": "Переменная окружения для подключения sandbox с mlab.com"
+      "description": "Environment variable for MondoDB (for example, sandbox from mlab.com)"
     },
     "LOGIN": {
-      "description": "Переменная окружения для авторизации"
+      "description": "Environment variable for basic-auth"
     },
     "PASS": {
-      "description": "Переменная окружения для авторизации"
+      "description": "Environment variable for basic-auth"
     }
   }
 }
