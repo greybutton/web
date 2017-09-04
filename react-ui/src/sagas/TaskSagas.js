@@ -7,8 +7,56 @@ import * as TaskActions from '../actions/TaskActions';
 const url = 'tasks';
 
 if (!global.localStorage[url]) {
-  global.localStorage.setItem(url, JSON.stringify({ daily: [], important: [], notImportant: [] }));
-  global.localStorage.setItem('_id', JSON.stringify(1));
+  global.localStorage.setItem(
+    url,
+    JSON.stringify({
+      daily: [
+        {
+          text:
+            'Write 1 entree recipes that can be made ahead and frozen in a personal kitchen for inclusion in a cookbook',
+          time: '00:30',
+          area: 2,
+          quadrant: 'daily',
+          _id: 4,
+        },
+        {
+          text:
+            'Read 100 pages',
+          time: '01:00',
+          area: 6,
+          quadrant: 'daily',
+          _id: 5,
+        },
+      ],
+      important: [
+        {
+          text: 'Increase revenue by 25% each month by catering 2 parties a month.',
+          time: '00:00',
+          area: 1,
+          quadrant: 'first',
+          _id: 1,
+        },
+        {
+          text:
+            'Create a website to sell jewelry from my store by December 31st. Utilize a website development company to create the site and payment interface.',
+          area: 5,
+          time: '00:00',
+          quadrant: 'second',
+          _id: 3,
+        },
+        {
+          area: 1,
+          text:
+            'Gain 2 clients each quarter for my consulting business by participating in a monthly networking group.',
+          quadrant: 'second',
+          time: '00:00',
+          _id: 2,
+        },
+      ],
+      notImportant: [],
+    }),
+  );
+  global.localStorage.setItem('_id', JSON.stringify(6));
 }
 
 const getId = () => JSON.parse(global.localStorage.getItem('_id'));

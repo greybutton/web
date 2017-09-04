@@ -7,7 +7,17 @@ import * as AreaActions from '../actions/AreaActions';
 const url = 'areas';
 
 if (!window.localStorage[url]) {
-  window.localStorage.setItem(url, JSON.stringify([]));
+  window.localStorage.setItem(
+    url,
+    JSON.stringify([
+      { title: 'Hobby', score: 1, desirableScore: 3, _id: 5 },
+      { title: 'Sports', score: 2, desirableScore: 5, _id: 4 },
+      { title: 'Work', score: 3, desirableScore: 5, _id: 1 },
+      { title: 'Health', score: 3, desirableScore: 5, _id: 2 },
+      { title: 'Education', score: 4, desirableScore: 5, _id: 6 },
+      { title: 'Family', score: 5, desirableScore: 8, _id: 3 },
+    ]),
+  );
 }
 
 export function fetchAreaListApi() {
