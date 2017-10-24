@@ -1,0 +1,34 @@
+version: "3"
+
+services:
+  web:
+    build: .
+    command: yarn develop
+    volumes:
+      - .:/usr/src/app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    volumes:
+      - /data/db:/data/db
+    ports:
+      - "27017:27017"
+
+  frontend:
+    build:
+      context: .
+      args:
+        - proxy
+    env_file:
+      - .env
+    command: make frontend-start
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/usr/src/app
+    links:
+      - web

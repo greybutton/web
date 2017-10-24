@@ -27,7 +27,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost/laura', {
+mongoose.connect(process.env.MONGO_URI || 'mongodb://mongo/laura' || 'mongodb://localhost/laura', {
   useMongoClient: true,
 });
 
